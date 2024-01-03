@@ -16,6 +16,9 @@
                     <div class="form-group col-12">
                         <label for="attr_name">Name</label>
                         <input type="text" value="{{$attribute -> name}}" name="name" id="attr_name" class="form-control">
+                        @if ($errors->has('name'))
+                            <span class="text-danger">{{ $errors->first('name') }}</span>
+                        @endif
                     </div>
                 </div>
             </div>

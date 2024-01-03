@@ -1,14 +1,15 @@
 <?php
 
-use App\Http\Controllers\UploadController;
-use App\Http\Controllers\FileController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\AttributeValueController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FileController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductVariantController;
+use App\Http\Controllers\UploadController;
+use Illuminate\Support\Facades\Route;
 
 #admin routes
 Route::post('/upload', [UploadController::class, 'store'])->name('upload.store');
@@ -23,6 +24,10 @@ Route::get('/delete/{file_id}/draft', [FileController::class, 'delete'])
     ->name("file.draft.delete");
 
 Route::prefix('admin')->group(function () {
+    #Dashboard
+    Route::get('', [HomeController::class, 'index'])
+        ->name('admin.dashboard');
+
     #Attributes
     Route::get('attributes', [AttributeController::class, 'index'])
         ->name('admin.attributes.index');
@@ -33,15 +38,16 @@ Route::prefix('admin')->group(function () {
     Route::post('attributes/create', [AttributeController::class, 'store'])
         ->name('admin.attributes.store');
 
-    Route::get('attributes/edit/{id}', [AttributeController::class, 'show'])
-        ->name('admin.attributes.show');
+    Route::get('attributes/edit/{id}', [AttributeController::class, 'edit'])
+        ->name('admin.attributes.edit');
 
     Route::post('attributes/update/{id}', [AttributeController::class, 'update'])
         ->name('admin.attributes.update');
 
-    Route::get('attributes/delete/{id}', [AttributeController::class, 'delete'])
+    Route::delete('attributes/delete/{id}', [AttributeController::class, 'delete'])
         ->name('admin.attributes.delete');
-#Attribute Values
+
+    #Attribute Values
     Route::get('attribute-values', [AttributeValueController::class, 'index'])
         ->name('admin.attribute_values.index');
 
@@ -59,7 +65,8 @@ Route::prefix('admin')->group(function () {
 
     Route::get('attribute-values/delete/{id}', [AttributeValueController::class, 'delete'])
         ->name('admin.attribute_values.delete');
-#Categories
+
+    #Categories
     Route::get('categories', [CategoryController::class, 'index'])
         ->name('admin.categories.index');
 
@@ -77,7 +84,8 @@ Route::prefix('admin')->group(function () {
 
     Route::get('categories/delete/{id}', [CategoryController::class, 'delete'])
         ->name('admin.categories.delete');
-#Banners
+
+    #Banners
     Route::get('banners', [BannerController::class, 'index'])
         ->name('admin.banners.index');
 
@@ -95,7 +103,8 @@ Route::prefix('admin')->group(function () {
 
     Route::get('banners/delete/{id}', [BannerController::class, 'delete'])
         ->name('admin.banners.delete');
-#Products
+
+    #Products
     Route::get('/products', [ProductController::class, 'index'])
         ->name('admin.products.index');
 
@@ -113,7 +122,8 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/products/delete/{id}', [ProductController::class, 'delete'])
         ->name('admin.products.delete');
-#Product Variants
+
+    #Product Variants
     Route::get('/product-variants', [ProductVariantController::class, 'index'])
         ->name('admin.product_variants.index');
 
