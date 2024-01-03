@@ -27,7 +27,7 @@ class AttributeController extends Controller
         $request->validate([
             'name' => 'required',
         ], [
-            'name.required' => 'Attribue name is required',
+            'name.required' => 'Attribute name is required',
         ]);
 
         Attribute::create([
