@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Admin\CreateAttributeRequest;
 use App\Http\Requests\Admin\UpdateAttributeRequest;
 use App\Models\Attribute;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Database\QueryException;
 
 class AttributeController extends Controller
 {
@@ -63,6 +63,11 @@ class AttributeController extends Controller
         ]);
     }
 
+    /**
+     * @param UpdateAttributeRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(UpdateAttributeRequest $request, $id)
     {
         $attribute = Attribute::find($id);
@@ -80,15 +85,26 @@ class AttributeController extends Controller
         return redirect()->route('admin.attributes.index');
     }
 
-    public function delete($id){
-        $attribute = Attribute::find($id);
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function delete($id)
+    {
+        try {
+            $attribute = Attribute::findOrFail($id);
+            $attribute->delete();
 
-        if (!$attribute) {
-            dd(404);
+            return redirect()->route('admin.attributes.index');
+        } catch (\Exception $e) {
+            if ($e instanceof QueryException && $e->errorInfo[1] == 1451) {
+                // Foreign key constraint violation
+                return redirect()->route('admin.attributes.index')
+                    ->with('error', 'Cannot delete the attribute. It is associated with other records.');
+            }
+
+            // Handle other types of exceptions or rethrow the exception
+            dd($e);
         }
-
-        $attribute->delete();
-
-        return redirect()->route('admin.attributes.index');
     }
 }

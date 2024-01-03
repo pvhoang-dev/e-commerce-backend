@@ -50,3 +50,14 @@
         </div>
     </div>
 @endsection
+@push('js')
+
+@endpush
+<script>
+
+    // Blade syntax to check if the 'error' session variable is present
+    @if(session('error'))
+    // Display an alert with the error message
+    alert("{{ session('error') }}");
+    @endif
+</script>
