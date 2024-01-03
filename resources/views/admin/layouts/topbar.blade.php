@@ -2,7 +2,7 @@
     <div class="container-fluid">
 
         <!-- LOGO -->
-        <a href="#" class="topnav-logo">
+        <a href="/admin" class="topnav-logo">
             <span class="topnav-logo-lg">
                 <img src="{{ asset('images/logo-light.png') }}" alt="" height="16">
             </span>
