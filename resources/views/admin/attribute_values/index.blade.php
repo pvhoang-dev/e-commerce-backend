@@ -28,7 +28,7 @@
                                 <td>
                                     <div class='btn-group'>
                                         <a class="action-icon"
-                                            href="{{ route('admin.attribute_values.show', ['id' => $value->id]) }}">
+                                            href="{{ route('admin.attribute_values.edit', ['id' => $value->id]) }}">
                                             <i class="mdi mdi-pencil"></i>
                                         </a>
                                         <a class="action-icon delete"

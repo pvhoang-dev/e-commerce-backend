@@ -57,13 +57,13 @@ Route::prefix('admin')->group(function () {
     Route::post('attribute-values/create', [AttributeValueController::class, 'store'])
         ->name('admin.attribute_values.store');
 
-    Route::get('attribute-values/edit/{id}', [AttributeValueController::class, 'show'])
-        ->name('admin.attribute_values.show');
+    Route::get('attribute-values/edit/{id}', [AttributeValueController::class, 'edit'])
+        ->name('admin.attribute_values.edit');
 
     Route::post('attribute-values/update/{id}', [AttributeValueController::class, 'update'])
         ->name('admin.attribute_values.update');
 
-    Route::get('attribute-values/delete/{id}', [AttributeValueController::class, 'delete'])
+    Route::delete('attribute-values/delete/{id}', [AttributeValueController::class, 'delete'])
         ->name('admin.attribute_values.delete');
 
     #Categories

@@ -2,71 +2,88 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Admin\CreateAttributeValueRequest;
+use App\Http\Requests\Admin\UpdateAttributeValueRequest;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
-use Illuminate\Http\Request;
 
 class AttributeValueController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function index()
     {
         $attributeValues = AttributeValue::get();
 
-        return view('admin.atribute_values.index', ['attributeValues' => $attributeValues]);
+        return view('admin.attribute_values.index', ['attributeValues' => $attributeValues]);
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function create()
     {
         $attributes = Attribute::get();
 
-        return view('admin.atribute_values.create', ['attributes' => $attributes]);
+        return view('admin.attribute_values.create', ['attributes' => $attributes]);
     }
 
-    public function store(Request $request)
+    /**
+     * @param CreateAttributeValueRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(CreateAttributeValueRequest $request)
     {
-        $request->validate([
-            'attribute_id' => 'required',
-            'value' => 'required',
-        ], [
-            'attribute_id.required' => 'Attribue name is required',
-            'value.required' => 'Attribue value is required',
-        ]);
+        $input = $request->all();
 
-        AttributeValue::create([
-            'attribute_id' => $request->input('attribute_id'),
-            'value' => $request->input('value'),
-        ]);
+        AttributeValue::create($input);
 
         return redirect()->route('admin.attribute_values.index');
     }
 
-    public function show($id)
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function edit($id)
     {
         $attributes = Attribute::get();
 
         $attributeValue = AttributeValue::find($id);
 
-        return view('admin.atribute_values.edit', [
+        if (!$attributeValue) {
+            dd(404);
+        }
+
+        return view('admin.attribute_values.edit', [
             'attributeValue' => $attributeValue,
             'attributes' => $attributes
         ]);
     }
 
-    public function update(Request $request, $id)
+    /**
+     * @param UpdateAttributeValueRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(UpdateAttributeValueRequest $request, $id)
     {
         $attributeValue = AttributeValue::find($id);
 
-        if(!$attributeValue){
+        if (!$attributeValue) {
             dd(404);
         }
 
-        $attributeValue->update($request -> all());
+        $input = $request->all();
+
+        $attributeValue->update($input);
 
         return redirect()->route('admin.attribute_values.index');
     }
 
     public function delete()
     {
-        
+
     }
 }

@@ -24,6 +24,9 @@
                     <div class="form-group col-6">
                         <label for="attr_value">Value</label>
                         <input type="text" value="{{$attributeValue -> value}}" name="value" id="attr_value" class="form-control">
+                        @if ($errors->has('value'))
+                            <span class="text-danger">{{ $errors->first('value') }}</span>
+                        @endif
                     </div>
                 </div>
             </div>
