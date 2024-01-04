@@ -83,6 +83,10 @@ class AttributeValueController extends Controller
         return redirect()->route('admin.attribute_values.index');
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function delete($id)
     {
         try {
