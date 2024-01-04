@@ -6,6 +6,7 @@ use App\Http\Requests\Admin\CreateAttributeValueRequest;
 use App\Http\Requests\Admin\UpdateAttributeValueRequest;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
+use Illuminate\Database\QueryException;
 
 class AttributeValueController extends Controller
 {
@@ -82,8 +83,22 @@ class AttributeValueController extends Controller
         return redirect()->route('admin.attribute_values.index');
     }
 
-    public function delete()
+    public function delete($id)
     {
+        try {
+            $attributeValues = AttributeValue::findOrFail($id);
+            $attributeValues->delete();
 
+            return redirect()->route('admin.attribute_values.index');
+        } catch (\Exception $e) {
+            if ($e instanceof QueryException && $e->errorInfo[1] == 1451) {
+                // Foreign key constraint violation
+                return redirect()->route('admin.attribute_values.index')
+                    ->with('error', 'Cannot delete the attribute value. It is associated with other records.');
+            }
+
+            // Handle other types of exceptions or rethrow the exception
+            dd($e);
+        }
     }
 }
