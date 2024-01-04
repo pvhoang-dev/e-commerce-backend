@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Admin\CreateProductRequest;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
@@ -13,6 +14,9 @@ use Illuminate\Pagination\Paginator;
 
 class ProductController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function index()
     {
         Paginator::useBootstrap();
@@ -24,43 +28,29 @@ class ProductController extends Controller
         return view('admin.products.index', ['products' => $products]);
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function create()
     {
         $categories = Category::all();
 
-        return view('admin.products.create', ['categories' => $categories]);
+        return view('admin.products.create', [
+            'categories' => $categories
+        ]);
     }
 
-    public function store(Request $request)
+    /**
+     * @param CreateProductRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(CreateProductRequest $request)
     {
         $arrProductImg = [];
 
-        $request->validate([
-            'name' => 'required',
-            'qty' => 'required',
-            'plv_1' => 'required',
-            'plv_2' => 'required',
-            'plv_3' => 'required',
-        ], [
-            'name.required' => 'Product name is required',
-            'qty.required' => 'Quantity is required',
-            'plv_1.required' => 'Plv_1 is required',
-            'plv_2.required' => 'Plv_2 is required',
-            'plv_3.required' => 'Plv_3 is required',
-        ]);
+        $input = $request->all();
 
-        $product = Product::create([
-            'name' => $request->input('name'),
-            'slug' => Str::slug($request->input('name'), '-'),
-            'sku' => 'N&H' . Str::upper(Str::random(4)),
-            'category_id' => $request->input('category_id'),
-            'plv_1' => $request->input('plv_1'),
-            'plv_2' => $request->input('plv_2'),
-            'plv_3' => $request->input('plv_3'),
-            'qty' => $request->input('qty'),
-            'short_description' => $request->input('short_description'),
-            'status' => 1
-        ]);
+        $product = Product::create($input);
 
         if ($request->has('file_id')) {
             foreach ($request->get('file_id') as $file_id) {
@@ -71,7 +61,7 @@ class ProductController extends Controller
                 }
 
                 $arrProductImg[] = [
-                    'file_id' => $file_id,
+                    'file_id' => $response["id"],
                     'type' => 0,
                     'product_id' => $product->id,
                 ];

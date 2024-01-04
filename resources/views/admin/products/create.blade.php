@@ -15,36 +15,54 @@
                 <div class="row">
                     <div class="form-group col-sm-6">
                         <label for="pro_name">Name</label>
-                        <input type="text" name="name" id="pro_name" class="form-control">
+                        <input type="text" name="name" id="pro_name" class="form-control" value="{{ old('name') }}">
+                        @if ($errors->has('name'))
+                            <span class="text-danger">{{ $errors->first('name') }}</span>
+                        @endif
                     </div>
 
                     <div class="form-group col-sm-6">
                         <label for="qty">Quantity</label>
-                        <input type="number" name="qty" id="qty" class="form-control">
+                        <input type="number" name="qty" id="qty" class="form-control" value="{{ old('qty') }}">
+                        @if ($errors->has('qty'))
+                            <span class="text-danger">{{ $errors->first('qty') }}</span>
+                        @endif
                     </div>
 
                     <div class="form-group col-sm-6">
                         <label for="category_id">Category</label>
                         <select class="form-control select2" name="category_id" id="category_id" data-toggle="select2">
                             @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : ''}}>{{ $category->name }}</option>
                             @endforeach
+                                @if ($errors->has('category_id'))
+                                    <span class="text-danger">{{ $errors->first('category_id') }}</span>
+                                @endif
                         </select>
                     </div>
 
                     <div class="form-group col-sm-6">
                         <label for="plv_1">Plv_1</label>
-                        <input type="number" name="plv_1" id="plv_1" class="form-control">
+                        <input type="number" name="plv_1" id="plv_1" class="form-control" value="{{ old('plv_1') }}">
+                        @if ($errors->has('plv_1'))
+                            <span class="text-danger">{{ $errors->first('plv_1') }}</span>
+                        @endif
                     </div>
 
                     <div class="form-group col-sm-6">
                         <label for="plv_2">Plv_2</label>
-                        <input type="number" name="plv_2" id="plv_2" class="form-control">
+                        <input type="number" name="plv_2" id="plv_2" class="form-control" value="{{ old('plv_2') }}">
+                        @if ($errors->has('plv_2'))
+                            <span class="text-danger">{{ $errors->first('plv_2') }}</span>
+                        @endif
                     </div>
 
                     <div class="form-group col-sm-6">
                         <label for="plv_3">Plv_3</label>
-                        <input type="number" name="plv_3" id="plv_3" class="form-control">
+                        <input type="number" name="plv_3" id="plv_3" class="form-control" value="{{ old('plv_3') }}">
+                        @if ($errors->has('plv_3'))
+                            <span class="text-danger">{{ $errors->first('plv_3') }}</span>
+                        @endif
                     </div>
 
                     <div class="form-group col-sm-12">
@@ -99,7 +117,7 @@
                 const listImages = $('.dropzone-previews .card');
                 for (let i = 0; i < files.length; i++) {
                     var file = files[i];
-                    
+
                     let urlImage = "{{ route('file.draft.show', ['file_id' => 'file_id']) }}";
                     urlImage = urlImage.replace('file_id', file.id);
 
@@ -117,14 +135,13 @@
                                                 </a>
                                         </div>
                                         <div class="col-auto">
-                                            <!-- Button -->
                                             <a href="${urlDeleteImage}" class="btn btn-link btn-lg text-muted" data-dz-remove="">
                                                 <i class="dripicons-cross"></i>
                                             </a>
                                         </div>
                                     </div>
                                 </div>`;
-                }
+                };
 
                 listImages.append(html);
 
