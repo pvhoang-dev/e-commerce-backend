@@ -4,6 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use App\Models\Attribute;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 class UpdateAttributeRequest extends FormRequest
 {
@@ -13,6 +14,16 @@ class UpdateAttributeRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
+    }
+
+    /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'code' => Str::slug($this->name),
+        ]);
     }
 
     /**

@@ -38,10 +38,7 @@ class AttributeController extends Controller
     {
         $input = $request->all();
 
-        Attribute::create([
-            'name' => $input['name'],
-            'code' => Str::slug($input['name'], '-'),
-        ]);
+        Attribute::create($input);
 
         return redirect()->route('admin.attributes.index');
     }
@@ -78,9 +75,7 @@ class AttributeController extends Controller
 
         $input = $request->all();
 
-        $attribute->name = $input['name'];
-        $attribute->code = Str::slug($input['name'], '-');
-        $attribute->save();
+        $attribute->update($input);
 
         return redirect()->route('admin.attributes.index');
     }
