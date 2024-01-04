@@ -16,6 +16,7 @@
                         <thead>
                             <tr>
                                 <th>Name</th>
+                                <th>Image</th>
                                 <th>Position</th>
                                 <th>Parent</th>
                                 <th>Action</th>
@@ -25,12 +26,19 @@
                             @foreach ($categories as $category)
                                 <tr>
                                     <td>{{ $category->name }}</td>
+                                    <td style="max-width: 20px">
+                                        @if ($category->file_id)
+                                            <img class="rounded mr-1 mb-3 mb-sm-0 img-fluid" src="{{route('file.show', $category->file_id)}}" alt="">
+                                        @else
+                                            Chưa có ảnh
+                                        @endif
+                                    </td>
                                     <td>{{ $category->position }}</td>
                                     <td>{{ $category -> parent_id != 0 ? $category->parentCategory -> name : 'Parent'}}</td>
                                     <td>
                                         <div class='btn-group'>
                                             <a class="action-icon"
-                                                href="{{ route('admin.categories.show', ['id' => $category->id]) }}">
+                                                href="{{ route('admin.categories.edit', ['id' => $category->id]) }}">
                                                 <i class="mdi mdi-pencil"></i>
                                             </a>
                                             <a class="action-icon delete"

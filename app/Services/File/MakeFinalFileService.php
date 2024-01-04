@@ -7,8 +7,11 @@ use App\Models\FileDraft;
 
 class MakeFinalFileService
 {
-
-    public static function  convertDraftToFinal($file_id)
+    /**
+     * @param $file_id
+     * @return array
+     */
+    public static function convertDraftToFinal($file_id)
     {
         $fileDraft = FileDraft::find($file_id);
 
@@ -21,7 +24,6 @@ class MakeFinalFileService
         }
 
         $file = new File();
-        $file->id = $fileDraft->id;
         $file->name = $fileDraft->name;
         $file->type = $fileDraft->type;
         $file->path = $fileDraft->path;
@@ -33,7 +35,8 @@ class MakeFinalFileService
         return [
             "status" => true,
             "message" => "success",
-            "file" => $file
+            "file" => $file,
+            "id" => $file->id,
         ];
     }
 }

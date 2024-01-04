@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Admin\CreateCategoryRequest;
+use App\Http\Requests\Admin\UpdateCategoryRequest;
 use App\Models\Category;
 use App\Services\File\MakeFinalFileService;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function index()
     {
         $categories = Category::all();
@@ -18,6 +22,9 @@ class CategoryController extends Controller
         ]);
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function create()
     {
         $categories = Category::where('parent_id', 0)->get();
@@ -27,13 +34,15 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    /**
+     * @param CreateCategoryRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(CreateCategoryRequest $request)
     {
         $input = $request->all();
 
-        $input['slug'] = Str::slug($request->input('name'), '-');
-
-        $input['status'] = 1;
+        // dd($input);
 
         if ($request->has('file_id')) {
             $response = MakeFinalFileService::convertDraftToFinal($input['file_id']);
@@ -43,20 +52,26 @@ class CategoryController extends Controller
             }
         }
 
+        $input['file_id'] = $response["id"];
+
         Category::create($input);
 
         return redirect()->route('admin.categories.index');
     }
 
-    public function show($id)
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function edit($id)
     {
         $category = Category::find($id);
-
-        $categories = Category::where('parent_id', 0)->get();
 
         if (!$category) {
             dd(404);
         }
+
+        $categories = Category::where('parent_id', 0)->get();
 
         return view('admin.categories.edit', [
             'categories' => $categories,
@@ -64,21 +79,30 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(UpdateCategoryRequest $request, $id)
     {
         $input = $request->all();
 
-        $input['slug'] = Str::slug($request->input('name'), '-');
+        $category = Category::find($id);
+
+        if (!$category) {
+            dd(404);
+        }
 
         if ($request->has('file_id')) {
             $response = MakeFinalFileService::convertDraftToFinal($input['file_id']);
 
             if (!$response["status"]) {
-                return redirect()->back()->withErrors(["message" => "Upload file errors!"]);
+                $input['file_id'] = $category->file_id;
+            } else {
+                $input['file_id'] = $response["id"];
             }
         }
-
-        $category = Category::find($id);
 
         $category->update($input);
 

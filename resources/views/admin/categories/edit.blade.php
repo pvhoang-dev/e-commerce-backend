@@ -17,11 +17,17 @@
                         <label for="cate_name">Name</label>
                         <input type="text" value="{{ $category->name }}" name="name" id="cate_name"
                             class="form-control">
+                        @if ($errors->has('name'))
+                            <span class="text-danger">{{ $errors->first('name') }}</span>
+                        @endif
                     </div>
                     <div class="form-group col-6">
                         <label for="cate_po">Position</label>
                         <input type="number" value="{{ $category->position }}" name="position" id="cate_po"
                             class="form-control">
+                        @if ($errors->has('position'))
+                            <span class="text-danger">{{ $errors->first('position') }}</span>
+                        @endif
                     </div>
 
                     <div class="form-group col-12">
@@ -34,6 +40,9 @@
                                 </option>
                             @endforeach
                         </select>
+                        @if ($errors->has('parent_id'))
+                            <span class="text-danger">{{ $errors->first('parent_id') }}</span>
+                        @endif
                     </div>
 
                     <div class="form-group col-12">
@@ -54,6 +63,7 @@
                                         <div class="col-auto">
                                             <img src="{{ route('file.show', $category->file_id) }}"
                                                 class="avatar-sm rounded bg-light">
+                                            <input type="hidden" name="file_id" value="{{ $category->file_id }}" />
                                         </div>
                                         <div class="col pl-0">
                                             <a href="javascript:void(0);" class="text-muted font-weight-bold">
@@ -71,6 +81,9 @@
                                 </div>
                             </div>
                         </div>
+                        @if ($errors->has('file_id'))
+                            <span class="text-danger">{{ $errors->first('file_id') }}</span>
+                        @endif
                     </div>
                 </div>
             </div>

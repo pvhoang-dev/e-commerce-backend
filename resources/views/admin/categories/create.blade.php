@@ -15,14 +15,14 @@
                 <div class="row">
                     <div class="form-group col-6">
                         <label for="cate_name">Name</label>
-                        <input type="text" name="name" id="cate_name" class="form-control">
+                        <input type="text" name="name" id="cate_name" class="form-control" value="{{ old('name') }}">
                         @if ($errors->has('name'))
                             <span class="text-danger">{{ $errors->first('name') }}</span>
                         @endif
                     </div>
                     <div class="form-group col-6">
                         <label for="cate_po">Position</label>
-                        <input type="number" name="position" id="cate_po" class="form-control">
+                        <input type="number" name="position" id="cate_po" class="form-control" value="{{ old('position') }}">
                         @if ($errors->has('position'))
                             <span class="text-danger">{{ $errors->first('position') }}</span>
                         @endif
@@ -33,9 +33,12 @@
                         <select class="form-control select2" name="parent_id" id="cate_parent" data-toggle="select2">
                             <option value="0">Category Parent</option>
                             @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                <option value="{{ $category->id }}" {{ old('parent_id') == $category->id ? 'selected' : ''}}>{{ $category->name }}</option>
                             @endforeach
                         </select>
+                        @if ($errors->has('parent_id'))
+                            <span class="text-danger">{{ $errors->first('parent_id') }}</span>
+                        @endif
                     </div>
 
                     <div class="form-group col-12">
@@ -51,9 +54,11 @@
                         <!-- Preview -->
                         <div class="dropzone-previews mt-3">
                             <div class="card mt-1 mb-0 shadow-none border dz-processing dz-error dz-complete">
-
                             </div>
                         </div>
+                        @if ($errors->has('file_id'))
+                            <span class="text-danger">{{ $errors->first('file_id') }}</span>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -66,7 +71,7 @@
 @endsection
 @push('js')
     <script>
-        $('#uploadFile').change(function() {
+        $('#uploadFile').change(function () {
             let formData = new FormData();
 
             let files = $(this)[0].files;
@@ -86,7 +91,7 @@
                 const listImages = $('.dropzone-previews .card');
 
                 listImages.empty();
-                
+
                 for (let i = 0; i < files.length; i++) {
                     var file = files[i];
 
