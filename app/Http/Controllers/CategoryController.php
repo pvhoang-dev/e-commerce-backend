@@ -6,6 +6,7 @@ use App\Http\Requests\Admin\CreateCategoryRequest;
 use App\Http\Requests\Admin\UpdateCategoryRequest;
 use App\Models\Category;
 use App\Services\File\MakeFinalFileService;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -109,7 +110,34 @@ class CategoryController extends Controller
         return redirect()->route('admin.categories.index');
     }
 
-    public function delete()
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function delete($id)
     {
+        try {
+            $category = Category::findOrFail($id);
+
+            $subCategories = Category::where('parent_id', $id)->get();
+
+            if($subCategories){
+                return redirect()->route('admin.categories.index')
+                    ->with('error', 'Cannot delete the category. It is associated with other records.');
+            }
+
+            $category->delete();
+
+            return redirect()->route('admin.categories.index');
+        } catch (\Exception $e) {
+            if ($e instanceof QueryException && $e->errorInfo[1] == 1451) {
+                // Foreign key constraint violation
+                return redirect()->route('admin.categories.index')
+                    ->with('error', 'Cannot delete the category. It is associated with other records.');
+            }
+
+            // Handle other types of exceptions or rethrow the exception
+            dd($e);
+        }
     }
 }

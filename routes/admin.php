@@ -82,7 +82,7 @@ Route::prefix('admin')->group(function () {
     Route::post('categories/update/{id}', [CategoryController::class, 'update'])
         ->name('admin.categories.update');
 
-    Route::get('categories/delete/{id}', [CategoryController::class, 'delete'])
+    Route::delete('categories/delete/{id}', [CategoryController::class, 'delete'])
         ->name('admin.categories.delete');
 
     #Banners
