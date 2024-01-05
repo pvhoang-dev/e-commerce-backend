@@ -33,11 +33,7 @@ class UpdateAttributeRequest extends FormRequest
      */
     public function rules()
     {
-        // Get all route parameters
-        $routeParameters = $this->route()->parameters();
-
-        // Access the 'id' parameter
-        $id = $routeParameters['id'] ?? null;
+        $id = $this->route('id') ?? null;
 
         return Attribute::getValidationRules($id);
     }
