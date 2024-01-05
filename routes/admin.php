@@ -101,7 +101,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/products/edit/{id}', [ProductController::class, 'update'])
         ->name('admin.products.update');
 
-    Route::get('/products/delete/{id}', [ProductController::class, 'delete'])
+    Route::delete('/products/delete/{id}', [ProductController::class, 'delete'])
         ->name('admin.products.delete');
 
     #Product Variants

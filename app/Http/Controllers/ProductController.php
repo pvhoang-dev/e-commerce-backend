@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Admin\CreateProductRequest;
 use App\Http\Requests\Admin\UpdateProductRequest;
 use App\Models\Category;
+use App\Models\File;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use App\Services\File\MakeFinalFileService;
+use Illuminate\Database\QueryException;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -159,7 +159,40 @@ class ProductController extends Controller
         }
     }
 
-    public function delete()
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function delete($id)
     {
+        DB::beginTransaction();
+
+        try {
+            $product = Product::findOrFail($id);
+
+            $image_ids = $product->images->pluck('file_id')->toArray();
+
+            if (!empty($image_ids)) {
+                ProductImage::where('product_id', $id)->delete();
+                File::whereIn('id', $image_ids)->delete();
+            }
+
+            $product->delete();
+
+            DB::commit();
+
+            return redirect()->route('admin.products.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            if ($e instanceof QueryException && $e->errorInfo[1] == 1451) {
+                // Foreign key constraint violation
+                return redirect()->route('admin.products.index')
+                    ->with('error', 'Cannot delete the product. It is associated with other records.');
+            }
+
+            // Handle other types of exceptions or rethrow the exception
+            dd($e);
+        }
     }
 }
