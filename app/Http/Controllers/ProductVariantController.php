@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Admin\CreateProductVariantRequest;
+use App\Http\Requests\Admin\UpdateProductVariantRequest;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Product;
 use App\Models\ProductAttributeValue;
 use App\Models\ProductVariant;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class ProductVariantController extends Controller
 {
@@ -93,7 +95,11 @@ class ProductVariantController extends Controller
         return redirect()->route('admin.products.edit', ['id' => $input["product_id"]]);
     }
 
-    public function show($id)
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function edit($id)
     {
         $productVariant = ProductVariant::with([
             'productAttributeValue',
@@ -113,13 +119,68 @@ class ProductVariantController extends Controller
         ]);
     }
 
-    public function update()
+    /**
+     * @param UpdateProductVariantRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(UpdateProductVariantRequest $request, $id)
     {
+        $input = $request->all();
 
+        $product = Product::find($input["product_id"]);
+
+        $productVariant = ProductVariant::find($id);
+
+        if (!$productVariant) {
+            dd(404);
+        }
+
+        $product->qty = $product->qty - $productVariant->qty + $input["qty"];
+
+        $productVariant->update($input);
+
+        $product->save();
+
+        return redirect()->back();
     }
 
-    public function delete()
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function delete($id)
     {
+        DB::beginTransaction();
+
+        try {
+            $productVariant = ProductVariant::findOrFail($id);
+
+            $product = Product::find($productVariant->product_id);
+
+            ProductAttributeValue::where('product_variant_id', $id)->delete();
+
+            $productVariant->delete();
+
+            $product->qty = $product->qty - $productVariant->qty > 0 ? $product->qty - $productVariant->qty : 0;
+
+            $product->save();
+
+            DB::commit();
+
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            if ($e instanceof QueryException && $e->errorInfo[1] == 1451) {
+                // Foreign key constraint violation
+                return redirect()->back()
+                    ->with('error', 'Cannot delete the product variant. It is associated with other records.');
+            }
+
+            // Handle other types of exceptions or rethrow the exception
+            dd($e);
+        }
     }
 
     /**

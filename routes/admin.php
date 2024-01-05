@@ -114,13 +114,13 @@ Route::prefix('admin')->group(function () {
     Route::post('/product-variants/create', [ProductVariantController::class, 'store'])
         ->name('admin.product_variants.store');
 
-    Route::get('/product-variants/edit/{id}', [ProductVariantController::class, 'show'])
-        ->name('admin.product_variants.show');
+    Route::get('/product-variants/edit/{id}', [ProductVariantController::class, 'edit'])
+        ->name('admin.product_variants.edit');
 
     Route::post('/product-variants/edit/{id}', [ProductVariantController::class, 'update'])
         ->name('admin.product_variants.update');
 
-    Route::get('/product-variants/delete/{id}', [ProductVariantController::class, 'delete'])
+    Route::delete('/product-variants/delete/{id}', [ProductVariantController::class, 'delete'])
         ->name('admin.product_variants.delete');
 
     #Ajax

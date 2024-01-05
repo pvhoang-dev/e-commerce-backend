@@ -173,14 +173,18 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <div class='btn-group'>
-                                            <a href="{{ route('admin.product_variants.show', [$productVariant->id]) }}"
-                                               class="action-icon"> <i class="mdi mdi-eye"></i></a>
-                                            <a class="action-icon delete"
-                                               href="{{ route('admin.product_variants.delete', ['id' => $product->id]) }}">
-                                                <i class="mdi mdi-delete"></i>
-                                            </a>
-                                        </div>
+                                        <form action="{{ route('admin.product_variants.delete', $productVariant->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <div class='btn-group'>
+                                                <a href="{{ route('admin.product_variants.edit', [$productVariant->id]) }}"
+                                                   class="action-icon"> <i class="mdi mdi-eye"></i></a>
+                                                <button type="submit" class="action-icon delete border-0 bg-transparent"
+                                                        onclick="return confirm('Are you sure?')">
+                                                    <i class="mdi mdi-delete"></i>
+                                                </button>
+                                            </div>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
@@ -202,6 +206,10 @@
 @endsection
 @push('js')
     <script>
+        @if(session('error'))
+        // Display an alert with the error message
+        alert("{{ session('error') }}");
+        @endif
         @if ($errors->has('message'))
         alert("{{ implode('\n', $errors->get('message')) }}");
         @endif
@@ -244,14 +252,13 @@
                                                 </a>
                                         </div>
                                         <div class="col-auto">
-                                            <!-- Button -->
                         <a href="${urlDeleteImage}" class="btn btn-link btn-lg text-muted" data-dz-remove="">
                         <i class="dripicons-cross"></i>
                         </a>
                         </div>
                         </div>
                         </div>`;
-                        }
+                }
 
                 listImages.append(html);
 
