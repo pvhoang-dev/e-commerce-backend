@@ -85,25 +85,6 @@ Route::prefix('admin')->group(function () {
     Route::delete('categories/delete/{id}', [CategoryController::class, 'delete'])
         ->name('admin.categories.delete');
 
-    #Banners
-    Route::get('banners', [BannerController::class, 'index'])
-        ->name('admin.banners.index');
-
-    Route::get('banners/create', [BannerController::class, 'create'])
-        ->name('admin.banners.create');
-
-    Route::post('banners/create', [BannerController::class, 'store'])
-        ->name('admin.banners.store');
-
-    Route::get('banners/edit/{id}', [BannerController::class, 'show'])
-        ->name('admin.banners.show');
-
-    Route::post('banners/update/{id}', [BannerController::class, 'update'])
-        ->name('admin.banners.update');
-
-    Route::get('banners/delete/{id}', [BannerController::class, 'delete'])
-        ->name('admin.banners.delete');
-
     #Products
     Route::get('/products', [ProductController::class, 'index'])
         ->name('admin.products.index');
@@ -114,8 +95,8 @@ Route::prefix('admin')->group(function () {
     Route::post('/products/create', [ProductController::class, 'store'])
         ->name('admin.products.store');
 
-    Route::get('/products/edit/{id}', [ProductController::class, 'show'])
-        ->name('admin.products.show');
+    Route::get('/products/edit/{id}', [ProductController::class, 'edit'])
+        ->name('admin.products.edit');
 
     Route::post('/products/edit/{id}', [ProductController::class, 'update'])
         ->name('admin.products.update');
@@ -144,6 +125,25 @@ Route::prefix('admin')->group(function () {
 
     Route::get('ajax/attribute-value', [App\Http\Controllers\AjaxController::class, 'getAttributeValue'])
         ->name('admin.ajaxGetAttributeValue');
+
+    #Banners
+    Route::get('banners', [BannerController::class, 'index'])
+        ->name('admin.banners.index');
+
+    Route::get('banners/create', [BannerController::class, 'create'])
+        ->name('admin.banners.create');
+
+    Route::post('banners/create', [BannerController::class, 'store'])
+        ->name('admin.banners.store');
+
+    Route::get('banners/edit/{id}', [BannerController::class, 'show'])
+        ->name('admin.banners.show');
+
+    Route::post('banners/update/{id}', [BannerController::class, 'update'])
+        ->name('admin.banners.update');
+
+    Route::get('banners/delete/{id}', [BannerController::class, 'delete'])
+        ->name('admin.banners.delete');
 });
 
 

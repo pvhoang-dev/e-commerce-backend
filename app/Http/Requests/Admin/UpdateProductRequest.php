@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Models\Product;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 class UpdateProductRequest extends FormRequest
 {
@@ -11,7 +13,19 @@ class UpdateProductRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
+    }
+
+    /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'slug' => Str::slug($this->name),
+            'status' => 1,
+            'sku' => 'N&H' . Str::upper(Str::random(10)),
+        ]);
     }
 
     /**
@@ -21,8 +35,8 @@ class UpdateProductRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        $id = $this->route('id') ?? null;
+
+        return Product::getValidationRules($id);
     }
 }

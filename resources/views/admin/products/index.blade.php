@@ -58,7 +58,7 @@
                                 </td>
                                 <td>
                                     <div class='btn-group'>
-                                        <a href="{{ route('admin.products.show', [$product->id]) }}" class="action-icon">
+                                        <a href="{{ route('admin.products.edit', [$product->id]) }}" class="action-icon">
                                             <i class="mdi mdi-pencil"></i></a>
                                         <a class="action-icon delete"
                                             href="{{ route('admin.products.delete', ['id' => $product->id]) }}">

@@ -16,13 +16,19 @@
                     <div class="form-group col-sm-6">
                         <label for="pro_name">Name</label>
                         <input type="text" value="{{ $product->name }}" name="name" id="pro_name"
-                            class="form-control">
+                               class="form-control">
+                        @if ($errors->has('name'))
+                            <span class="text-danger">{{ $errors->first('name') }}</span>
+                        @endif
                     </div>
 
                     <div class="form-group col-sm-6">
                         <label for="qty">Quantity</label>
                         <input type="number" value="{{ $product->qty }}" name="qty" id="qty"
-                            class="form-control">
+                               class="form-control">
+                        @if ($errors->has('qty'))
+                            <span class="text-danger">{{ $errors->first('qty') }}</span>
+                        @endif
                     </div>
 
                     <div class="form-group col-sm-6">
@@ -30,34 +36,46 @@
                         <select class="form-control select2" name="category_id" id="category_id" data-toggle="select2">
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}"
-                                    {{ $product->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}
+                                        {{ $product->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}
                                 </option>
                             @endforeach
+                            @if ($errors->has('category_id'))
+                                <span class="text-danger">{{ $errors->first('category_id') }}</span>
+                            @endif
                         </select>
                     </div>
 
                     <div class="form-group col-sm-6">
                         <label for="plv_1">Plv_1</label>
                         <input type="number" value="{{ $product->plv_1 }}" name="plv_1" id="plv_1"
-                            class="form-control">
+                               class="form-control">
+                        @if ($errors->has('plv_1'))
+                            <span class="text-danger">{{ $errors->first('plv_1') }}</span>
+                        @endif
                     </div>
 
                     <div class="form-group col-sm-6">
                         <label for="plv_2">Plv_2</label>
                         <input type="number" value="{{ $product->plv_2 }}" name="plv_2" id="plv_2"
-                            class="form-control">
+                               class="form-control">
+                        @if ($errors->has('plv_2'))
+                            <span class="text-danger">{{ $errors->first('plv_2') }}</span>
+                        @endif
                     </div>
 
                     <div class="form-group col-sm-6">
                         <label for="plv_3">Plv_3</label>
                         <input type="number" value="{{ $product->plv_3 }}" name="plv_3" id="plv_3"
-                            class="form-control">
+                               class="form-control">
+                        @if ($errors->has('plv_3'))
+                            <span class="text-danger">{{ $errors->first('plv_3') }}</span>
+                        @endif
                     </div>
 
                     <div class="form-group col-sm-12">
                         <label for="short_desc">Description</label>
                         <input type="text" value="{{ $product->short_description }}" name="short_description"
-                            id="short_desc" class="form-control">
+                               id="short_desc" class="form-control">
                     </div>
 
                     <div class="form-group col-12">
@@ -87,13 +105,13 @@
 
     @if ($product->images->count())
         <div class="row">
-        @foreach ($product->images as $img)
-            <div class="col">
-                <img src="{{ route('file.show', $img->file_id) }}" alt="post-img"
-                    class="rounded mr-1 mb-3 mb-sm-0 img-fluid">
-            </div>
-        @endforeach
-    </div>
+            @foreach ($product->images as $img)
+                <div class="col">
+                    <img src="{{ route('file.show', $img->file_id) }}" alt="post-img"
+                         class="rounded mr-1 mb-3 mb-sm-0 img-fluid">
+                </div>
+            @endforeach
+        </div>
     @endif
 
     <div class="row">
@@ -102,7 +120,7 @@
                 <div class="page-title d-flex justify-content-between align-items-center">
                     Product Variant
                     <a class="btn btn-primary float-right align-items-center"
-                        href="{{ route('admin.product_variants.create', ['product_id' => $product->id]) }}">
+                       href="{{ route('admin.product_variants.create', ['product_id' => $product->id]) }}">
                         Add New
                     </a>
                 </div>
@@ -117,55 +135,55 @@
                     <div class="table-responsive users-table">
                         <table class="table table-centered mb-0 " id="product-variants-table">
                             <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th class="d-none d-lg-table-cell">Slug</th>
-                                    <th class="d-none d-sm-table-cell">Qty</th>
-                                    <th class="d-none d-sm-table-cell">Plv 1</th>
-                                    <th class="d-none d-sm-table-cell">Plv 2</th>
-                                    <th class="d-none d-sm-table-cell">Plv 3</th>
-                                    <th class="d-none d-lg-table-cell">Sku</th>
-                                    <th>Status</th>
-                                    <th colspan="3">Action</th>
-                                </tr>
+                            <tr>
+                                <th>Name</th>
+                                <th class="d-none d-lg-table-cell">Slug</th>
+                                <th class="d-none d-sm-table-cell">Qty</th>
+                                <th class="d-none d-sm-table-cell">Plv 1</th>
+                                <th class="d-none d-sm-table-cell">Plv 2</th>
+                                <th class="d-none d-sm-table-cell">Plv 3</th>
+                                <th class="d-none d-lg-table-cell">Sku</th>
+                                <th>Status</th>
+                                <th colspan="3">Action</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                @foreach ($productVariants as $productVariant)
-                                    <tr>
-                                        <td>{{ $productVariant->name }}</td>
-                                        <td class="d-none d-lg-table-cell">{{ $productVariant->slug }}</td>
-                                        <td class="d-none d-sm-table-cell">
-                                            <h4><span class="badge badge-primary">{{ $productVariant->qty }}</span>
-                                            </h4>
-                                        </td>
-                                        <td class="d-none d-sm-table-cell">{{ $productVariant->plv_1 }}</td>
-                                        <td class="d-none d-sm-table-cell">{{ $productVariant->plv_2 }}</td>
-                                        <td class="d-none d-sm-table-cell">{{ $productVariant->plv_3 }}</td>
-                                        <td class="d-none d-lg-table-cell">{{ $productVariant->sku }}</td>
-                                        <td>
-                                            <div>
-                                                <input class="updateStatus" type="checkbox"
-                                                    id="product-variants-{{ $productVariant->id }}"
-                                                    object="product-variants" object_id="{{ $productVariant->id }}"
-                                                    status="{{ $productVariant->status }}"
-                                                    @if ($productVariant->status == 1) checked @endif
-                                                    data-switch="success" />
-                                                <label for="product-variants-{{ $productVariant->id }}"
-                                                    data-on-label="Yes" data-off-label="No" class="mb-0 d-block"></label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class='btn-group'>
-                                                <a href="{{ route('admin.product_variants.show', [$productVariant->id]) }}"
-                                                    class="action-icon"> <i class="mdi mdi-eye"></i></a>
-                                                <a class="action-icon delete"
-                                                    href="{{ route('admin.product_variants.delete', ['id' => $product->id]) }}">
-                                                    <i class="mdi mdi-delete"></i>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                            @foreach ($productVariants as $productVariant)
+                                <tr>
+                                    <td>{{ $productVariant->name }}</td>
+                                    <td class="d-none d-lg-table-cell">{{ $productVariant->slug }}</td>
+                                    <td class="d-none d-sm-table-cell">
+                                        <h4><span class="badge badge-primary">{{ $productVariant->qty }}</span>
+                                        </h4>
+                                    </td>
+                                    <td class="d-none d-sm-table-cell">{{ $productVariant->plv_1 }}</td>
+                                    <td class="d-none d-sm-table-cell">{{ $productVariant->plv_2 }}</td>
+                                    <td class="d-none d-sm-table-cell">{{ $productVariant->plv_3 }}</td>
+                                    <td class="d-none d-lg-table-cell">{{ $productVariant->sku }}</td>
+                                    <td>
+                                        <div>
+                                            <input class="updateStatus" type="checkbox"
+                                                   id="product-variants-{{ $productVariant->id }}"
+                                                   object="product-variants" object_id="{{ $productVariant->id }}"
+                                                   status="{{ $productVariant->status }}"
+                                                   @if ($productVariant->status == 1) checked @endif
+                                                   data-switch="success"/>
+                                            <label for="product-variants-{{ $productVariant->id }}"
+                                                   data-on-label="Yes" data-off-label="No" class="mb-0 d-block"></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class='btn-group'>
+                                            <a href="{{ route('admin.product_variants.show', [$productVariant->id]) }}"
+                                               class="action-icon"> <i class="mdi mdi-eye"></i></a>
+                                            <a class="action-icon delete"
+                                               href="{{ route('admin.product_variants.delete', ['id' => $product->id]) }}">
+                                                <i class="mdi mdi-delete"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -184,7 +202,11 @@
 @endsection
 @push('js')
     <script>
-        $('#uploadFile').change(function() {
+        @if ($errors->has('message'))
+        alert("{{ implode('\n', $errors->get('message')) }}");
+        @endif
+
+        $('#uploadFile').change(function () {
             let formData = new FormData();
 
             let files = $(this)[0].files;
@@ -204,7 +226,7 @@
                 const listImages = $('.dropzone-previews .card');
                 for (let i = 0; i < files.length; i++) {
                     var file = files[i];
-                    
+
                     let urlImage = "{{ route('file.draft.show', ['file_id' => 'file_id']) }}";
                     urlImage = urlImage.replace('file_id', file.id);
 
@@ -223,13 +245,13 @@
                                         </div>
                                         <div class="col-auto">
                                             <!-- Button -->
-                                            <a href="${urlDeleteImage}" class="btn btn-link btn-lg text-muted" data-dz-remove="">
-                                                <i class="dripicons-cross"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>`;
-                }
+                        <a href="${urlDeleteImage}" class="btn btn-link btn-lg text-muted" data-dz-remove="">
+                        <i class="dripicons-cross"></i>
+                        </a>
+                        </div>
+                        </div>
+                        </div>`;
+                        }
 
                 listImages.append(html);
 
