@@ -20,7 +20,6 @@ class UpdateCategoryRequest extends FormRequest
     {
         $this->merge([
             'slug' => Str::slug($this->name),
-            'status' => 1,
         ]);
     }
 

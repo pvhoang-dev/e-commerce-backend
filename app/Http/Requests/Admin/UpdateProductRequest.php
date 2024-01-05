@@ -23,8 +23,6 @@ class UpdateProductRequest extends FormRequest
     {
         $this->merge([
             'slug' => Str::slug($this->name),
-            'status' => 1,
-            'sku' => 'N&H' . Str::upper(Str::random(10)),
         ]);
     }
 
