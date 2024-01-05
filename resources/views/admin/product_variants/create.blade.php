@@ -2,7 +2,7 @@
 
 @section('title')
     Add Product Variant
-    <a href="{{ route('admin.products.show', request()->product_id) }}" class="btn btn-outline-info float-right">
+    <a href="{{ route('admin.products.edit', request()->product_id) }}" class="btn btn-outline-info float-right">
         <i class="uil uil-corner-up-left-alt"></i> Back
     </a>
 @endsection
@@ -21,40 +21,44 @@
 
                     <div class="form-group col-sm-6">
                         <label for="name">Name</label>
-                        <input type="text" name="name" id="name" class="form-control">
+                        <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}">
+                        @if ($errors->has('name'))
+                            <span class="text-danger">{{ $errors->first('name') }}</span>
+                        @endif
                     </div>
 
                     <div class="form-group col-sm-6">
                         <label for="plv_1">Plv 1</label>
-                        <input type="number" name="plv_1" id="plv_1" class="form-control">
+                        <input type="number" name="plv_1" id="plv_1" class="form-control" value="{{ old('plv_1') }}">
+                        @if ($errors->has('plv_1'))
+                            <span class="text-danger">{{ $errors->first('plv_1') }}</span>
+                        @endif
                     </div>
 
                      <div class="form-group col-sm-6">
                         <label for="plv_2">Plv 2</label>
-                        <input type="number" name="plv_2" id="plv_2" class="form-control">
+                        <input type="number" name="plv_2" id="plv_2" class="form-control" value="{{ old('plv_2') }}">
+                         @if ($errors->has('plv_2'))
+                             <span class="text-danger">{{ $errors->first('plv_2') }}</span>
+                         @endif
                     </div>
 
                      <div class="form-group col-sm-6">
                         <label for="plv_3">Plv 3</label>
-                        <input type="number" name="plv_3" id="plv_3" class="form-control">
+                        <input type="number" name="plv_3" id="plv_3" class="form-control" value="{{ old('plv_3') }}">
+                         @if ($errors->has('plv_3'))
+                             <span class="text-danger">{{ $errors->first('plv_3') }}</span>
+                         @endif
                     </div>
                     <div class="form-group col-sm-6">
                          <label for="qty">Quantity</label>
-                        <input type="number" name="qty" id="qty" class="form-control">
+                        <input type="number" name="qty" id="qty" class="form-control" value="{{ old('qty') }}">
+                        @if ($errors->has('qty'))
+                            <span class="text-danger">{{ $errors->first('qty') }}</span>
+                        @endif
                     </div>
 
                     <div class="form-group col-sm-12"></div>
-
-                    {{-- Edit Product Variant --}}
-                    @if (isset($productVariant->productAttributeValue))
-                        @foreach ($productVariant->productAttributeValue as $attrValue)
-                            <div class="form-group col-sm-6">
-                                <label>{{ $attrValue->attributeValue->attribute->name }}:</label>
-                                <input type="text" class="form-control" disabled
-                                    value="{{ $attrValue->attributeValue->value }}">
-                            </div>
-                        @endforeach
-                    @endif
 
                     {{-- Create Product Variant --}}
                     @if (empty($variantAttribute))

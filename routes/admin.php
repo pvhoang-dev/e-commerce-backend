@@ -123,6 +123,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/product-variants/delete/{id}', [ProductVariantController::class, 'delete'])
         ->name('admin.product_variants.delete');
 
+    #Ajax
     Route::get('ajax/attribute-value', [App\Http\Controllers\AjaxController::class, 'getAttributeValue'])
         ->name('admin.ajaxGetAttributeValue');
 

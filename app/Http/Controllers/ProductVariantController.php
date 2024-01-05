@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Admin\CreateProductVariantRequest;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Product;
@@ -16,6 +17,10 @@ class ProductVariantController extends Controller
     {
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function create(Request $request)
     {
         $attributes = Attribute::get();
@@ -49,22 +54,20 @@ class ProductVariantController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    /**
+     * @param CreateProductVariantRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(CreateProductVariantRequest $request)
     {
         $input = $request->all();
 
         $product = Product::find($input["product_id"]);
 
-        $input['slug'] = Str::slug($input['name'], '-');
-
-        $input['sku'] = Str::upper(Str::random(6));
-
-        $input['status'] = 1;
-
         $result = $this->variantAttributeValidate(
             $input["product_id"],
             $input["attribute_id_1"],
-            $input["attribute_value_id_1"],
+            $input["attribute_value_id_1"] ?? 0,
             $input["attribute_id_2"] ?? 0,
             $input["attribute_value_id_2"] ?? 0
         );
@@ -83,11 +86,11 @@ class ProductVariantController extends Controller
             [$input["attribute_value_id_1"], $input["attribute_value_id_2"] ?? 0]
         );
 
-
         $product->qty += $variant->qty;
+
         $product->save();
 
-        return redirect()->route('admin.products.show', ['id' => $input["product_id"]]);
+        return redirect()->route('admin.products.edit', ['id' => $input["product_id"]]);
     }
 
     public function show($id)
@@ -112,7 +115,7 @@ class ProductVariantController extends Controller
 
     public function update()
     {
-        
+
     }
 
     public function delete()
@@ -148,7 +151,7 @@ class ProductVariantController extends Controller
      * @param int $attrValue2
      * @return array
      */
-    public function variantAttributeValidate($product_id, $attr1, $attrValue1, $attr2 = 0, $attrValue2 = 0)
+    public function variantAttributeValidate($product_id, $attr1, $attrValue1 = 0, $attr2 = 0, $attrValue2 = 0)
     {
         if ($attr1 == $attr2)
             return ["status" => false, "message" => "Duplicate Attribute"];

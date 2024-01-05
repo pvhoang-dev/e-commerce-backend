@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Validation\Rule;
 
 class ProductVariant extends Model
 {
@@ -20,6 +21,30 @@ class ProductVariant extends Model
         'plv_3',
         'status'
     ];
+
+    public static function getValidationRules($id = null)
+    {
+        return [
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('product_variants', 'name')->ignore($id),
+            ],
+            'qty' => [
+                'required',
+            ],
+            'plv_1' => [
+                'required',
+            ],
+            'plv_2' => [
+                'required',
+            ],
+            'plv_3' => [
+                'required',
+            ],
+        ];
+    }
 
     public function product()
     {
