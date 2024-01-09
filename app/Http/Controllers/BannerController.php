@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 
 class BannerController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function index()
     {
         $banners = Banner::all();
@@ -18,11 +21,18 @@ class BannerController extends Controller
         ]);
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function create()
     {
         return view('admin.banners.create');
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request)
     {
         $input = $request->all();
@@ -44,6 +54,10 @@ class BannerController extends Controller
         return redirect()->route('admin.banners.index');
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function show($id)
     {
         $banner = Banner::find($id);
@@ -57,6 +71,11 @@ class BannerController extends Controller
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(Request $request, $id)
     {
         $input = $request->all();
