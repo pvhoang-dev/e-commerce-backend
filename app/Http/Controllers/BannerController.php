@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Admin\CreateBannerRequest;
 use App\Models\Banner;
 use App\Services\File\MakeFinalFileService;
 use Illuminate\Support\Str;
@@ -33,13 +34,9 @@ class BannerController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(CreateBannerRequest $request)
     {
         $input = $request->all();
-
-        $input['slug'] = Str::slug($request->input('title'), '-');
-
-        $input['status'] = 1;
 
         if ($request->has('file_id')) {
             $response = MakeFinalFileService::convertDraftToFinal($input['file_id']);
@@ -47,6 +44,8 @@ class BannerController extends Controller
             if (!$response["status"]) {
                 return redirect()->back()->withErrors(["message" => "Upload file errors!"]);
             }
+
+            $input['file_id'] = $response["id"];
         }
 
         Banner::create($input);

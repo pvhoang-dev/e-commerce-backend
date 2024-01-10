@@ -19,6 +19,9 @@
                         @if ($errors->has('title'))
                             <span class="text-danger">{{ $errors->first('title') }}</span>
                         @endif
+                        @if ($errors->has('slug'))
+                            <span class="text-danger">{{ $errors->first('slug') }}</span>
+                        @endif
                     </div>
                     <div class="form-group col-6">
                         <label for="banner_po">Position</label>
@@ -27,7 +30,13 @@
                             <span class="text-danger">{{ $errors->first('position') }}</span>
                         @endif
                     </div>
-
+                    <div class="form-group col-12">
+                        <label for="banner_url">Url</label>
+                        <input type="text" name="url" id="banner_url" class="form-control">
+                        @if ($errors->has('url'))
+                            <span class="text-danger">{{ $errors->first('url') }}</span>
+                        @endif
+                    </div>
                     <div class="form-group col-12">
                         <div class="dropzone">
                             <div class="dz-message needsclick">
@@ -38,6 +47,9 @@
                                 </label>
                             </div>
                         </div>
+                        @if ($errors->has('file_id'))
+                            <span class="text-danger">{{ $errors->first('file_id') }}</span>
+                        @endif
                         <!-- Preview -->
                         <div class="dropzone-previews mt-3">
                             <div class="card mt-1 mb-0 shadow-none border dz-processing dz-error dz-complete">
