@@ -90,10 +90,10 @@ class BannerController extends Controller
             $response = MakeFinalFileService::convertDraftToFinal($input['file_id']);
 
             if (!$response["status"]) {
-                return redirect()->back()->withErrors(["message" => "Upload file errors!"]);
+                $input['file_id'] = $banner->file_id;
+            } else {
+                $input['file_id'] = $response["id"];
             }
-
-            $input['file_id'] = $response["id"];
         }
 
         $banner->update($input);
