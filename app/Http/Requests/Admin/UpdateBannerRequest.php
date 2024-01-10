@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Models\Banner;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 class UpdateBannerRequest extends FormRequest
 {
@@ -14,6 +16,13 @@ class UpdateBannerRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'slug' => Str::slug($this->title),
+        ]);
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -21,8 +30,18 @@ class UpdateBannerRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        $id = $this->route('id') ?? null;
+
+        return Banner::getValidationRules($id);
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return Banner::messages();
     }
 }

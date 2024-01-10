@@ -53,6 +53,6 @@ class Banner extends Model
 
     public function file()
     {
-        return $this->belongsTo(File::class, "id", "file_id");
+        return $this->hasOne(File::class, "id", "file_id");
     }
 }

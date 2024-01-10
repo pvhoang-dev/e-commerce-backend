@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Admin\CreateBannerRequest;
+use App\Http\Requests\Admin\UpdateBannerRequest;
 use App\Models\Banner;
 use App\Services\File\MakeFinalFileService;
 use Illuminate\Support\Str;
@@ -71,15 +72,19 @@ class BannerController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param UpdateBannerRequest $request
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(UpdateBannerRequest $request, $id)
     {
         $input = $request->all();
 
-        $input['slug'] = Str::slug($request->input('title'), '-');
+        $banner = Banner::find($id);
+
+        if (!$banner) {
+            dd(404);
+        }
 
         if ($request->has('file_id')) {
             $response = MakeFinalFileService::convertDraftToFinal($input['file_id']);
@@ -87,9 +92,9 @@ class BannerController extends Controller
             if (!$response["status"]) {
                 return redirect()->back()->withErrors(["message" => "Upload file errors!"]);
             }
-        }
 
-        $banner = Banner::find($id);
+            $input['file_id'] = $response["id"];
+        }
 
         $banner->update($input);
 
