@@ -43,17 +43,15 @@ class CategoryController extends Controller
     {
         $input = $request->all();
 
-        // dd($input);
-
         if ($request->has('file_id')) {
             $response = MakeFinalFileService::convertDraftToFinal($input['file_id']);
 
             if (!$response["status"]) {
                 return redirect()->back()->withErrors(["message" => "Upload file errors!"]);
             }
-        }
 
-        $input['file_id'] = $response["id"];
+            $input['file_id'] = $response["id"];
+        }
 
         Category::create($input);
 
