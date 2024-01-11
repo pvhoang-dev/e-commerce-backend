@@ -13,11 +13,11 @@
             @csrf
             <div class="card-body">
                 <div class="row">
-                    <div class="form-group col-6">
-                        <label for="brand_name">Title</label>
-                        <input type="text" name="title" id="brand_name" class="form-control">
-                        @if ($errors->has('title'))
-                            <span class="text-danger">{{ $errors->first('title') }}</span>
+                    <div class="form-group col-12">
+                        <label for="brand_name">Name</label>
+                        <input type="text" name="name" id="brand_name" class="form-control">
+                        @if ($errors->has('name'))
+                            <span class="text-danger">{{ $errors->first('name') }}</span>
                         @endif
                         @if ($errors->has('slug'))
                             <span class="text-danger">{{ $errors->first('slug') }}</span>

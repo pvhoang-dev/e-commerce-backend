@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Models\Brand;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 class CreateBrandRequest extends FormRequest
 {
@@ -11,7 +13,17 @@ class CreateBrandRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
+    }
+
+    /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'slug' => Str::slug($this->name),
+        ]);
     }
 
     /**
@@ -21,8 +33,6 @@ class CreateBrandRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        return Brand::getValidationRules();
     }
 }
