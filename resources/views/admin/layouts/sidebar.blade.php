@@ -15,36 +15,43 @@
 
         <li class="side-nav-item">
             <a href="{{route('admin.attributes.index')}}" class="side-nav-link">
-                <i class="dripicons-view-thumb"></i>
+                <i class="dripicons-chevron-right"></i>
                 <span>Attributes</span>
             </a>
         </li>
 
         <li class="side-nav-item">
             <a href="{{route('admin.attribute_values.index')}}" class="side-nav-link">
-                <i class="dripicons-view-thumb"></i>
+                <i class="dripicons-chevron-right"></i>
                 <span>Attribute Values</span>
             </a>
         </li>
 
          <li class="side-nav-item">
             <a href="{{route('admin.categories.index')}}" class="side-nav-link">
-                <i class="dripicons-view-thumb"></i>
+                <i class="dripicons-chevron-right"></i>
                 <span>Categories</span>
             </a>
         </li>
 
          <li class="side-nav-item">
             <a href="{{route('admin.products.index')}}" class="side-nav-link">
-                <i class="dripicons-view-thumb"></i>
+                <i class="dripicons-chevron-right"></i>
                 <span>Products</span>
             </a>
         </li>
 
         <li class="side-nav-item">
             <a href="{{route('admin.banners.index')}}" class="side-nav-link">
-                <i class=" dripicons-photo"></i>
+                <i class="dripicons-chevron-right"></i>
                 <span>Banners</span>
+            </a>
+        </li>
+
+        <li class="side-nav-item">
+            <a href="{{route('admin.brands.index')}}" class="side-nav-link">
+                <i class="dripicons-chevron-right"></i>
+                <span>Brands</span>
             </a>
         </li>
     </ul>

@@ -35,9 +35,9 @@
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : ''}}>{{ $category->name }}</option>
                             @endforeach
-                                @if ($errors->has('category_id'))
-                                    <span class="text-danger">{{ $errors->first('category_id') }}</span>
-                                @endif
+                            @if ($errors->has('category_id'))
+                                <span class="text-danger">{{ $errors->first('category_id') }}</span>
+                            @endif
                         </select>
                     </div>
 
@@ -70,6 +70,10 @@
                         <input type="text" name="short_description" id="short_desc" class="form-control">
                     </div>
 
+                    <div class="col-sm-12 mt-2 mb-2">
+
+                    </div>
+
                     <div class="form-group col-12">
                         <div class="dropzone">
                             <div class="dz-message needsclick">
@@ -94,10 +98,33 @@
             </div>
         </form>
     </div>
+    <div id="toolbar-container"></div>
+
+    <!-- This container will become the editable. -->
+    <div id="editor">
+        <p>This is the initial editor content.</p>
+    </div>
 @endsection
 @push('js')
+    <!-- Include CKEditor -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/decoupled-document/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/decoupled-document/plugins/image/ckeditor.js"></script>
+
+    {{--<script src="{{ asset('assets/vendor/ckeditor/ckeditor.js') }}"></script>--}}
     <script>
-        $('#uploadFile').change(function() {
+        DecoupledEditor
+            .create(document.querySelector('#editor'))
+            .then(editor => {
+                const toolbarContainer = document.querySelector('#toolbar-container');
+
+                toolbarContainer.appendChild(editor.ui.view.toolbar.element);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+    <script>
+        $('#uploadFile').change(function () {
             let formData = new FormData();
 
             let files = $(this)[0].files;
@@ -141,7 +168,8 @@
                                         </div>
                                     </div>
                                 </div>`;
-                };
+                }
+                ;
 
                 listImages.append(html);
 

@@ -78,6 +78,10 @@
                                id="short_desc" class="form-control">
                     </div>
 
+                    <div class="form-group col-sm-12">
+                        <div id="editor"></div>
+                    </div>
+
                     <div class="form-group col-12">
                         <div class="dropzone">
                             <div class="dz-message needsclick">
@@ -205,6 +209,15 @@
     </div>
 @endsection
 @push('js')
+    <!-- Include CKEditor -->
+    <script src="{{ asset('assets/vendor/ckeditor/ckeditor.js') }}"></script>
+    <script>
+        ClassicEditor
+            .create( document.querySelector( '#editor' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
     <script>
         @if(session('error'))
         // Display an alert with the error message
