@@ -11,18 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_variants', function (Blueprint $table) {
+        Schema::create('product_promotions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("product_id");
-            $table->string("name", 250);
-            $table->string("slug", 250)->unique();
-            $table->string("sku", 50)->unique();
-            $table->integer("qty")->default(0);
-            $table->integer("price");
-            $table->tinyInteger("status")->index("idx_product_variants_status")->default(1);
+            $table->unsignedBigInteger("product_variant_id");
+            $table->string("product_variant_sku", 50);
+            $table->integer("discount_percent");
+            $table->tinyInteger("status")->index("idx_product_promotions_status");
+            $table->integer("start_date");
+            $table->integer("end_date");
             $table->timestamps();
 
             $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('product_variant_id')->references('id')->on('product_variants');
         });
     }
 
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_variants');
+        Schema::dropIfExists('product_promotions');
     }
 };

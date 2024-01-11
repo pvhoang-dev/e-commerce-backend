@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->integer('position');
             $table->unsignedBigInteger('file_id');
-            $table->tinyInteger('status')->index("idx_categories_status");
+            $table->string('url')->unique();
+            $table->tinyInteger('status')->index("idx_banners_status");
             $table->timestamps();
         });
     }
