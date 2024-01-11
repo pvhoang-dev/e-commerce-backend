@@ -100,4 +100,28 @@ class BrandController extends Controller
 
         return redirect()->route('admin.brands.index');
     }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function delete($id)
+    {
+        try {
+            $brand = Brand::findOrFail($id);
+
+            $brand->delete();
+
+            return redirect()->route('admin.brands.index');
+        } catch (\Exception $e) {
+            if ($e instanceof QueryException && $e->errorInfo[1] == 1451) {
+                // Foreign key constraint violation
+                return redirect()->route('admin.brands.index')
+                    ->with('error', 'Cannot delete the brand. Something is wrong !!!');
+            }
+
+            // Handle other types of exceptions or rethrow the exception
+            dd($e);
+        }
+    }
 }
