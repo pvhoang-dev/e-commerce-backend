@@ -3,6 +3,7 @@
 use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\AttributeValueController;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\HomeController;
@@ -141,6 +142,25 @@ Route::prefix('admin')->group(function () {
 
     Route::delete('banners/delete/{id}', [BannerController::class, 'delete'])
         ->name('admin.banners.delete');
+
+    #Brands
+    Route::get('brands', [BrandController::class, 'index'])
+        ->name('admin.brands.index');
+
+    Route::get('brands/create', [BrandController::class, 'create'])
+        ->name('admin.brands.create');
+
+    Route::post('brands/create', [BrandController::class, 'store'])
+        ->name('admin.brands.store');
+
+    Route::get('brands/edit/{id}', [BrandController::class, 'edit'])
+        ->name('admin.brands.edit');
+
+    Route::post('brands/update/{id}', [BrandController::class, 'update'])
+        ->name('admin.brands.update');
+
+    Route::delete('brands/delete/{id}', [BrandController::class, 'delete'])
+        ->name('admin.brands.delete');
 
     #Ajax
     Route::get('ajax/attribute-value', [App\Http\Controllers\AjaxController::class, 'getAttributeValue'])
