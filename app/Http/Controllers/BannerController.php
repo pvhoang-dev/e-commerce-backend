@@ -6,6 +6,7 @@ use App\Http\Requests\Admin\CreateBannerRequest;
 use App\Http\Requests\Admin\UpdateBannerRequest;
 use App\Models\Banner;
 use App\Services\File\MakeFinalFileService;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
@@ -58,7 +59,7 @@ class BannerController extends Controller
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show($id)
+    public function edit($id)
     {
         $banner = Banner::find($id);
 
@@ -101,7 +102,27 @@ class BannerController extends Controller
         return redirect()->route('admin.banners.index');
     }
 
-    public function delete()
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function delete($id)
     {
+        try {
+            $banner = Banner::findOrFail($id);
+
+            $banner->delete();
+
+            return redirect()->route('admin.banners.index');
+        } catch (\Exception $e) {
+            if ($e instanceof QueryException && $e->errorInfo[1] == 1451) {
+                // Foreign key constraint violation
+                return redirect()->route('admin.banners.index')
+                    ->with('error', 'Cannot delete the banner. Something is wrong !!!');
+            }
+
+            // Handle other types of exceptions or rethrow the exception
+            dd($e);
+        }
     }
 }

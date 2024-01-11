@@ -30,16 +30,20 @@
                                 <td><img width="200" src="{{route('file.show', ['file_id' => $banner -> file_id])}}" alt=""></td>
                                 <td>{{$banner -> position}}</td>
                                 <td>
-                                    <div class='btn-group'>
-                                        <a class="action-icon"
-                                           href="{{ route('admin.banners.show', ['id' => $banner->id]) }}">
-                                            <i class="mdi mdi-pencil"></i>
-                                        </a>
-                                        <a class="action-icon delete"
-                                           href="{{ route('admin.banners.delete', ['id' => $banner->id]) }}">
-                                            <i class="mdi mdi-delete"></i>
-                                        </a>
-                                    </div>
+                                    <form action="{{ route('admin.banners.delete', $banner->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <div class='btn-group'>
+                                            <a class="action-icon"
+                                               href="{{ route('admin.banners.edit', ['id' => $banner->id]) }}">
+                                                <i class="mdi mdi-pencil"></i>
+                                            </a>
+                                            <button type="submit" class="action-icon delete border-0 bg-transparent"
+                                                    onclick="return confirm('Are you sure?')">
+                                                <i class="mdi mdi-delete"></i>
+                                            </button>
+                                        </div>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach

@@ -123,10 +123,6 @@ Route::prefix('admin')->group(function () {
     Route::delete('/product-variants/delete/{id}', [ProductVariantController::class, 'delete'])
         ->name('admin.product_variants.delete');
 
-    #Ajax
-    Route::get('ajax/attribute-value', [App\Http\Controllers\AjaxController::class, 'getAttributeValue'])
-        ->name('admin.ajaxGetAttributeValue');
-
     #Banners
     Route::get('banners', [BannerController::class, 'index'])
         ->name('admin.banners.index');
@@ -137,14 +133,18 @@ Route::prefix('admin')->group(function () {
     Route::post('banners/create', [BannerController::class, 'store'])
         ->name('admin.banners.store');
 
-    Route::get('banners/edit/{id}', [BannerController::class, 'show'])
-        ->name('admin.banners.show');
+    Route::get('banners/edit/{id}', [BannerController::class, 'edit'])
+        ->name('admin.banners.edit');
 
     Route::post('banners/update/{id}', [BannerController::class, 'update'])
         ->name('admin.banners.update');
 
-    Route::get('banners/delete/{id}', [BannerController::class, 'delete'])
+    Route::delete('banners/delete/{id}', [BannerController::class, 'delete'])
         ->name('admin.banners.delete');
+
+    #Ajax
+    Route::get('ajax/attribute-value', [App\Http\Controllers\AjaxController::class, 'getAttributeValue'])
+        ->name('admin.ajaxGetAttributeValue');
 });
 
 
