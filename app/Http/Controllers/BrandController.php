@@ -53,4 +53,51 @@ class BrandController extends Controller
 
         return redirect()->route('admin.brands.index');
     }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function edit($id)
+    {
+        $brand = Brand::find($id);
+
+        if (!$brand) {
+            dd(404);
+        }
+
+        return view('admin.brands.edit', [
+            'brand' => $brand
+        ]);
+    }
+
+    /**
+     * @param UpdateBrandRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(UpdateBrandRequest $request, $id)
+    {
+        $input = $request->all();
+
+        $brand = Brand::find($id);
+
+        if (!$brand) {
+            dd(404);
+        }
+
+        if ($request->has('file_id')) {
+            $response = MakeFinalFileService::convertDraftToFinal($input['file_id']);
+
+            if (!$response["status"]) {
+                $input['file_id'] = $brand->file_id;
+            } else {
+                $input['file_id'] = $response["id"];
+            }
+        }
+
+        $brand->update($input);
+
+        return redirect()->route('admin.brands.index');
+    }
 }

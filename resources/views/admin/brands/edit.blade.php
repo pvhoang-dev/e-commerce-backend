@@ -22,12 +22,12 @@
             @csrf
             <div class="card-body">
                 <div class="row">
-                    <div class="form-group col-6">
-                        <label for="brand_title">Name</label>
-                        <input type="text" value="{{ $brand->title }}" name="title" id="brand_name"
+                    <div class="form-group col-12">
+                        <label for="brand_name">Name</label>
+                        <input type="text" value="{{ $brand->name }}" name="name" id="brand_name"
                                class="form-control">
-                        @if ($errors->has('title'))
-                            <span class="text-danger">{{ $errors->first('title') }}</span>
+                        @if ($errors->has('name'))
+                            <span class="text-danger">{{ $errors->first('name') }}</span>
                         @endif
                         @if ($errors->has('slug'))
                             <span class="text-danger">{{ $errors->first('slug') }}</span>
