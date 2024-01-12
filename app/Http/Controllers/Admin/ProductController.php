@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CreateProductRequest;
 use App\Http\Requests\Admin\UpdateProductRequest;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\File;
 use App\Models\Product;
@@ -38,8 +39,11 @@ class ProductController extends Controller
     {
         $categories = Category::all();
 
+        $brands = Category::all();
+
         return view('admin.products.create', [
-            'categories' => $categories
+            'categories' => $categories,
+            'brands' => $brands,
         ]);
     }
 
@@ -94,10 +98,13 @@ class ProductController extends Controller
 
         $categories = Category::get();
 
+        $brands = Brand::get();
+
         return view('admin.products.edit', [
             'product' => $product,
             'productVariants' => $productVariants,
-            'categories' => $categories
+            'categories' => $categories,
+            'brands' => $brands,
         ]);
     }
 
