@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\File;
 use App\Models\FileDraft;
-use App\Models\ProductImage;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 class FileController extends Controller

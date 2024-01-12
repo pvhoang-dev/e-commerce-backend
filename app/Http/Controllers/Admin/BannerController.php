@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CreateBannerRequest;
 use App\Http\Requests\Admin\UpdateBannerRequest;
 use App\Models\Banner;
 use App\Services\File\MakeFinalFileService;
 use Illuminate\Database\QueryException;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class BannerController extends Controller

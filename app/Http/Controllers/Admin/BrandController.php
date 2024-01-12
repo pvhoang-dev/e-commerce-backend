@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CreateBrandRequest;
 use App\Http\Requests\Admin\UpdateBrandRequest;
 use App\Models\Brand;

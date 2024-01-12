@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\FileDraft;
@@ -28,7 +29,7 @@ class UploadController extends Controller
                     'public/photos/original',
                     $file
                 );
-                
+
                 $fileImg = new FileDraft();
                 $fileImg->name = last(explode("/", $pathToImage));
                 $fileImg->mime_type = $file->getClientMimeType();

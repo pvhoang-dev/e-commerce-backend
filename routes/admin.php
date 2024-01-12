@@ -1,15 +1,15 @@
 <?php
 
-use App\Http\Controllers\AttributeController;
-use App\Http\Controllers\AttributeValueController;
-use App\Http\Controllers\BannerController;
-use App\Http\Controllers\BrandController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\FileController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProductVariantController;
-use App\Http\Controllers\UploadController;
+use App\Http\Controllers\Admin\AttributeController;
+use App\Http\Controllers\Admin\AttributeValueController;
+use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\FileController;
+use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ProductVariantController;
+use App\Http\Controllers\Admin\UploadController;
 use Illuminate\Support\Facades\Route;
 
 #admin routes
@@ -163,7 +163,7 @@ Route::prefix('admin')->group(function () {
         ->name('admin.brands.delete');
 
     #Ajax
-    Route::get('ajax/attribute-value', [App\Http\Controllers\AjaxController::class, 'getAttributeValue'])
+    Route::get('ajax/attribute-value', [App\Http\Controllers\Admin\AjaxController::class, 'getAttributeValue'])
         ->name('admin.ajaxGetAttributeValue');
 });
 

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CreateProductVariantRequest;
 use App\Http\Requests\Admin\UpdateProductVariantRequest;
 use App\Models\Attribute;

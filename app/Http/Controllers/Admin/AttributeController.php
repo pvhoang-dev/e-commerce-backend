@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CreateAttributeRequest;
 use App\Http\Requests\Admin\UpdateAttributeRequest;
 use App\Models\Attribute;
-use Illuminate\Support\Str;
 use Illuminate\Database\QueryException;
 
 class AttributeController extends Controller
