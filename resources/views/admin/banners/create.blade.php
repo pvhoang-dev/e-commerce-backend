@@ -9,13 +9,22 @@
 @endsection
 @section('content')
     <div class="card">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <form action="{{ route('admin.banners.store') }}" method="POST">
             @csrf
             <div class="card-body">
                 <div class="row">
                     <div class="form-group col-6">
-                        <label for="banner_name">Title</label>
-                        <input type="text" name="title" id="banner_name" class="form-control">
+                        <label>Title</label>
+                        <input type="text" name="title" value="{{ old('title') }}" class="form-control">
                         @if ($errors->has('title'))
                             <span class="text-danger">{{ $errors->first('title') }}</span>
                         @endif
@@ -25,14 +34,14 @@
                     </div>
                     <div class="form-group col-6">
                         <label for="banner_po">Position</label>
-                        <input type="number" name="position" id="banner_po" class="form-control">
+                        <input type="number" name="position" id="banner_po" value="{{ old('position') }}" class="form-control">
                         @if ($errors->has('position'))
                             <span class="text-danger">{{ $errors->first('position') }}</span>
                         @endif
                     </div>
                     <div class="form-group col-12">
                         <label for="banner_url">Url</label>
-                        <input type="text" name="url" id="banner_url" class="form-control">
+                        <input type="text" name="url" id="banner_url" value="{{ old('url') }}" class="form-control">
                         @if ($errors->has('url'))
                             <span class="text-danger">{{ $errors->first('url') }}</span>
                         @endif

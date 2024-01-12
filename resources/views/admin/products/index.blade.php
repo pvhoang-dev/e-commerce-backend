@@ -17,12 +17,10 @@
                     <tr>
                         <th>Name</th>
                         <th>Image</th>
-                        <th class="d-none d-lg-table-cell">Slug</th>
                         <th class="d-none d-sm-table-cell">Qty</th>
-                        <th class="d-none d-sm-table-cell">Plv 1</th>
-                        <th class="d-none d-sm-table-cell">Plv 2</th>
-                        <th class="d-none d-lg-table-cell">Plv 3</th>
+                        <th class="d-none d-sm-table-cell">Price</th>
                         <th class="d-none d-lg-table-cell">Category</th>
+                        <th class="d-none d-lg-table-cell">Brand</th>
                         <th>Status</th>
                         <th colspan="3">Action</th>
                     </tr>
@@ -39,14 +37,12 @@
                                     Chưa có ảnh
                                 @endif
                             </td>
-                            <td class="d-none d-lg-table-cell">{{ $product->slug }}</td>
                             <td class="d-none d-sm-table-cell">
                                 <h4><span class="badge badge-primary">{{ $product->qty }}</span></h4>
                             </td>
-                            <td class="d-none d-sm-table-cell">{{ $product->plv_1 }}</td>
-                            <td class="d-none d-sm-table-cell">{{ $product->plv_2 }}</td>
-                            <td class="d-none d-lg-table-cell">{{ $product->plv_3 }}</td>
+                            <td class="d-none d-lg-table-cell">{{ $product->price }}</td>
                             <td class="d-none d-lg-table-cell">{{ $product->category->name }}</td>
+                            <td class="d-none d-lg-table-cell">{{ $product->brand->name }}</td>
                             <td>
                                 <div>
                                     <input class="updateStatus" type="checkbox" id="product-{{ $product->id }}"

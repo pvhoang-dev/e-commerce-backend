@@ -36,9 +36,6 @@ class Product extends Model
                 'required',
                 Rule::unique('products', 'slug')->ignore($id),
             ],
-            'sku' => [
-                'required',
-            ],
             'category_id' => [
                 'required',
             ],
@@ -56,6 +53,11 @@ class Product extends Model
         return $this->belongsTo(Category::class, 'category_id');
     }
 
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class, "brand_id");
+    }
+
     public function productVariants()
     {
         return $this->hasMany(ProductVariant::class, 'product_id');
@@ -69,10 +71,5 @@ class Product extends Model
     public function images()
     {
         return $this->hasMany(ProductImage::class, "product_id");
-    }
-
-    public function brand()
-    {
-        return $this->belongsTo(Brand::class, "id", "brand_id");
     }
 }

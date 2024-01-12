@@ -31,10 +31,6 @@ class Banner extends Model
                 'required',
                 Rule::unique('banners', 'slug')->ignore($id),
             ],
-            'url' => [
-                'string',
-                'max:255',
-            ],
             'position' => [
                 'required',
             ],

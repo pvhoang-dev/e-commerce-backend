@@ -16,7 +16,6 @@
                         <thead>
                         <tr>
                             <th>Name</th>
-                            <td>Slug</td>
                             <th>Image</th>
                             <th>Action</th>
                         </tr>
@@ -25,7 +24,6 @@
                         @foreach ($brands as $brand)
                             <tr>
                                 <td>{{$brand -> name}}</td>
-                                <td>{{$brand -> slug}}</td>
                                 <td><img width="200" src="{{route('file.show', ['file_id' => $brand -> file_id])}}" alt=""></td>
                                 <td>
                                     <form action="{{ route('admin.brands.delete', $brand->id) }}" method="POST">

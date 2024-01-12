@@ -9,6 +9,15 @@
 
 @section('content')
     <div class="card">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <form action="{{ route('admin.products.store') }}" method="POST">
             @csrf
             <div class="card-body">
@@ -42,26 +51,22 @@
                     </div>
 
                     <div class="form-group col-sm-6">
-                        <label for="plv_1">Plv_1</label>
-                        <input type="number" name="plv_1" id="plv_1" class="form-control" value="{{ old('plv_1') }}">
-                        @if ($errors->has('plv_1'))
-                            <span class="text-danger">{{ $errors->first('plv_1') }}</span>
-                        @endif
+                        <label for="brand_id">Brand</label>
+                        <select class="form-control select2" name="brand_id" id="brand_id" data-toggle="select2">
+                            @foreach ($brands as $brand)
+                                <option value="{{ $brand->id }}" {{ old('brand_id') == $brand->id ? 'selected' : ''}}>{{ $brand->name }}</option>
+                            @endforeach
+                            @if ($errors->has('brand_id'))
+                                <span class="text-danger">{{ $errors->first('brand_id') }}</span>
+                            @endif
+                        </select>
                     </div>
 
                     <div class="form-group col-sm-6">
-                        <label for="plv_2">Plv_2</label>
-                        <input type="number" name="plv_2" id="plv_2" class="form-control" value="{{ old('plv_2') }}">
-                        @if ($errors->has('plv_2'))
-                            <span class="text-danger">{{ $errors->first('plv_2') }}</span>
-                        @endif
-                    </div>
-
-                    <div class="form-group col-sm-6">
-                        <label for="plv_3">Plv_3</label>
-                        <input type="number" name="plv_3" id="plv_3" class="form-control" value="{{ old('plv_3') }}">
-                        @if ($errors->has('plv_3'))
-                            <span class="text-danger">{{ $errors->first('plv_3') }}</span>
+                        <label for="price">Price</label>
+                        <input type="number" name="price" id="price" class="form-control" value="{{ old('price') }}">
+                        @if ($errors->has('price'))
+                            <span class="text-danger">{{ $errors->first('price') }}</span>
                         @endif
                     </div>
 
@@ -98,31 +103,8 @@
             </div>
         </form>
     </div>
-    <div id="toolbar-container"></div>
-
-    <!-- This container will become the editable. -->
-    <div id="editor">
-        <p>This is the initial editor content.</p>
-    </div>
 @endsection
 @push('js')
-    <!-- Include CKEditor -->
-    <script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/decoupled-document/ckeditor.js"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/decoupled-document/plugins/image/ckeditor.js"></script>
-
-    {{--<script src="{{ asset('assets/vendor/ckeditor/ckeditor.js') }}"></script>--}}
-    <script>
-        DecoupledEditor
-            .create(document.querySelector('#editor'))
-            .then(editor => {
-                const toolbarContainer = document.querySelector('#toolbar-container');
-
-                toolbarContainer.appendChild(editor.ui.view.toolbar.element);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    </script>
     <script>
         $('#uploadFile').change(function () {
             let formData = new FormData();

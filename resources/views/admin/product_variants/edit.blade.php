@@ -9,6 +9,15 @@
 
 @section('content')
     <div class="card">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <form action="{{route('admin.product_variants.update', ['id' => $productVariant->id])}}" method="post">
             @csrf
             <div class="card-body">
@@ -28,28 +37,13 @@
                     </div>
 
                     <div class="form-group col-sm-6">
-                        <label for="plv_1">Plv 1</label>
-                        <input type="number" value="{{$productVariant->plv_1}}" name="plv_1" id="plv_1" class="form-control">
-                        @if ($errors->has('plv_1'))
-                            <span class="text-danger">{{ $errors->first('plv_1') }}</span>
+                        <label for="price">Price</label>
+                        <input type="number" value="{{$productVariant->price}}" name="price" id="price" class="form-control">
+                        @if ($errors->has('price'))
+                            <span class="text-danger">{{ $errors->first('price') }}</span>
                         @endif
                     </div>
 
-                     <div class="form-group col-sm-6">
-                        <label for="plv_2">Plv 2</label>
-                        <input type="number" value="{{$productVariant->plv_2}}" name="plv_2" id="plv_2" class="form-control">
-                         @if ($errors->has('plv_2'))
-                             <span class="text-danger">{{ $errors->first('plv_2') }}</span>
-                         @endif
-                    </div>
-
-                     <div class="form-group col-sm-6">
-                        <label for="plv_3">Plv 3</label>
-                        <input type="number" value="{{$productVariant->plv_3}}" name="plv_3" id="plv_3" class="form-control">
-                         @if ($errors->has('plv_3'))
-                             <span class="text-danger">{{ $errors->first('plv_3') }}</span>
-                         @endif
-                    </div>
                     <div class="form-group col-sm-6">
                          <label for="qty">Quantity</label>
                         <input type="number" value="{{$productVariant->qty}}" name="qty" id="qty" class="form-control">

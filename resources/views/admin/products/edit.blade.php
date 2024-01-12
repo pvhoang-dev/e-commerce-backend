@@ -9,6 +9,15 @@
 
 @section('content')
     <div class="card">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <form action="{{ route('admin.products.update', ['id' => $product->id]) }}" method="POST">
             @csrf
             <div class="card-body">
@@ -46,29 +55,25 @@
                     </div>
 
                     <div class="form-group col-sm-6">
-                        <label for="plv_1">Plv_1</label>
-                        <input type="number" value="{{ $product->plv_1 }}" name="plv_1" id="plv_1"
-                               class="form-control">
-                        @if ($errors->has('plv_1'))
-                            <span class="text-danger">{{ $errors->first('plv_1') }}</span>
-                        @endif
+                        <label for="brand_id">Brand</label>
+                        <select class="form-control select2" name="brand_id" id="brand_id" data-toggle="select2">
+                            @foreach ($brands as $brand)
+                                <option value="{{ $brand->id }}"
+                                        {{ $product->brand_id == $brand->id ? 'selected' : '' }}>{{ $brand->name }}
+                                </option>
+                            @endforeach
+                            @if ($errors->has('brand_id'))
+                                <span class="text-danger">{{ $errors->first('brand_id') }}</span>
+                            @endif
+                        </select>
                     </div>
 
                     <div class="form-group col-sm-6">
-                        <label for="plv_2">Plv_2</label>
-                        <input type="number" value="{{ $product->plv_2 }}" name="plv_2" id="plv_2"
+                        <label for="price">Price</label>
+                        <input type="number" value="{{ $product->price }}" name="price" id="price"
                                class="form-control">
-                        @if ($errors->has('plv_2'))
-                            <span class="text-danger">{{ $errors->first('plv_2') }}</span>
-                        @endif
-                    </div>
-
-                    <div class="form-group col-sm-6">
-                        <label for="plv_3">Plv_3</label>
-                        <input type="number" value="{{ $product->plv_3 }}" name="plv_3" id="plv_3"
-                               class="form-control">
-                        @if ($errors->has('plv_3'))
-                            <span class="text-danger">{{ $errors->first('plv_3') }}</span>
+                        @if ($errors->has('price'))
+                            <span class="text-danger">{{ $errors->first('price') }}</span>
                         @endif
                     </div>
 
@@ -76,10 +81,6 @@
                         <label for="short_desc">Description</label>
                         <input type="text" value="{{ $product->short_description }}" name="short_description"
                                id="short_desc" class="form-control">
-                    </div>
-
-                    <div class="form-group col-sm-12">
-                        <div id="editor"></div>
                     </div>
 
                     <div class="form-group col-12">
@@ -141,11 +142,8 @@
                             <thead>
                             <tr>
                                 <th>Name</th>
-                                <th class="d-none d-lg-table-cell">Slug</th>
                                 <th class="d-none d-sm-table-cell">Qty</th>
-                                <th class="d-none d-sm-table-cell">Plv 1</th>
-                                <th class="d-none d-sm-table-cell">Plv 2</th>
-                                <th class="d-none d-sm-table-cell">Plv 3</th>
+                                <th class="d-none d-sm-table-cell">Price</th>
                                 <th class="d-none d-lg-table-cell">Sku</th>
                                 <th>Status</th>
                                 <th colspan="3">Action</th>
@@ -155,14 +153,11 @@
                             @foreach ($productVariants as $productVariant)
                                 <tr>
                                     <td>{{ $productVariant->name }}</td>
-                                    <td class="d-none d-lg-table-cell">{{ $productVariant->slug }}</td>
                                     <td class="d-none d-sm-table-cell">
                                         <h4><span class="badge badge-primary">{{ $productVariant->qty }}</span>
                                         </h4>
                                     </td>
-                                    <td class="d-none d-sm-table-cell">{{ $productVariant->plv_1 }}</td>
-                                    <td class="d-none d-sm-table-cell">{{ $productVariant->plv_2 }}</td>
-                                    <td class="d-none d-sm-table-cell">{{ $productVariant->plv_3 }}</td>
+                                    <td class="d-none d-sm-table-cell">{{ $productVariant->price }}</td>
                                     <td class="d-none d-lg-table-cell">{{ $productVariant->sku }}</td>
                                     <td>
                                         <div>
@@ -209,15 +204,6 @@
     </div>
 @endsection
 @push('js')
-    <!-- Include CKEditor -->
-    <script src="{{ asset('assets/vendor/ckeditor/ckeditor.js') }}"></script>
-    <script>
-        ClassicEditor
-            .create( document.querySelector( '#editor' ) )
-            .catch( error => {
-                console.error( error );
-            } );
-    </script>
     <script>
         @if(session('error'))
         // Display an alert with the error message

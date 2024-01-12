@@ -34,6 +34,13 @@
             </a>
         </li>
 
+        <li class="side-nav-item">
+            <a href="{{route('admin.brands.index')}}" class="side-nav-link">
+                <i class="dripicons-chevron-right"></i>
+                <span>Brands</span>
+            </a>
+        </li>
+
          <li class="side-nav-item">
             <a href="{{route('admin.products.index')}}" class="side-nav-link">
                 <i class="dripicons-chevron-right"></i>
@@ -45,13 +52,6 @@
             <a href="{{route('admin.banners.index')}}" class="side-nav-link">
                 <i class="dripicons-chevron-right"></i>
                 <span>Banners</span>
-            </a>
-        </li>
-
-        <li class="side-nav-item">
-            <a href="{{route('admin.brands.index')}}" class="side-nav-link">
-                <i class="dripicons-chevron-right"></i>
-                <span>Brands</span>
             </a>
         </li>
     </ul>
