@@ -34,7 +34,7 @@ class CreateBannerRequest extends FormRequest
      */
     public function rules(): array
     {
-        return Banner::getValidationRules();
+        return Banner::getRules();
     }
 
     /**

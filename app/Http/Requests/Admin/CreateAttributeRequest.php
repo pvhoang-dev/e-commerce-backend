@@ -33,6 +33,6 @@ class CreateAttributeRequest extends FormRequest
      */
     public function rules()
     {
-        return Attribute::getValidationRules();
+        return Attribute::getRules();
     }
 }

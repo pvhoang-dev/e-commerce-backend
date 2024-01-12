@@ -33,6 +33,6 @@ class CreateBrandRequest extends FormRequest
      */
     public function rules(): array
     {
-        return Brand::getValidationRules();
+        return Brand::getRules();
     }
 }

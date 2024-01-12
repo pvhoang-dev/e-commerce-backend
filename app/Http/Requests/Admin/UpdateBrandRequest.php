@@ -32,6 +32,6 @@ class UpdateBrandRequest extends FormRequest
     {
         $id = $this->route('id') ?? null;
 
-        return Brand::getValidationRules($id);
+        return Brand::getRules($id);
     }
 }

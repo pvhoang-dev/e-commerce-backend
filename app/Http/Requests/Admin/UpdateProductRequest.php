@@ -35,6 +35,6 @@ class UpdateProductRequest extends FormRequest
     {
         $id = $this->route('id') ?? null;
 
-        return Product::getValidationRules($id);
+        return Product::getRules($id);
     }
 }

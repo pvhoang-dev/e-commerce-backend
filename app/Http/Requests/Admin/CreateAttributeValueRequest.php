@@ -22,6 +22,6 @@ class CreateAttributeValueRequest extends FormRequest
      */
     public function rules(): array
     {
-        return AttributeValue::getValidationRules();
+        return AttributeValue::getRules();
     }
 }

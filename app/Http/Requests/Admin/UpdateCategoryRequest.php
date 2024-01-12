@@ -32,7 +32,7 @@ class UpdateCategoryRequest extends FormRequest
     {
         $id = $this->route('id') ?? null;
 
-        return Category::getValidationRules($id);
+        return Category::getRules($id);
     }
 
     /**

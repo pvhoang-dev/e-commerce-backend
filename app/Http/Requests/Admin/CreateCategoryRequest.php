@@ -34,7 +34,7 @@ class CreateCategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-        return Category::getValidationRules();
+        return Category::getRules();
     }
 
     /**

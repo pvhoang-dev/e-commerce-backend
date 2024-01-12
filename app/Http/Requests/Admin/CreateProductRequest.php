@@ -35,6 +35,6 @@ class CreateProductRequest extends FormRequest
      */
     public function rules(): array
     {
-        return Product::getValidationRules();
+        return Product::getRules();
     }
 }

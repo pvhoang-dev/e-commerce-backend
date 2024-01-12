@@ -32,7 +32,7 @@ class UpdateBannerRequest extends FormRequest
     {
         $id = $this->route('id') ?? null;
 
-        return Banner::getValidationRules($id);
+        return Banner::getRules($id);
     }
 
     /**

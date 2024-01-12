@@ -24,6 +24,6 @@ class UpdateAttributeValueRequest extends FormRequest
     {
         $id = $this->route('id') ?? null;
 
-        return AttributeValue::getValidationRules($id);
+        return AttributeValue::getRules($id);
     }
 }
