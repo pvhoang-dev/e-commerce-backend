@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
-            $table->integer('position');
             $table->integer('parent_id')->default(0);
+            $table->integer('position');
+            $table->text('description')->nullable();
             $table->unsignedBigInteger('file_id');
             $table->tinyInteger('status')->index("idx_categories_status");
             $table->timestamps();

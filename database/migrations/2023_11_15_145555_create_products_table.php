@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string("slug", 250)->unique();
             $table->string("sku", 50)->unique();
             $table->unsignedBigInteger("category_id")->default(0);
+            $table->unsignedBigInteger("brand_id");
             $table->integer("price");
             $table->integer("promotion_price")->default(0);
             $table->integer("product_promotion_id")->default(0);
@@ -26,6 +27,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('brand_id')->references('id')->on('brands');
         });
     }
 
