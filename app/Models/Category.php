@@ -15,18 +15,22 @@ class Category extends Model
         'slug',
         'parent_id',
         'position',
+        'description',
         'file_id',
         'status',
     ];
 
-    public static function getValidationRules($id = null)
+    public static function getRules($id = null)
     {
         return [
             'name' => [
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('categories', 'name')->ignore($id),
+            ],
+            'slug' => [
+                'required',
+                Rule::unique('categories', 'slug')->ignore($id),
             ],
             'position' => [
                 'required',
@@ -54,7 +58,7 @@ class Category extends Model
 
     public function parentCategory()
     {
-        return $this->belongsTo(Category::class, 'parent_id', 'id');
+        return $this->belongsTo(Category::class, 'id', 'parent_id');
     }
 
     public function file()

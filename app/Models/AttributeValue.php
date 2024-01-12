@@ -15,7 +15,7 @@ class AttributeValue extends Model
         'value'
     ];
 
-    public static function getValidationRules($id = null)
+    public static function getRules($id = null)
     {
         return [
             'attribute_id' => [

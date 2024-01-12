@@ -16,7 +16,7 @@ class Brand extends Model
         'file_id',
     ];
 
-    public static function getValidationRules($id = null)
+    public static function getRules($id = null)
     {
         return [
             'name' => [
@@ -25,6 +25,7 @@ class Brand extends Model
                 'max:255'
             ],
             'slug' => [
+                'required',
                 Rule::unique('brands', 'slug')->ignore($id),
             ],
         ];

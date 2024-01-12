@@ -19,7 +19,7 @@ class Banner extends Model
         'status'
     ];
 
-    public static function getValidationRules($id = null)
+    public static function getRules($id = null)
     {
         return [
             'title' => [
@@ -28,10 +28,10 @@ class Banner extends Model
                 'max:255'
             ],
             'slug' => [
+                'required',
                 Rule::unique('banners', 'slug')->ignore($id),
             ],
             'url' => [
-                'required',
                 'string',
                 'max:255',
             ],

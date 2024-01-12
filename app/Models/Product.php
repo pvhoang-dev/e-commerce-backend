@@ -13,39 +13,40 @@ class Product extends Model
     protected $fillable = [
         'name',
         'slug',
-        'plv_1',
-        'plv_2',
-        'plv_3',
-        'qty',
+        'sku',
         'category_id',
-        'status',
+        'brand_id',
+        'price',
+        'promotion_price',
+        'product_promotion_id',
+        'qty',
         'short_description',
-        'sku'
+        'status',
     ];
 
-    public static function getValidationRules($id = null)
+    public static function getRules($id = null)
     {
         return [
             'name' => [
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('products', 'name')->ignore($id),
             ],
-            'qty' => [
+            'slug' => [
                 'required',
+                Rule::unique('products', 'slug')->ignore($id),
             ],
-            'plv_1' => [
-                'required',
-            ],
-            'plv_2' => [
-                'required',
-            ],
-            'plv_3' => [
+            'sku' => [
                 'required',
             ],
             'category_id' => [
-                'required'
+                'required',
+            ],
+            'brand_id' => [
+                'required',
+            ],
+            'price' => [
+                'required',
             ],
         ];
     }
@@ -68,5 +69,10 @@ class Product extends Model
     public function images()
     {
         return $this->hasMany(ProductImage::class, "product_id");
+    }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class, "id", "brand_id");
     }
 }

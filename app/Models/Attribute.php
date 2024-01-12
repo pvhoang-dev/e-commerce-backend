@@ -16,19 +16,22 @@ class Attribute extends Model
     ];
 
     protected $casts = [
+        'name' => 'string',
         'code' => 'string',
-        'name' => 'string'
     ];
 
-    public static function getValidationRules($id = null)
+    public static function getRules($id = null)
     {
         return [
             'name' => [
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('attributes', 'name')->ignore($id),
             ],
+            'code' => [
+                'required',
+                Rule::unique('attributes', 'code')->ignore($id),
+            ]
         ];
     }
 

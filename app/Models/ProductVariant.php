@@ -16,31 +16,26 @@ class ProductVariant extends Model
         'slug',
         'sku',
         'qty',
-        'plv_1',
-        'plv_2',
-        'plv_3',
+        'price',
         'status'
     ];
 
-    public static function getValidationRules($id = null)
+    public static function getRules($id = null)
     {
         return [
             'name' => [
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('product_variants', 'name')->ignore($id),
+            ],
+            'slug' => [
+                'required',
+                Rule::unique('product_variants', 'slug')->ignore($id),
             ],
             'qty' => [
                 'required',
             ],
-            'plv_1' => [
-                'required',
-            ],
-            'plv_2' => [
-                'required',
-            ],
-            'plv_3' => [
+            'price' => [
                 'required',
             ],
         ];
