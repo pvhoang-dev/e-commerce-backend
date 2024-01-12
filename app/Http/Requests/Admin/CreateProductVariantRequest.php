@@ -25,6 +25,7 @@ class CreateProductVariantRequest extends FormRequest
             'slug' => Str::slug($this->name),
             'status' => 1,
             'sku' => Str::upper(Str::random(10)),
+            'qty' => $this->qty ?? 0,
         ]);
     }
 
