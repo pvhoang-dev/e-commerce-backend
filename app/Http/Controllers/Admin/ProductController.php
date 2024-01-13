@@ -39,7 +39,7 @@ class ProductController extends Controller
     {
         $categories = Category::all();
 
-        $brands = Category::all();
+        $brands = Brand::all();
 
         return view('admin.products.create', [
             'categories' => $categories,
