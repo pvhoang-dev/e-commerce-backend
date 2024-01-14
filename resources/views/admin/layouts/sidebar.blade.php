@@ -54,6 +54,15 @@
                 <span>Banners</span>
             </a>
         </li>
+
+        <li class="side-nav-title side-nav-item">Others</li>
+
+        <li class="side-nav-item">
+            <a href="{{route('admin.locations.index')}}" class="side-nav-link">
+                <i class="dripicons-chevron-right"></i>
+                <span>Locations</span>
+            </a>
+        </li>
     </ul>
     <!-- End Sidebar -->
 

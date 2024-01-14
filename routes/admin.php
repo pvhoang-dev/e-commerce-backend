@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\FileController;
 use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductVariantController;
 use App\Http\Controllers\Admin\UploadController;
@@ -161,6 +162,13 @@ Route::prefix('admin')->group(function () {
 
     Route::delete('brands/delete/{id}', [BrandController::class, 'delete'])
         ->name('admin.brands.delete');
+
+    #Locations
+    Route::get('locations', [LocationController::class, 'index'])
+        ->name('admin.locations.index');
+
+    Route::post('locations/create', [LocationController::class, 'store'])
+        ->name('admin.locations.create');
 
     #Ajax
     Route::get('ajax/attribute-value', [App\Http\Controllers\Admin\AjaxController::class, 'getAttributeValue'])
