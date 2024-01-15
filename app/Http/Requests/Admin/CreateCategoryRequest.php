@@ -24,6 +24,7 @@ class CreateCategoryRequest extends FormRequest
         $this->merge([
             'slug' => Str::slug($this->name),
             'status' => 1,
+            'position' => 0
         ]);
     }
 
