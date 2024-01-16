@@ -23,4 +23,31 @@ class MenuController extends Controller
             'menus' => $menus
         ]);
     }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function create()
+    {
+        $menus = Menu::with(['subMenus' => function($query){
+            $query->with('subMenus');
+        }])->where('parent_id', 0)->get()->toArray();
+
+        return view('admin.menus.create', [
+            'menus' => $menus
+        ]);
+    }
+
+    /**
+     * @param CreateMenuRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(CreateMenuRequest $request)
+    {
+        $input = $request->all();
+
+        Menu::create($input);
+
+        return redirect()->route('admin.menus.index');
+    }
 }
