@@ -55,6 +55,13 @@
             </a>
         </li>
 
+        <li class="side-nav-item">
+            <a href="{{route('admin.menus.index')}}" class="side-nav-link">
+                <i class="dripicons-chevron-right"></i>
+                <span>Menus</span>
+            </a>
+        </li>
+
         <li class="side-nav-title side-nav-item">Others</li>
 
         <li class="side-nav-item">
