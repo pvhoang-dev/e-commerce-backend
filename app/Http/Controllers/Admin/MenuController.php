@@ -50,4 +50,46 @@ class MenuController extends Controller
 
         return redirect()->route('admin.menus.index');
     }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function edit($id)
+    {
+        $menu = Menu::find($id);
+
+        if (!$menu) {
+            dd(404);
+        }
+
+        $menus = Menu::with(['subMenus' => function($query){
+            $query->with('subMenus');
+        }])->where('parent_id', 0)->get()->toArray();
+
+        return view('admin.menus.edit', [
+            'menus' => $menus,
+            'menu' => $menu
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(UpdateMenuRequest $request, $id)
+    {
+        $input = $request->all();
+
+        $menu = Menu::find($id);
+
+        if (!$menu) {
+            dd(404);
+        }
+
+        $menu->update($input);
+
+        return redirect()->back();
+    }
 }
