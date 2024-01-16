@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\HomepageProductEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CreateProductRequest;
 use App\Http\Requests\Admin\UpdateProductRequest;
@@ -13,6 +14,7 @@ use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use App\Services\File\MakeFinalFileService;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 
@@ -98,6 +100,10 @@ class ProductController extends Controller
 
         $categories = Category::get();
 
+        $position = $categories->where('parent_id', 0)->pluck('position', 'name');
+
+        $groups = HomepageProductEnum::getArrWithLowerKey();
+
         $brands = Brand::get();
 
         return view('admin.products.edit', [
@@ -105,6 +111,8 @@ class ProductController extends Controller
             'productVariants' => $productVariants,
             'categories' => $categories,
             'brands' => $brands,
+            'groups' => $groups,
+            'position' => $position
         ]);
     }
 

@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductVariantController;
 use App\Http\Controllers\Admin\UploadController;
+use App\Http\Controllers\Admin\HomePageController;
 use Illuminate\Support\Facades\Route;
 
 #admin routes
@@ -106,6 +107,10 @@ Route::prefix('admin')->group(function () {
 
     Route::delete('/products/delete/{id}', [ProductController::class, 'delete'])
         ->name('admin.products.delete');
+
+    #Home page product
+    Route::post('/add_home_page_product', [HomePageController::class, 'addHomePage'])
+        ->name('add_home_page');
 
     #Product Variants
     Route::get('/product-variants', [ProductVariantController::class, 'index'])
