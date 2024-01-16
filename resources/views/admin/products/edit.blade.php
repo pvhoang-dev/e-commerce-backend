@@ -123,6 +123,53 @@
         <div class="col-12">
             <div class="page-title-box">
                 <div class="page-title d-flex justify-content-between align-items-center">
+                    Bạn có muốn thêm sản phẩm này vào trang home không?
+                </div>
+
+                <label for="add_home_page">
+                    <input type="radio"  id="add_home_page" name="add_home_page"> Có
+                </label>
+
+                <label for="remove_home_page">
+                    <input type="radio"  id="remove_home_page" name="add_home_page"> Không
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mt-3">
+        <form action="{{route('add_home_page')}}" method="post">
+            <div class="card-body">
+                @csrf
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label for="group">Group</label>
+                        <select class="form-control" id="group_id" name="group">
+                            @foreach($groups as $key => $group)
+                                <option value="{{$group}}">{{$key}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label for="group">Position</label>
+                        <select name="position" id="position_id" class="form-control">
+                            @foreach($position as $value)
+                                <option value="{{$value}}">{{$value}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <input type="hidden" name="product_id" value="{{$product->id}}">
+                </div>
+            </div>
+            <div class="card-footer" style="text-align: right">
+                <button type="submit" class="btn btn-primary" id="create">Save</button>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title d-flex justify-content-between align-items-center">
                     Product Variant
                     <a class="btn btn-primary float-right align-items-center"
                        href="{{ route('admin.product_variants.create', ['product_id' => $product->id]) }}">
@@ -172,7 +219,8 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <form action="{{ route('admin.product_variants.delete', $productVariant->id) }}" method="POST">
+                                        <form action="{{ route('admin.product_variants.delete', $productVariant->id) }}"
+                                              method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <div class='btn-group'>
@@ -266,5 +314,22 @@
                 alert('Upload ảnh lỗi');
             }
         });
+
+        $('#add_home_page_product').on('change', function () {
+            let product_id = $(this).attr("data-product_id");
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ url('add_home_page') }}",
+                method: "POST",
+                data: {
+                    product_id: product_id,
+                },
+                success: function (data) {
+                    console.log(data)
+                }
+            });
+        })
     </script>
 @endpush
