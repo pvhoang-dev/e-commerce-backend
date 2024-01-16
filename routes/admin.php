@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\FileController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\LocationController;
+use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductVariantController;
 use App\Http\Controllers\Admin\UploadController;
@@ -162,6 +163,25 @@ Route::prefix('admin')->group(function () {
 
     Route::delete('brands/delete/{id}', [BrandController::class, 'delete'])
         ->name('admin.brands.delete');
+
+    #Menus
+    Route::get('menus', [MenuController::class, 'index'])
+        ->name('admin.menus.index');
+
+    Route::get('menus/create', [MenuController::class, 'create'])
+        ->name('admin.menus.create');
+
+    Route::post('menus/create', [MenuController::class, 'store'])
+        ->name('admin.menus.store');
+
+    Route::get('menus/edit/{id}', [MenuController::class, 'edit'])
+        ->name('admin.menus.edit');
+
+    Route::post('menus/update/{id}', [MenuController::class, 'update'])
+        ->name('admin.menus.update');
+
+    Route::delete('menus/delete/{id}', [MenuController::class, 'delete'])
+        ->name('admin.menus.delete');
 
     #Locations
     Route::get('locations', [LocationController::class, 'index'])
