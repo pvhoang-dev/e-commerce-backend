@@ -118,9 +118,9 @@ class CategoryController extends Controller
         try {
             $category = Category::findOrFail($id);
 
-            $subCategories = Category::where('parent_id', $id)->get();
+            $subCategories = Category::where('parent_id', $id)->first();
 
-            if($subCategories->count()){
+            if($subCategories){
                 return redirect()->route('admin.categories.index')
                     ->with('error', 'Cannot delete the category. It is associated with sub records.');
             }
