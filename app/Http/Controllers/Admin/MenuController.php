@@ -92,4 +92,35 @@ class MenuController extends Controller
 
         return redirect()->back();
     }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function delete($id)
+    {
+        try {
+            $menu = Menu::findOrFail($id);
+
+            $subMenus = Menu::where('parent_id', $id)->first();
+
+            if($subMenus){
+                return redirect()->route('admin.menus.index')
+                    ->with('error', 'Cannot delete the menu. It is associated with sub records.');
+            }
+
+            $menu->delete();
+
+            return redirect()->route('admin.menus.index');
+        } catch (\Exception $e) {
+            if ($e instanceof QueryException && $e->errorInfo[1] == 1451) {
+                // Foreign key constraint violation
+                return redirect()->route('admin.menus.index')
+                    ->with('error', 'Cannot delete the menu. It is associated with other records.');
+            }
+
+            // Handle other types of exceptions or rethrow the exception
+            dd($e);
+        }
+    }
 }
