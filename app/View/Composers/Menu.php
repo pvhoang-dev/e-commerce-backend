@@ -16,6 +16,15 @@ class Menu
             return Category::where('parent_id', 0)->take(3)->get();
         });
 
-        $view->with('categories', $categories);
+        $menus = Cache::remember('menus', 3600, function (){
+            return $menuItems = \App\Models\Menu::with(['subMenus' => function($query){
+                $query->with('subMenus');
+            }])->where('parent_id', 0)->take(3)->get()->toArray();
+        });
+
+        $view->with([
+            'categories' => $categories,
+            'menus' => $menus
+        ]);
     }
 }

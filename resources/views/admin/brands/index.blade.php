@@ -24,7 +24,13 @@
                         @foreach ($brands as $brand)
                             <tr>
                                 <td>{{$brand -> name}}</td>
-                                <td><img width="200" src="{{route('file.show', ['file_id' => $brand -> file_id])}}" alt=""></td>
+                                <td>
+                                    @if ($brand->file_id)
+                                        <img class="rounded mr-1 mb-3 mb-sm-0 img-fluid"
+                                             src="{{route('file.show', $brand->file_id)}}" alt="">
+                                    @else
+                                        none
+                                    @endif
                                 <td>
                                     <form action="{{ route('admin.brands.delete', $brand->id) }}" method="POST">
                                         @csrf
