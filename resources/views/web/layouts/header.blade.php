@@ -37,7 +37,51 @@
                 <div class="menu-desktop">
                     <ul class="main-menu">
                         <li>
-                            <a href="{{ route('home.show') }}">Home</a>
+                            <a href="#">Menu</a>
+                            <ul class="sub-menu">
+                                @foreach ($menus as $menu)
+                                    <li class="">
+                                        <a href="#">{{ $menu['name'] }}</a>
+                                        @if(!empty($menu['sub_menus']))
+                                            <ul class="sub-menu">
+                                                @foreach($menu['sub_menus'] as $subMenu)
+                                                    <li class="">
+                                                        <a href="#">{{ $subMenu['name'] }}</a>
+                                                        @if(!empty($subMenu['sub_menus']))
+                                                            <ul class="sub-menu">
+                                                                @foreach($subMenu['sub_menus'] as $subSubMenu)
+                                                                    <li>
+                                                                        <a href="#">{{ $subSubMenu['name'] }}</a>
+                                                                    </li>
+                                                                @endforeach
+                                                            </ul>
+                                                        @endif
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        @endif
+                                    </li>
+                                @endforeach
+                               {{-- <li class="main-menu">
+                                    <a href="#">Menu 1</a>
+                                    <ul class="sub-menu">
+                                        <li class="main-menu">
+                                            <a href="#">SubMenu 1</a>
+                                            <ul class="sub-menu">
+                                                <li>
+                                                    <a href="#">SubSubMenu 1</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#">SubMenu 2</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">SubMenu 3</a>
+                                        </li>
+                                    </ul>
+                                </li>--}}
+                            </ul>
                         </li>
                         <li>
                             <a href="">Shop</a>
@@ -222,22 +266,22 @@
         <div class="header-cart-content flex-w js-pscroll w-full">
             <ul class="header-cart-wrapitem w-full">
 
-                    <li class="header-cart-item flex-w flex-t m-b-12">
-                        <div class="header-cart-item-img">
-                            <img src=""
-                                 alt="IMG">
-                        </div>
+                <li class="header-cart-item flex-w flex-t m-b-12">
+                    <div class="header-cart-item-img">
+                        <img src=""
+                             alt="IMG">
+                    </div>
 
-                        <div class="header-cart-item-txt p-t-8">
-                            <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-                                hoangf awn cuwst tao
-                            </a>
+                    <div class="header-cart-item-txt p-t-8">
+                        <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+                            hoangf awn cuwst tao
+                        </a>
 
-                            <span class="header-cart-item-info">
+                        <span class="header-cart-item-info">
                                 2 x 100d
                             </span>
-                        </div>
-                    </li>
+                    </div>
+                </li>
             </ul>
         </div>
         <div class="w-full">
@@ -259,3 +303,7 @@
         </div>
     </div>
 </div>
+
+<script>
+
+</script>
