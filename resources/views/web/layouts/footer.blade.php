@@ -156,7 +156,7 @@
 <!--===============================================================================================-->
 {{--<script src="{{ asset('web/vendor/animsition/js/animsition.min.js') }}"></script>--}}
 <!--===============================================================================================-->
-<script src="{{ asset('web/vendor/bootstrap/js/popper.js') }}"></script>
+{{--<script src="{{ asset('web/vendor/bootstrap/js/popper.js') }}"></script>--}}
 <script src="{{ asset('web/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
 <!--===============================================================================================-->
 <script src="{{ asset('web/vendor/select2/select2.min.js') }}"></script>
