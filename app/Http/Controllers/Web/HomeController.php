@@ -17,7 +17,6 @@ class HomeController extends Controller
 
         $allProducts = HomepageProduct::with('product')->get();
 
-
         $groupedProducts = $allProducts->groupBy('group');
 
         return view('web.home', [
