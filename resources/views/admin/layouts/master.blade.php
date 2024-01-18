@@ -87,7 +87,8 @@
     <script src="{{ asset('js/vendor/dropzone.min.js') }}"></script>
     <!-- init js -->
     <script src="{{ asset('js/ui/component.fileupload.js') }}"></script>
-     <script src="{{ asset('js/main.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
+    <script src="{{ asset('vendor/tinymce/tinymce.min.js') }}"></script>
     @stack('js')
     <!-- end demo js-->
 </body>

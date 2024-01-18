@@ -11,6 +11,7 @@ class FileController extends Controller
 {
     public function index($fileId)
     {
+        /*
         $cacheKey = 'file' . $fileId;
 
         if (Cache::has($cacheKey)) {
@@ -24,8 +25,11 @@ class FileController extends Controller
             //     ));
             // }
 
-            Cache::put($cacheKey, $file, 86400);
+            // Cache::put($cacheKey, $file, 86400);
         }
+        */
+        $file = File::find($fileId);
+
         return response()->file(storage_path("app/" . $file->path), array('Content-Type' => $file->mime_type));
     }
 

@@ -10,6 +10,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\File;
 use App\Models\Product;
+use App\Models\ProductDescription;
 use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use App\Services\File\MakeFinalFileService;
@@ -210,5 +211,27 @@ class ProductController extends Controller
             // Handle other types of exceptions or rethrow the exception
             dd($e);
         }
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function storeDescription(Request $request)
+    {
+        $input = $request->all();
+
+        $description = ProductDescription::firstOrNew(['product_id' => $input['id']]);
+
+        if (!$description->exists) {
+            $description->product_id = $input['id'];
+            $description->description = $input['description'];
+        } else {
+            $description->description = $input['description'];
+        }
+
+        $description->save();
+
+        return redirect()->back();
     }
 }
