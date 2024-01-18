@@ -22,7 +22,7 @@
 </head>
 
 <body class="loading" data-layout="detached"
-    data-layout-config='{"leftSidebarCondensed":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+    data-layout-config='{"leftSidebarCondensed":false,"darkMode":true, "showRightSidebarOnStart": true}'>
 
     <!-- Topbar Start -->
     @include('admin.layouts.topbar')
@@ -73,7 +73,7 @@
 
     <!-- bundle -->
     <script src="{{ asset('js/vendor.min.js') }}"></script>
-    <script src=" {{ asset('js/app.min.js') }}"></script>
+    <script src="{{ asset('js/app.min.js') }}"></script>
 
     <!-- third party js -->
     <script src="{{ asset('js/vendor/apexcharts.min.js') }}"></script>

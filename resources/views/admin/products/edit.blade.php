@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Add Product
+    Edit Product
     <a href="{{ route('admin.products.index') }}" class="btn btn-outline-info float-right">
         <i class="uil uil-corner-up-left-alt"></i> Back
     </a>
@@ -101,9 +101,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="card-footer float-right">
-                <button type="submit" class="btn btn-primary" id="create">Save</button>
+                <div class="float-right mt-2 mb-3">
+                    <button type="submit" class="btn btn-primary" id="create">Create</button>
+                </div>
             </div>
         </form>
     </div>

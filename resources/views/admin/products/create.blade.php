@@ -97,9 +97,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="card-footer float-right">
-                <button type="submit" class="btn btn-primary" id="create">Create</button>
+
+                <div class="float-right mt-2 mb-3">
+                    <button type="submit" class="btn btn-primary" id="create">Create</button>
+                </div>
             </div>
         </form>
     </div>
