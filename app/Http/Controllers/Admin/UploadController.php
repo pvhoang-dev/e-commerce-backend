@@ -48,4 +48,21 @@ class UploadController extends Controller
             return $this->sendError($exception->getMessage());
         }
     }
+
+    public function uploadImageTinyCloud(Request $request)
+    {
+        $request->validate([
+            'file' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $image = $request->file('file');
+
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
+
+        $path = $image->storeAs('images/products/description', $imageName, 'public');
+
+        $imageUrl = Storage::url($path);
+
+        return response()->json(['location' => asset($imageUrl)]);
+    }
 }

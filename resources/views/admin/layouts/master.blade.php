@@ -22,7 +22,7 @@
 </head>
 
 <body class="loading" data-layout="detached"
-    data-layout-config='{"leftSidebarCondensed":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+    data-layout-config='{"leftSidebarCondensed":false,"darkMode":true, "showRightSidebarOnStart": true}'>
 
     <!-- Topbar Start -->
     @include('admin.layouts.topbar')
@@ -73,7 +73,7 @@
 
     <!-- bundle -->
     <script src="{{ asset('js/vendor.min.js') }}"></script>
-    <script src=" {{ asset('js/app.min.js') }}"></script>
+    <script src="{{ asset('js/app.min.js') }}"></script>
 
     <!-- third party js -->
     <script src="{{ asset('js/vendor/apexcharts.min.js') }}"></script>
@@ -87,7 +87,8 @@
     <script src="{{ asset('js/vendor/dropzone.min.js') }}"></script>
     <!-- init js -->
     <script src="{{ asset('js/ui/component.fileupload.js') }}"></script>
-     <script src="{{ asset('js/main.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
+    <script src="{{ asset('vendor/tinymce/tinymce.min.js') }}"></script>
     @stack('js')
     <!-- end demo js-->
 </body>

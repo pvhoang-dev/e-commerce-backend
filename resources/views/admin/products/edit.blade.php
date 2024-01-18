@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Add Product
+    Edit Product
     <a href="{{ route('admin.products.index') }}" class="btn btn-outline-info float-right">
         <i class="uil uil-corner-up-left-alt"></i> Back
     </a>
@@ -101,9 +101,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="card-footer float-right">
-                <button type="submit" class="btn btn-primary" id="create">Save</button>
+                <div class="float-right mt-2 mb-3">
+                    <button type="submit" class="btn btn-primary" id="create">Create</button>
+                </div>
             </div>
         </form>
     </div>
@@ -166,6 +166,21 @@
             </div>
         </form>
     </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form action="{{ route('admin.products.store_description', ['id' => $product->id]) }}" method="POST">
+                @csrf
+                <h4 class="mb-3">Description</h4>
+                <textarea id="description" name="description">{{ $product->description->description }}</textarea>
+
+                <div class="float-right mt-3">
+                    <button type="submit" class="btn btn-primary" id="create">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-12">
             <div class="page-title-box">
@@ -252,6 +267,57 @@
     </div>
 @endsection
 @push('js')
+    <script>
+        const useDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        tinymce.init({
+            selector: '#description',
+            plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount charmap quickbars emoticons accordion',
+            menubar: 'file edit view insert format tools table help',
+            toolbar: 'undo redo | accordion accordionremove | blocks fontfamily fontsize | bold italic underline strikethrough | align numlist bullist | link image | table media | lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code fullscreen preview | save print | pagebreak anchor codesample | ltr rtl',
+            height: 600,
+            image_upload_url: '/upload-image',
+            images_upload_handler: function (blobInfo) {
+                return new Promise(function (resolve, reject) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.withCredentials = false;
+                    xhr.open('POST', '/upload-image');
+                    xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
+
+                    xhr.onload = function () {
+                        try {
+                            if (xhr.status != 200) {
+                                throw new Error('HTTP Error: ' + xhr.status);
+                            }
+
+                            var json = JSON.parse(xhr.responseText);
+
+                            if (!json || typeof json.location !== 'string') {
+                                throw new Error('Invalid JSON: ' + xhr.responseText);
+                            }
+
+                            resolve(json.location);
+                        } catch (error) {
+                            console.error(error);
+                            reject(error.message);
+                        }
+                    };
+
+                    xhr.onerror = function () {
+                        console.error('Network error occurred.');
+                        reject('Network error occurred.');
+                    };
+
+                    var formData = new FormData();
+                    formData.append('file', blobInfo.blob(), blobInfo.filename());
+
+                    xhr.send(formData);
+                });
+            },
+            skin: useDarkMode ? 'oxide-dark' : 'oxide',
+            content_css: useDarkMode ? 'dark' : 'default',
+        });
+    </script>
     <script>
         @if(session('error'))
         // Display an alert with the error message

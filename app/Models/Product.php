@@ -72,4 +72,9 @@ class Product extends Model
     {
         return $this->hasMany(ProductImage::class, "product_id");
     }
+
+    public function description()
+    {
+        return $this->hasOne(ProductDescription::class, 'product_id');
+    }
 }

@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 #admin routes
 Route::post('/upload', [UploadController::class, 'store'])->name('upload.store');
 
+Route::post('/upload-image', [UploadController::class, 'uploadImageTinyCloud']);
+
 Route::get('/files/{file_id}', [FileController::class, 'index'])
     ->name("file.show");
 
@@ -98,6 +100,9 @@ Route::prefix('admin')->group(function () {
 
     Route::post('/products/create', [ProductController::class, 'store'])
         ->name('admin.products.store');
+
+    Route::post('/products/store-description', [ProductController::class, 'storeDescription'])
+        ->name('admin.products.store_description');
 
     Route::get('/products/edit/{id}', [ProductController::class, 'edit'])
         ->name('admin.products.edit');
