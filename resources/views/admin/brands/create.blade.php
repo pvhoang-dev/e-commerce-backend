@@ -63,7 +63,7 @@
 @endsection
 @push('js')
     <script>
-        $('#uploadFile').change(function () {
+        $('#uploadFile').change(function() {
             let formData = new FormData();
 
             let files = $(this)[0].files;

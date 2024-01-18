@@ -5,8 +5,7 @@
 
     <form action="{{ route('admin.locations.create') }}" method="POST">
         @csrf
-        <button type="submit" class="btn btn-outline-info float-right"
-                onclick="return confirm('Are you sure?')">
+        <button type="submit" class="btn btn-outline-info float-right" onclick="return confirm('Are you sure?')">
             Create
         </button>
     </form>

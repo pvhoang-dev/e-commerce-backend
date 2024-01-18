@@ -34,14 +34,16 @@
                     </div>
                     <div class="form-group col-6">
                         <label for="banner_po">Position</label>
-                        <input type="number" name="position" id="banner_po" value="{{ old('position') }}" class="form-control">
+                        <input type="number" name="position" id="banner_po" value="{{ old('position') }}"
+                            class="form-control">
                         @if ($errors->has('position'))
                             <span class="text-danger">{{ $errors->first('position') }}</span>
                         @endif
                     </div>
                     <div class="form-group col-12">
                         <label for="banner_url">Url</label>
-                        <input type="text" name="url" id="banner_url" value="{{ old('url') }}" class="form-control">
+                        <input type="text" name="url" id="banner_url" value="{{ old('url') }}"
+                            class="form-control">
                         @if ($errors->has('url'))
                             <span class="text-danger">{{ $errors->first('url') }}</span>
                         @endif
@@ -77,7 +79,7 @@
 @endsection
 @push('js')
     <script>
-        $('#uploadFile').change(function () {
+        $('#uploadFile').change(function() {
             let formData = new FormData();
 
             let files = $(this)[0].files;

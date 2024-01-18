@@ -25,7 +25,7 @@
                     <div class="form-group col-6">
                         <label for="banner_title">Name</label>
                         <input type="text" value="{{ $banner->title }}" name="title" id="banner_name"
-                               class="form-control">
+                            class="form-control">
                         @if ($errors->has('title'))
                             <span class="text-danger">{{ $errors->first('title') }}</span>
                         @endif
@@ -36,12 +36,13 @@
                     <div class="form-group col-6">
                         <label for="banner_po">Position</label>
                         <input type="number" value="{{ $banner->position }}" name="position" id="banner_po"
-                               class="form-control">
+                            class="form-control">
                     </div>
 
                     <div class="form-group col-12">
                         <label for="banner_url">Url</label>
-                        <input type="text" value="{{ $banner->url }}" name="url" id="banner_url" class="form-control">
+                        <input type="text" value="{{ $banner->url }}" name="url" id="banner_url"
+                            class="form-control">
                         @if ($errors->has('url'))
                             <span class="text-danger">{{ $errors->first('url') }}</span>
                         @endif
@@ -64,7 +65,7 @@
                                     <div class="row align-items-center">
                                         <div class="col-auto">
                                             <img src="{{ route('file.show', $banner->file_id) }}"
-                                                 class="avatar-sm rounded bg-light">
+                                                class="avatar-sm rounded bg-light">
                                             <input type="hidden" name="file_id" value="{{ $banner->file_id }}" />
                                         </div>
                                         <div class="col pl-0">
@@ -75,7 +76,7 @@
                                         <div class="col-auto">
                                             <!-- Button -->
                                             <a href="${urlDeleteImage}" class="btn btn-link btn-lg text-muted"
-                                               data-dz-remove="">
+                                                data-dz-remove="">
                                                 <i class="dripicons-cross"></i>
                                             </a>
                                         </div>
@@ -143,7 +144,7 @@
                         </div>
                         </div>
                         </div>`;
-                        }
+                }
 
                 listImages.append(html);
 

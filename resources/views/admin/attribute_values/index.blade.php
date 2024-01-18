@@ -14,35 +14,36 @@
                 @if ($attributeValues->count())
                     <table class="table table-centered mb-0 " id="attributes-table">
                         <thead>
-                        <tr>
-                            <th>Attribute Name</th>
-                            <th>Value</th>
-                            <th>Action</th>
-                        </tr>
+                            <tr>
+                                <th>Attribute Name</th>
+                                <th>Value</th>
+                                <th>Action</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        @foreach ($attributeValues as $value)
-                            <tr>
-                                <td>{{ $value->attribute->name }}</td>
-                                <td>{{ $value->value }}</td>
-                                <td>
-                                    <form action="{{ route('admin.attribute_values.delete', $value->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <div class='btn-group'>
-                                            <a class="action-icon"
-                                               href="{{ route('admin.attribute_values.edit', ['id' => $value->id]) }}">
-                                                <i class="mdi mdi-pencil"></i>
-                                            </a>
-                                            <button type="submit" class="action-icon delete border-0 bg-transparent"
+                            @foreach ($attributeValues as $value)
+                                <tr>
+                                    <td>{{ $value->attribute->name }}</td>
+                                    <td>{{ $value->value }}</td>
+                                    <td>
+                                        <form action="{{ route('admin.attribute_values.delete', $value->id) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <div class='btn-group'>
+                                                <a class="action-icon"
+                                                    href="{{ route('admin.attribute_values.edit', ['id' => $value->id]) }}">
+                                                    <i class="mdi mdi-pencil"></i>
+                                                </a>
+                                                <button type="submit" class="action-icon delete border-0 bg-transparent"
                                                     onclick="return confirm('Are you sure?')">
-                                                <i class="mdi mdi-delete"></i>
-                                            </button>
-                                        </div>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
+                                                    <i class="mdi mdi-delete"></i>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 @endif
@@ -53,9 +54,9 @@
 @push('js')
     <script>
         // Blade syntax to check if the 'error' session variable is present
-        @if(session('error'))
-        // Display an alert with the error message
-        alert("{{ session('error') }}");
+        @if (session('error'))
+            // Display an alert with the error message
+            alert("{{ session('error') }}");
         @endif
     </script>
 @endpush
