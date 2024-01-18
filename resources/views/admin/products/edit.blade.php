@@ -25,7 +25,7 @@
                     <div class="form-group col-sm-6">
                         <label for="pro_name">Name</label>
                         <input type="text" value="{{ $product->name }}" name="name" id="pro_name"
-                               class="form-control">
+                            class="form-control">
                         @if ($errors->has('name'))
                             <span class="text-danger">{{ $errors->first('name') }}</span>
                         @endif
@@ -34,7 +34,7 @@
                     <div class="form-group col-sm-6">
                         <label for="qty">Quantity</label>
                         <input type="number" value="{{ $product->qty }}" name="qty" id="qty"
-                               class="form-control">
+                            class="form-control">
                         @if ($errors->has('qty'))
                             <span class="text-danger">{{ $errors->first('qty') }}</span>
                         @endif
@@ -45,7 +45,7 @@
                         <select class="form-control select2" name="category_id" id="category_id" data-toggle="select2">
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}"
-                                        {{ $product->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}
+                                    {{ $product->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}
                                 </option>
                             @endforeach
                             @if ($errors->has('category_id'))
@@ -59,7 +59,7 @@
                         <select class="form-control select2" name="brand_id" id="brand_id" data-toggle="select2">
                             @foreach ($brands as $brand)
                                 <option value="{{ $brand->id }}"
-                                        {{ $product->brand_id == $brand->id ? 'selected' : '' }}>{{ $brand->name }}
+                                    {{ $product->brand_id == $brand->id ? 'selected' : '' }}>{{ $brand->name }}
                                 </option>
                             @endforeach
                             @if ($errors->has('brand_id'))
@@ -71,7 +71,7 @@
                     <div class="form-group col-sm-6">
                         <label for="price">Price</label>
                         <input type="number" value="{{ $product->price }}" name="price" id="price"
-                               class="form-control">
+                            class="form-control">
                         @if ($errors->has('price'))
                             <span class="text-danger">{{ $errors->first('price') }}</span>
                         @endif
@@ -80,7 +80,7 @@
                     <div class="form-group col-sm-12">
                         <label for="short_desc">Description</label>
                         <input type="text" value="{{ $product->short_description }}" name="short_description"
-                               id="short_desc" class="form-control">
+                            id="short_desc" class="form-control">
                     </div>
 
                     <div class="form-group col-12">
@@ -113,7 +113,7 @@
             @foreach ($product->images as $img)
                 <div class="col">
                     <img src="{{ route('file.show', $img->file_id) }}" alt="post-img"
-                         class="rounded mr-1 mb-3 mb-sm-0 img-fluid">
+                        class="rounded mr-1 mb-3 mb-sm-0 img-fluid">
                 </div>
             @endforeach
         </div>
@@ -127,38 +127,38 @@
                 </div>
 
                 <label for="add_home_page">
-                    <input type="radio"  id="add_home_page" name="add_home_page"> Có
+                    <input type="radio" id="add_home_page" name="add_home_page"> Có
                 </label>
 
                 <label for="remove_home_page">
-                    <input type="radio"  id="remove_home_page" name="add_home_page"> Không
+                    <input type="radio" id="remove_home_page" name="add_home_page"> Không
                 </label>
             </div>
         </div>
     </div>
 
     <div class="card mt-3">
-        <form action="{{route('add_home_page')}}" method="post">
+        <form action="{{ route('add_home_page') }}" method="post">
             <div class="card-body">
                 @csrf
                 <div class="row">
                     <div class="form-group col-sm-6">
                         <label for="group">Group</label>
                         <select class="form-control" id="group_id" name="group">
-                            @foreach($groups as $key => $group)
-                                <option value="{{$group}}">{{$key}}</option>
+                            @foreach ($groups as $key => $group)
+                                <option value="{{ $group }}">{{ $key }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group col-sm-6">
                         <label for="group">Position</label>
                         <select name="position" id="position_id" class="form-control">
-                            @foreach($position as $value)
-                                <option value="{{$value}}">{{$value}}</option>
+                            @foreach ($position as $value)
+                                <option value="{{ $value }}">{{ $value }}</option>
                             @endforeach
                         </select>
                     </div>
-                    <input type="hidden" name="product_id" value="{{$product->id}}">
+                    <input type="hidden" name="product_id" value="{{ $product->id }}">
                 </div>
             </div>
             <div class="card-footer" style="text-align: right">
@@ -187,7 +187,7 @@
                 <div class="page-title d-flex justify-content-between align-items-center">
                     Product Variant
                     <a class="btn btn-primary float-right align-items-center"
-                       href="{{ route('admin.product_variants.create', ['product_id' => $product->id]) }}">
+                        href="{{ route('admin.product_variants.create', ['product_id' => $product->id]) }}">
                         Add New
                     </a>
                 </div>
@@ -202,54 +202,56 @@
                     <div class="table-responsive users-table">
                         <table class="table table-centered mb-0 " id="product-variants-table">
                             <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th class="d-none d-sm-table-cell">Qty</th>
-                                <th class="d-none d-sm-table-cell">Price</th>
-                                <th class="d-none d-lg-table-cell">Sku</th>
-                                <th>Status</th>
-                                <th colspan="3">Action</th>
-                            </tr>
+                                <tr>
+                                    <th>Name</th>
+                                    <th class="d-none d-sm-table-cell">Qty</th>
+                                    <th class="d-none d-sm-table-cell">Price</th>
+                                    <th class="d-none d-lg-table-cell">Sku</th>
+                                    <th>Status</th>
+                                    <th colspan="3">Action</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            @foreach ($productVariants as $productVariant)
-                                <tr>
-                                    <td>{{ $productVariant->name }}</td>
-                                    <td class="d-none d-sm-table-cell">
-                                        <h4><span class="badge badge-primary">{{ $productVariant->qty }}</span>
-                                        </h4>
-                                    </td>
-                                    <td class="d-none d-sm-table-cell">{{ $productVariant->price }}</td>
-                                    <td class="d-none d-lg-table-cell">{{ $productVariant->sku }}</td>
-                                    <td>
-                                        <div>
-                                            <input class="updateStatus" type="checkbox"
-                                                   id="product-variants-{{ $productVariant->id }}"
-                                                   object="product-variants" object_id="{{ $productVariant->id }}"
-                                                   status="{{ $productVariant->status }}"
-                                                   @if ($productVariant->status == 1) checked @endif
-                                                   data-switch="success"/>
-                                            <label for="product-variants-{{ $productVariant->id }}"
-                                                   data-on-label="Yes" data-off-label="No" class="mb-0 d-block"></label>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <form action="{{ route('admin.product_variants.delete', $productVariant->id) }}"
-                                              method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <div class='btn-group'>
-                                                <a href="{{ route('admin.product_variants.edit', [$productVariant->id]) }}"
-                                                   class="action-icon"> <i class="mdi mdi-eye"></i></a>
-                                                <button type="submit" class="action-icon delete border-0 bg-transparent"
-                                                        onclick="return confirm('Are you sure?')">
-                                                    <i class="mdi mdi-delete"></i>
-                                                </button>
+                                @foreach ($productVariants as $productVariant)
+                                    <tr>
+                                        <td>{{ $productVariant->name }}</td>
+                                        <td class="d-none d-sm-table-cell">
+                                            <h4><span class="badge badge-primary">{{ $productVariant->qty }}</span>
+                                            </h4>
+                                        </td>
+                                        <td class="d-none d-sm-table-cell">{{ $productVariant->price }}</td>
+                                        <td class="d-none d-lg-table-cell">{{ $productVariant->sku }}</td>
+                                        <td>
+                                            <div>
+                                                <input class="updateStatus" type="checkbox"
+                                                    id="product-variants-{{ $productVariant->id }}"
+                                                    object="product-variants" object_id="{{ $productVariant->id }}"
+                                                    status="{{ $productVariant->status }}"
+                                                    @if ($productVariant->status == 1) checked @endif
+                                                    data-switch="success" />
+                                                <label for="product-variants-{{ $productVariant->id }}"
+                                                    data-on-label="Yes" data-off-label="No" class="mb-0 d-block"></label>
                                             </div>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
+                                        </td>
+                                        <td>
+                                            <form
+                                                action="{{ route('admin.product_variants.delete', $productVariant->id) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <div class='btn-group'>
+                                                    <a href="{{ route('admin.product_variants.edit', [$productVariant->id]) }}"
+                                                        class="action-icon"> <i class="mdi mdi-eye"></i></a>
+                                                    <button type="submit"
+                                                        class="action-icon delete border-0 bg-transparent"
+                                                        onclick="return confirm('Are you sure?')">
+                                                        <i class="mdi mdi-delete"></i>
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -277,14 +279,15 @@
             toolbar: 'undo redo | accordion accordionremove | blocks fontfamily fontsize | bold italic underline strikethrough | align numlist bullist | link image | table media | lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code fullscreen preview | save print | pagebreak anchor codesample | ltr rtl',
             height: 600,
             image_upload_url: '/upload-image',
-            images_upload_handler: function (blobInfo) {
-                return new Promise(function (resolve, reject) {
+            images_upload_handler: function(blobInfo) {
+                return new Promise(function(resolve, reject) {
                     var xhr = new XMLHttpRequest();
                     xhr.withCredentials = false;
                     xhr.open('POST', '/upload-image');
-                    xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
+                    xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector(
+                        'meta[name="csrf-token"]').content);
 
-                    xhr.onload = function () {
+                    xhr.onload = function() {
                         try {
                             if (xhr.status != 200) {
                                 throw new Error('HTTP Error: ' + xhr.status);
@@ -303,7 +306,7 @@
                         }
                     };
 
-                    xhr.onerror = function () {
+                    xhr.onerror = function() {
                         console.error('Network error occurred.');
                         reject('Network error occurred.');
                     };
@@ -319,15 +322,15 @@
         });
     </script>
     <script>
-        @if(session('error'))
-        // Display an alert with the error message
-        alert("{{ session('error') }}");
+        @if (session('error'))
+            // Display an alert with the error message
+            alert("{{ session('error') }}");
         @endif
         @if ($errors->has('message'))
-        alert("{{ implode('\n', $errors->get('message')) }}");
+            alert("{{ implode('\n', $errors->get('message')) }}");
         @endif
 
-        $('#uploadFile').change(function () {
+        $('#uploadFile').change(function() {
             let formData = new FormData();
 
             let files = $(this)[0].files;
@@ -381,7 +384,7 @@
             }
         });
 
-        $('#add_home_page_product').on('change', function () {
+        $('#add_home_page_product').on('change', function() {
             let product_id = $(this).attr("data-product_id");
             $.ajax({
                 headers: {
@@ -392,7 +395,7 @@
                 data: {
                     product_id: product_id,
                 },
-                success: function (data) {
+                success: function(data) {
                     console.log(data)
                 }
             });

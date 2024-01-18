@@ -14,42 +14,43 @@
                 @if ($banners->count())
                     <table class="table table-centered mb-0 " id="attributes-table">
                         <thead>
-                        <tr>
-                            <th>Title</th>
-                            <td>Slug</td>
-                            <th>Image</th>
-                            <th>Position</th>
-                            <th>Url</th>
-                            <th>Action</th>
-                        </tr>
+                            <tr>
+                                <th>Title</th>
+                                <td>Slug</td>
+                                <th>Image</th>
+                                <th>Position</th>
+                                <th>Url</th>
+                                <th>Action</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        @foreach ($banners as $banner)
-                            <tr>
-                                <td>{{ $banner -> title }}</td>
-                                <td>{{ $banner -> slug }}</td>
-                                <td><img width="200" src="{{ route('file.show', ['file_id' => $banner -> file_id]) }}"
-                                         alt=""></td>
-                                <td>{{ $banner -> position }}</td>
-                                <td>{{ $banner -> url ?? 'none' }}</td>
-                                <td>
-                                    <form action="{{ route('admin.banners.delete', $banner->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <div class='btn-group'>
-                                            <a class="action-icon"
-                                               href="{{ route('admin.banners.edit', ['id' => $banner->id]) }}">
-                                                <i class="mdi mdi-pencil"></i>
-                                            </a>
-                                            <button type="submit" class="action-icon delete border-0 bg-transparent"
+                            @foreach ($banners as $banner)
+                                <tr>
+                                    <td>{{ $banner->title }}</td>
+                                    <td>{{ $banner->slug }}</td>
+                                    <td style="max-width: 20px"><img
+                                            src="{{ route('file.show', ['file_id' => $banner->file_id]) }}" alt="">
+                                    </td>
+                                    <td>{{ $banner->position }}</td>
+                                    <td>{{ $banner->url ?? 'none' }}</td>
+                                    <td>
+                                        <form action="{{ route('admin.banners.delete', $banner->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <div class='btn-group'>
+                                                <a class="action-icon"
+                                                    href="{{ route('admin.banners.edit', ['id' => $banner->id]) }}">
+                                                    <i class="mdi mdi-pencil"></i>
+                                                </a>
+                                                <button type="submit" class="action-icon delete border-0 bg-transparent"
                                                     onclick="return confirm('Are you sure?')">
-                                                <i class="mdi mdi-delete"></i>
-                                            </button>
-                                        </div>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
+                                                    <i class="mdi mdi-delete"></i>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 @endif

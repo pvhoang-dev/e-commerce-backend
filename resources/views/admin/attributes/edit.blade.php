@@ -18,13 +18,14 @@
                 </ul>
             </div>
         @endif
-        <form action="{{ route('admin.attributes.update', ['id' => $attribute-> id]) }}" method="POST">
+        <form action="{{ route('admin.attributes.update', ['id' => $attribute->id]) }}" method="POST">
             @csrf
             <div class="card-body">
                 <div class="row">
                     <div class="form-group col-12">
                         <label for="attr_name">Name</label>
-                        <input type="text" value="{{$attribute -> name}}" name="name" id="attr_name" class="form-control">
+                        <input type="text" value="{{ $attribute->name }}" name="name" id="attr_name"
+                            class="form-control">
                         @if ($errors->has('name'))
                             <span class="text-danger">{{ $errors->first('name') }}</span>
                         @endif

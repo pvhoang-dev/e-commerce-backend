@@ -22,7 +22,7 @@
 </head>
 
 <body class="loading" data-layout="detached"
-    data-layout-config='{"leftSidebarCondensed":false,"darkMode":true, "showRightSidebarOnStart": true}'>
+    data-layout-config='{"leftSidebarCondensed":false,"darkMode":true, "showRightSidebarOnStart": false}'>
 
     <!-- Topbar Start -->
     @include('admin.layouts.topbar')

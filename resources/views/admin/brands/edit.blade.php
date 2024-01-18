@@ -25,7 +25,7 @@
                     <div class="form-group col-12">
                         <label for="brand_name">Name</label>
                         <input type="text" value="{{ $brand->name }}" name="name" id="brand_name"
-                               class="form-control">
+                            class="form-control">
                         @if ($errors->has('name'))
                             <span class="text-danger">{{ $errors->first('name') }}</span>
                         @endif
@@ -44,32 +44,34 @@
                                 </label>
                             </div>
                         </div>
-                        <!-- Preview -->
-                        <div class="dropzone-previews mt-3">
-                            <div class="card mt-1 mb-0 shadow-none border dz-processing dz-error dz-complete">
-                                <div class="p-2">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto">
-                                            <img src="{{ route('file.show', $brand->file_id) }}"
-                                                 class="avatar-sm rounded bg-light">
-                                            <input type="hidden" name="file_id" value="{{ $brand->file_id }}" />
-                                        </div>
-                                        <div class="col pl-0">
-                                            <a href="javascript:void(0);" class="text-muted font-weight-bold">
-                                                {{ $brand->file->name }}
-                                            </a>
-                                        </div>
-                                        <div class="col-auto">
-                                            <!-- Button -->
-                                            <a href="${urlDeleteImage}" class="btn btn-link btn-lg text-muted"
-                                               data-dz-remove="">
-                                                <i class="dripicons-cross"></i>
-                                            </a>
+                        @if ($brand->file_id)
+                            <!-- Preview -->
+                            <div class="dropzone-previews mt-3">
+                                <div class="card mt-1 mb-0 shadow-none border dz-processing dz-error dz-complete">
+                                    <div class="p-2">
+                                        <div class="row align-items-center">
+                                            <div class="col-auto">
+                                                <img src="{{ route('file.show', $brand->file_id) }}"
+                                                    class="avatar-sm rounded bg-light">
+                                                <input type="hidden" name="file_id" value="{{ $brand->file_id }}" />
+                                            </div>
+                                            <div class="col pl-0">
+                                                <a href="javascript:void(0);" class="text-muted font-weight-bold">
+                                                    {{ $brand->file->name }}
+                                                </a>
+                                            </div>
+                                            <div class="col-auto">
+                                                <!-- Button -->
+                                                <a href="${urlDeleteImage}" class="btn btn-link btn-lg text-muted"
+                                                    data-dz-remove="">
+                                                    <i class="dripicons-cross"></i>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -130,7 +132,7 @@
                         </div>
                         </div>
                         </div>`;
-                        }
+                }
 
                 listImages.append(html);
 

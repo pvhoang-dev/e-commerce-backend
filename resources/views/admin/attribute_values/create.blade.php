@@ -26,7 +26,7 @@
                         <label for="attr_id">Attribute</label>
                         <select class="form-control select2" name="attribute_id" id="attr_id" data-toggle="select2">
                             @foreach ($attributes as $attribute)
-                                <option value="{{$attribute -> id}}">{{$attribute -> name}}</option>
+                                <option value="{{ $attribute->id }}">{{ $attribute->name }}</option>
                             @endforeach
                         </select>
                         @if ($errors->has('attribute_id'))

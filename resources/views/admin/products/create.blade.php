@@ -24,7 +24,8 @@
                 <div class="row">
                     <div class="form-group col-sm-6">
                         <label for="pro_name">Name</label>
-                        <input type="text" name="name" id="pro_name" class="form-control" value="{{ old('name') }}">
+                        <input type="text" name="name" id="pro_name" class="form-control"
+                            value="{{ old('name') }}">
                         @if ($errors->has('name'))
                             <span class="text-danger">{{ $errors->first('name') }}</span>
                         @endif
@@ -32,7 +33,8 @@
 
                     <div class="form-group col-sm-6">
                         <label for="qty">Quantity</label>
-                        <input type="number" name="qty" id="qty" class="form-control" value="{{ old('qty') }}">
+                        <input type="number" name="qty" id="qty" class="form-control"
+                            value="{{ old('qty') }}">
                         @if ($errors->has('qty'))
                             <span class="text-danger">{{ $errors->first('qty') }}</span>
                         @endif
@@ -42,7 +44,9 @@
                         <label for="category_id">Category</label>
                         <select class="form-control select2" name="category_id" id="category_id" data-toggle="select2">
                             @foreach ($categories as $category)
-                                <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : ''}}>{{ $category->name }}</option>
+                                <option value="{{ $category->id }}"
+                                    {{ old('category_id') == $category->id ? 'selected' : '' }}>{{ $category->name }}
+                                </option>
                             @endforeach
                             @if ($errors->has('category_id'))
                                 <span class="text-danger">{{ $errors->first('category_id') }}</span>
@@ -54,7 +58,8 @@
                         <label for="brand_id">Brand</label>
                         <select class="form-control select2" name="brand_id" id="brand_id" data-toggle="select2">
                             @foreach ($brands as $brand)
-                                <option value="{{ $brand->id }}" {{ old('brand_id') == $brand->id ? 'selected' : ''}}>{{ $brand->name }}</option>
+                                <option value="{{ $brand->id }}" {{ old('brand_id') == $brand->id ? 'selected' : '' }}>
+                                    {{ $brand->name }}</option>
                             @endforeach
                             @if ($errors->has('brand_id'))
                                 <span class="text-danger">{{ $errors->first('brand_id') }}</span>
@@ -64,7 +69,8 @@
 
                     <div class="form-group col-sm-6">
                         <label for="price">Price</label>
-                        <input type="number" name="price" id="price" class="form-control" value="{{ old('price') }}">
+                        <input type="number" name="price" id="price" class="form-control"
+                            value="{{ old('price') }}">
                         @if ($errors->has('price'))
                             <span class="text-danger">{{ $errors->first('price') }}</span>
                         @endif
@@ -107,7 +113,7 @@
 @endsection
 @push('js')
     <script>
-        $('#uploadFile').change(function () {
+        $('#uploadFile').change(function() {
             let formData = new FormData();
 
             let files = $(this)[0].files;
@@ -151,8 +157,7 @@
                                         </div>
                                     </div>
                                 </div>`;
-                }
-                ;
+                };
 
                 listImages.append(html);
 
