@@ -29,29 +29,21 @@ Route::get('/files/draft/{file_id}', [FileController::class, 'draft'])
 Route::get('/delete/{file_id}/draft', [FileController::class, 'delete'])
     ->name("file.draft.delete");
 
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->name('admin.')->group(function () {
     #Dashboard
     Route::get('', [HomeController::class, 'index'])
-        ->name('admin.dashboard');
+        ->name('dashboard');
 
     #Attributes
-    Route::get('attributes', [AttributeController::class, 'index'])
-        ->name('admin.attributes.index');
+    Route::prefix('attributes')->controller(AttributeController::class)->name('attributes.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/create', 'store')->name('store');
+        Route::get('/edit/{id}', 'edit')->name('edit');
+        Route::post('/update/{id}', 'update')->name('update');
+        Route::delete('/delete/{id}', 'delete')->name('delete');
+    });
 
-    Route::get('attributes/create', [AttributeController::class, 'create'])
-        ->name('admin.attributes.create');
-
-    Route::post('attributes/create', [AttributeController::class, 'store'])
-        ->name('admin.attributes.store');
-
-    Route::get('attributes/edit/{id}', [AttributeController::class, 'edit'])
-        ->name('admin.attributes.edit');
-
-    Route::post('attributes/update/{id}', [AttributeController::class, 'update'])
-        ->name('admin.attributes.update');
-
-    Route::delete('attributes/delete/{id}', [AttributeController::class, 'delete'])
-        ->name('admin.attributes.delete');
 
     #Attribute Values
     Route::get('attribute-values', [AttributeValueController::class, 'index'])
@@ -204,5 +196,3 @@ Route::prefix('admin')->group(function () {
     Route::get('ajax/attribute-value', [App\Http\Controllers\Admin\AjaxController::class, 'getAttributeValue'])
         ->name('admin.ajaxGetAttributeValue');
 });
-
-
