@@ -225,10 +225,9 @@ class ProductController extends Controller
 
         if (!$description->exists) {
             $description->product_id = $input['id'];
-            $description->description = $input['description'];
-        } else {
-            $description->description = $input['description'];
         }
+
+        $description->description = $input['description'];
 
         $description->save();
 
