@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AjaxController;
 use App\Http\Controllers\Web\CartController;
 use App\Http\Controllers\Web\CheckoutController;
 use App\Http\Controllers\Web\OrderController;
@@ -24,18 +25,17 @@ Route::get('/', [HomeController::class, 'index'])
 Route::get('/detail/{id}', [ProductDetailController::class, 'index'])
     ->name("detail.show");
 
-Route::get('/home/ajax/products',[\App\Http\Controllers\Admin\AjaxController::class, 'getProductsHomePage'])
+Route::get('/home/ajax/products', [AjaxController::class, 'getProductsHomePage'])
     ->name('ajaxGetProductHomePage');
 
 // Cart
 Route::get('/cart', [CartController::class, 'index'])
     ->name("cart.show");
-// Checkout
 
+// Checkout
 Route::get('/checkout', [CheckoutController::class, 'index'])
     ->name("checkout.show");
 
 // Order
-
 Route::post('/order/store', [OrderController::class, 'store'])
     ->name("order.store");

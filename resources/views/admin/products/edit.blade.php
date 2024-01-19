@@ -138,7 +138,7 @@
     </div>
 
     <div class="card mt-3">
-        <form action="{{ route('add_home_page') }}" method="post">
+        <form action="{{ route('admin.add_home_page') }}" method="post">
             <div class="card-body">
                 @csrf
                 <div class="row">
