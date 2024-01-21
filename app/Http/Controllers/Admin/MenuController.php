@@ -46,9 +46,11 @@ class MenuController extends Controller
     {
         $input = $request->all();
 
-        Menu::create($input);
+        $menu = Menu::create($input);
 
-        return redirect()->route('admin.menus.index');
+        return redirect()->route('admin.menus.edit', [
+            'id' => $menu->id
+        ]);
     }
 
     /**

@@ -82,7 +82,9 @@ class ProductController extends Controller
             ProductImage::insert($arrProductImg);
         }
 
-        return redirect()->route('admin.products.index');
+        return redirect()->route('admin.products.edit', [
+            'id' => $product->id
+        ]);
     }
 
     /**
@@ -169,7 +171,7 @@ class ProductController extends Controller
                 return redirect()->back()->withErrors(["message" => "An error occurred while updating the product."]);
             }
 
-            return redirect()->route('admin.products.index')->with('success', 'Product updated successfully');
+            return redirect()->back();
         } catch (\Exception $e) {
 
             return redirect()->back()->withErrors(["message" => "An unexpected error occurred."]);

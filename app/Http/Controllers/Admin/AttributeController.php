@@ -38,9 +38,11 @@ class AttributeController extends Controller
     {
         $input = $request->all();
 
-        Attribute::create($input);
+        $attr = Attribute::create($input);
 
-        return redirect()->route('admin.attributes.index');
+        return redirect()->route('admin.attributes.edit', [
+            'id' => $attr->id
+        ]);
     }
 
     /**
@@ -77,7 +79,7 @@ class AttributeController extends Controller
 
         $attribute->update($input);
 
-        return redirect()->route('admin.attributes.index');
+        return redirect()->back();
     }
 
     /**

@@ -50,9 +50,11 @@ class BrandController extends Controller
             $input['file_id'] = $response["id"];
         }
 
-        Brand::create($input);
+        $brand = Brand::create($input);
 
-        return redirect()->route('admin.brands.index');
+        return redirect()->route('admin.brands.edit', [
+            'id' => $brand->id
+        ]);
     }
 
     /**
@@ -99,7 +101,7 @@ class BrandController extends Controller
 
         $brand->update($input);
 
-        return redirect()->route('admin.brands.index');
+        return redirect()->back();
     }
 
     /**

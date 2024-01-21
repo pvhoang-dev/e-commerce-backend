@@ -50,9 +50,11 @@ class BannerController extends Controller
             $input['file_id'] = $response["id"];
         }
 
-        Banner::create($input);
+        $banner = Banner::create($input);
 
-        return redirect()->route('admin.banners.index');
+        return redirect()->route('admin.banners.edit', [
+            'id' => $banner->id
+        ]);
     }
 
     /**
@@ -99,7 +101,7 @@ class BannerController extends Controller
 
         $banner->update($input);
 
-        return redirect()->route('admin.banners.index');
+        return redirect()->back();
     }
 
     /**

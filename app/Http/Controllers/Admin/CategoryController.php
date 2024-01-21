@@ -54,9 +54,11 @@ class CategoryController extends Controller
             $input['file_id'] = $response["id"];
         }
 
-        Category::create($input);
+        $category = Category::create($input);
 
-        return redirect()->route('admin.categories.index');
+        return redirect()->route('admin.categories.edit', [
+            'id' => $category->id
+        ]);
     }
 
     /**

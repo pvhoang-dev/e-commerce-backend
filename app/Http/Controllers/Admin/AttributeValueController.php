@@ -39,9 +39,11 @@ class AttributeValueController extends Controller
     {
         $input = $request->all();
 
-        AttributeValue::create($input);
+        $attrValue = AttributeValue::create($input);
 
-        return redirect()->route('admin.attribute_values.index');
+        return redirect()->route('admin.attribute_values.edit', [
+            'id' => $attrValue->id
+        ]);
     }
 
     /**
@@ -81,7 +83,7 @@ class AttributeValueController extends Controller
 
         $attributeValue->update($input);
 
-        return redirect()->route('admin.attribute_values.index');
+        return redirect()->back();
     }
 
     /**

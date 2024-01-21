@@ -93,7 +93,7 @@ class ProductVariantController extends Controller
 
         $product->save();
 
-        return redirect()->route('admin.products.edit', ['id' => $input["product_id"]]);
+        return redirect()->route('admin.product_variants.edit', ['id' => $variant->id]);
     }
 
     /**
