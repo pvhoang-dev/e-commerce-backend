@@ -11,7 +11,7 @@
     <!--- Sidemenu -->
     <ul class="metismenu side-nav">
 
-        <li class="side-nav-title side-nav-item">Menu</li>
+        <li class="side-nav-title side-nav-item">For Products</li>
 
         <li class="side-nav-item">
             <a href="{{ route('admin.attributes.index') }}" class="side-nav-link">
@@ -48,6 +48,33 @@
             </a>
         </li>
 
+        <li class="side-nav-title side-nav-item">Order management</li>
+
+        <li class="side-nav-item">
+            <a href="#" class="side-nav-link">
+                <i class="dripicons-chevron-right"></i>
+                <span>Orders</span>
+            </a>
+        </li>
+
+        <li class="side-nav-title side-nav-item">Promotion management</li>
+
+        <li class="side-nav-item">
+            <a href="#" class="side-nav-link">
+                <i class="dripicons-chevron-right"></i>
+                <span>Promotion</span>
+            </a>
+        </li>
+
+        <li class="side-nav-title side-nav-item">Display</li>
+
+        <li class="side-nav-item">
+            <a href="#" class="side-nav-link">
+                <i class="dripicons-chevron-right"></i>
+                <span>HomePage</span>
+            </a>
+        </li>
+
         <li class="side-nav-item">
             <a href="{{ route('admin.banners.index') }}" class="side-nav-link">
                 <i class="dripicons-chevron-right"></i>
@@ -59,6 +86,13 @@
             <a href="{{ route('admin.menus.index') }}" class="side-nav-link">
                 <i class="dripicons-chevron-right"></i>
                 <span>Menus</span>
+            </a>
+        </li>
+
+        <li class="side-nav-item">
+            <a href="#" class="side-nav-link">
+                <i class="dripicons-chevron-right"></i>
+                <span>Blogs</span>
             </a>
         </li>
 
