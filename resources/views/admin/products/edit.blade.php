@@ -92,7 +92,7 @@
 
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('admin.products.update', ['id' => $product->id]) }}" method="POST">
+            <form action="{{ route('admin.products.upload_images', ['id' => $product->id]) }}" method="POST">
                 @csrf
                 <h4 class="mb-3">Upload Images</h4>
                 <hr>
