@@ -221,7 +221,14 @@ class ProductController extends Controller
 
             $file = File::find($id);
 
-            ProductImage::where('file_id', $id)->delete();
+            $productImage = ProductImage::where('file_id', $id)->first();
+
+            if($productImage->type == 1)
+            {
+                return response()->json(['success' => false, 'message' => "Do not delete the default image"]);
+            }
+
+            $productImage->delete();
 
             $file->delete();
 

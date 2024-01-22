@@ -132,7 +132,7 @@
                             <div class="col-md-3 col-sm-6 col-12 img-{{ $img->file_id }}">
                                 <div class="card ribbon-box">
                                     <div class="card-body border rounded">
-                                        <div data-id="{{ $img->file_id }}" role="button" class="deleteImg ribbon ribbon-warning float-right">
+                                        <div data-id="{{ $img->file_id }}" role="button" class="deleteImg ribbon ribbon-primary float-right">
                                             <i class="dripicons-cross"></i>
                                         </div>
                                         <div class="float-left custom-control custom-radio">
@@ -467,8 +467,14 @@
                         id: id,
                     },
                     success: function (data) {
-                        $.NotificationApp.send("Success", "Deleted image", "bottom-right", "success");
-                        $(".img-" + id).remove();
+                        if (data.success == true) {
+                            $.NotificationApp.send("Success", data.message, "bottom-right", '#10c469', "success");
+                            setTimeout(function() {
+                                $(".img-" + id).remove();
+                            }, 500);
+                        } else {
+                            $.NotificationApp.send("Warning", data.message, "bottom-right", '#f9c851', "warning");
+                        }
                     }
                 });
             }
