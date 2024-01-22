@@ -241,6 +241,56 @@ class ProductController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
+    public function setupPositionImages(Request $request)
+    {
+        if(!$request->has('defaultImage'))
+        {
+            return redirect()->back()->withErrors(["message" => "Choose default image!!!"]);
+        }
+
+        if($request->has('file'))
+        {
+            try {
+                DB::beginTransaction();
+
+                $positions = $request->get('file');
+
+                $defaultImage = $request->get('defaultImage');
+
+                $type = 0;
+
+                foreach ($positions as $file_id => $position)
+                {
+                    if($defaultImage == $file_id)
+                    {
+                        $type = 1;
+                    }
+
+                    DB::table('product_images')
+                        ->where('file_id', $file_id)
+                        ->update([
+                            'position' => $position,
+                            'type' => $type
+                        ]);
+
+                    $type = 0;
+                }
+
+                DB::commit();
+
+                return redirect()->back();
+            } catch (\Exception $e) {
+                DB::rollBack();
+
+                return redirect()->back()->withErrors(["message" => $e->getMessage()]);
+            }
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function storeDescription(Request $request)
     {
         $input = $request->all();

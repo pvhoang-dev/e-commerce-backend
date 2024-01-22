@@ -123,24 +123,28 @@
     @if ($product->images->count())
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('admin.products.update', ['id' => $product->id]) }}" method="POST">
+                <form action="{{ route('admin.products.setup_position_images') }}" method="POST">
                     @csrf
                     <h4 class="mb-3">Product Images</h4>
                     <hr>
                     <div class="row">
                         @foreach ($product->images->sortBy('position') as $img)
-                            <div class="col-md-3 col-sm-6 col-12">
+                            <div class="col-md-3 col-sm-6 col-12 img-{{ $img->file_id }}">
                                 <div class="card ribbon-box">
                                     <div class="card-body border rounded">
-                                        <div role="button" class="ribbon ribbon-warning float-right">
+                                        <div data-id="{{ $img->file_id }}" role="button" class="deleteImg ribbon ribbon-warning float-right">
                                             <i class="dripicons-cross"></i>
                                         </div>
-                                        <h5 class="float-left mt-0">
+                                        <div class="float-left custom-control custom-radio">
+                                            <input class="custom-control-input" type="radio" name="defaultImage" id="option-{{ $img->file_id }}" @if($img->type) checked @endif value="{{ $img->file_id }}">
+                                            <label class="custom-control-label" for="option-{{ $img->file_id }}">Default</label>
+                                        </div>
+                                        <h5 class="mt-0">
                                             <div class="input-group input-group-sm mb-3">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Pos</span>
                                                 </div>
-                                                <input value="{{ $img->position }}" type="text" class="form-control"
+                                                <input name="file[{{ $img->file_id }}]" value="{{ $img->position }}" type="number" class="form-control"
                                                        aria-label="Small">
                                             </div>
                                         </h5>
