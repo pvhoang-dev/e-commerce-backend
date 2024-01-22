@@ -45,7 +45,7 @@ class FileController extends Controller
         return response()->file(storage_path("app/" . $file->path), array('Content-Type' => $file->mime_type));
     }
 
-    public function delete($id)
+    public function deleteDraft($id)
     {
         try {
             $file = FileDraft::findOrFail($id);
