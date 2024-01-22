@@ -28,7 +28,7 @@ Route::get('/files/{file_id}', [FileController::class, 'index'])
 Route::get('/files/draft/{file_id}', [FileController::class, 'draft'])
     ->name("file.draft.show");
 
-Route::get('/delete/{file_id}/draft', [FileController::class, 'delete'])
+Route::delete('/delete/{file_id}/draft', [FileController::class, 'delete'])
     ->name("file.draft.delete");
 
 Route::prefix('admin')->name('admin.')->group(function () {

@@ -368,23 +368,44 @@
                                                 </a>
                                         </div>
                                         <div class="col-auto">
-                        <a href="${urlDeleteImage}" class="btn btn-link btn-lg text-muted" data-dz-remove="">
+                        <button data-href="${urlDeleteImage}" data-id="product-image-${file.id}" class="btn btn-link btn-lg text-muted pre-image" data-dz-remove="">
                         <i class="dripicons-cross"></i>
-                        </a>
+                        </button>
                         </div>
                         </div>
                         </div>`;
                 }
 
                 listImages.append(html);
-
-
             } else {
                 alert('Upload ảnh lỗi');
             }
         });
 
-        $('#add_home_page_product').on('change', function() {
+        $('.dropzone-previews').on('click', '.pre-image', function (event) {
+            event.preventDefault();
+            var deleteLink = $(this);
+            var dataId = deleteLink.data('id');
+            var urlDeleteImage = deleteLink.data('href');
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: urlDeleteImage,
+                method: 'DELETE',
+                dataType: 'json',
+                success: function (response) {
+                    $('.' + dataId).remove();
+                    console.log(response.message);
+                },
+                error: function (error) {
+                    console.error('Error:', error.responseJSON.error);
+                }
+            });
+        });
+
+        $('#add_home_page_product').on('change', function () {
             let product_id = $(this).attr("data-product_id");
             $.ajax({
                 headers: {
