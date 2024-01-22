@@ -45,15 +45,18 @@ class FileController extends Controller
         return response()->file(storage_path("app/" . $file->path), array('Content-Type' => $file->mime_type));
     }
 
-    public function delete($id)
+    public function deleteDraft($id)
     {
-        $fileId = FileDraft::where('id', $id)
-            ->first();
+        try {
+            $file = FileDraft::findOrFail($id);
 
-        unlink(storage_path("app/" . $fileId->path));
+            unlink(storage_path("app/" . $file->path));
 
-        $fileId->delete();
+            $file->delete();
 
-        return redirect()->back();
+            return response()->json(['message' => 'File deleted successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to delete file'], 500);
+        }
     }
 }

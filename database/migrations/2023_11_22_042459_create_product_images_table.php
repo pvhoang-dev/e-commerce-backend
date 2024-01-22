@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('product_images', function (Blueprint $table) {
             $table->id();
             $table->tinyInteger('type')->default(0);
+            $table->integer('position')->default(0);
             $table->unsignedBigInteger("product_id");
             $table->unsignedBigInteger("file_id");
             $table->timestamps();

@@ -18,6 +18,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -56,32 +57,13 @@ class ProductController extends Controller
      */
     public function store(CreateProductRequest $request)
     {
-        $arrProductImg = [];
-
         $input = $request->all();
 
         $product = Product::create($input);
 
         if ($request->has('file_id')) {
-            foreach ($request->get('file_id') as $file_id) {
-                $response = MakeFinalFileService::convertDraftToFinal($file_id);
-
-                if (!$response["status"]) {
-                    return redirect()->back()->withErrors(["message" => "Upload file errors!"]);
-                }
-
-                $arrProductImg[] = [
-                    'file_id' => $response["id"],
-                    'type' => 0,
-                    'product_id' => $product->id,
-                ];
-            }
-
-            $arrProductImg[0]['type'] = 1;
-
-            ProductImage::insert($arrProductImg);
+            self::uploadImages($request, $product->id, true);
         }
-
         return redirect()->route('admin.products.edit', [
             'id' => $product->id
         ]);
@@ -126,56 +108,17 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, $id)
     {
+        $product = Product::findOrFail($id);
+
         try {
-            $arrProductImg = [];
-            $tmp = true;
+            $input = $request->all();
 
-            $product = Product::find($id);
-
-            if ($product->images->where('type', 1)->count() > 0) {
-                $tmp = false;
-            }
-
-            if ($request->has('file_id')) {
-                foreach ($request->get('file_id') as $file_id) {
-                    $response = MakeFinalFileService::convertDraftToFinal($file_id);
-
-                    if (!$response["status"]) {
-                        return redirect()->back()->withErrors(["message" => "Upload file errors!"]);
-                    }
-
-                    $arrProductImg[] = [
-                        'file_id' => $response["id"],
-                        'type' => 0,
-                        'product_id' => $id,
-                    ];
-                }
-
-                if ($tmp)
-                    $arrProductImg[0]['type'] = 1;
-            }
-
-            DB::beginTransaction();
-
-            try {
-                ProductImage::insert($arrProductImg);
-
-                $input = $request->all();
-
-                $product->update($input);
-
-                DB::commit();
-            } catch (\Exception $e) {
-                DB::rollback();
-
-                return redirect()->back()->withErrors(["message" => "An error occurred while updating the product."]);
-            }
-
-            return redirect()->back();
+            $product->update($input);
         } catch (\Exception $e) {
-
-            return redirect()->back()->withErrors(["message" => "An unexpected error occurred."]);
+            return redirect()->back()->withErrors(["message" => "An error occurred while updating the product."]);
         }
+
+        return redirect()->back();
     }
 
     /**
@@ -212,6 +155,135 @@ class ProductController extends Controller
 
             // Handle other types of exceptions or rethrow the exception
             dd($e);
+        }
+    }
+
+    /**
+     * @param $file
+     * @param $id
+     * @param bool $create
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function uploadImages(Request $request, $id = null, $create = false)
+    {
+        if ($request->has('file_id')) {
+            $arrProductImg = [];
+
+            if ($create) {
+                $productId = $id;
+            } else {
+                $productId = $request->id;
+            }
+
+            $product = Product::find($productId);
+
+            $hasDefault = $product?->images->where('type', 1)->first();
+
+            foreach ($request->get('file_id') as $file_id) {
+                $response = MakeFinalFileService::convertDraftToFinal($file_id);
+
+                if (!$response["status"]) {
+                    return redirect()->back()->withErrors(["message" => "Upload file errors!"]);
+                }
+
+                $arrProductImg[] = [
+                    'file_id' => $response["id"],
+                    'position' => 0,
+                    'product_id' => $productId,
+                    'type' => 0,
+                ];
+            }
+
+            if ($create || !$hasDefault) {
+                $arrProductImg[0]['type'] = 1;
+            }
+
+            ProductImage::insert($arrProductImg);
+
+            if (!$create) {
+                return redirect()->back();
+            }
+        } else {
+            return redirect()->back()->withErrors(["message" => "Empty images."]);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteImage(Request $request)
+    {
+        $id = $request->id;
+
+        try {
+            DB::beginTransaction();
+
+            $file = File::find($id);
+
+            ProductImage::where('file_id', $id)->delete();
+
+            $file->delete();
+
+            unlink(storage_path("app/" . $file->path));
+
+            DB::commit();
+
+            return response()->json(['success' => true, 'message' => 'Image deleted successfully']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function setupPositionImages(Request $request)
+    {
+        if(!$request->has('defaultImage'))
+        {
+            return redirect()->back()->withErrors(["message" => "Choose default image!!!"]);
+        }
+
+        if($request->has('file'))
+        {
+            try {
+                DB::beginTransaction();
+
+                $positions = $request->get('file');
+
+                $defaultImage = $request->get('defaultImage');
+
+                $type = 0;
+
+                foreach ($positions as $file_id => $position)
+                {
+                    if($defaultImage == $file_id)
+                    {
+                        $type = 1;
+                    }
+
+                    DB::table('product_images')
+                        ->where('file_id', $file_id)
+                        ->update([
+                            'position' => $position,
+                            'type' => $type
+                        ]);
+
+                    $type = 0;
+                }
+
+                DB::commit();
+
+                return redirect()->back();
+            } catch (\Exception $e) {
+                DB::rollBack();
+
+                return redirect()->back()->withErrors(["message" => $e->getMessage()]);
+            }
         }
     }
 
