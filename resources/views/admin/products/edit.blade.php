@@ -182,7 +182,8 @@
         </div>
     </div>
 
-    <div class="row">
+   {{--
+   <div class="row">
         <div class="col-12">
             <div class="page-title-box">
                 <div class="page-title d-flex justify-content-between align-items-center">
@@ -229,6 +230,7 @@
             </div>
         </form>
     </div>
+    --}}
 
     <div class="row">
         <div class="col-12">
@@ -252,6 +254,7 @@
                         <table class="table table-centered mb-0 " id="product-variants-table">
                             <thead>
                             <tr>
+                                <th>Image</th>
                                 <th>Name</th>
                                 <th class="d-none d-sm-table-cell">Qty</th>
                                 <th class="d-none d-sm-table-cell">Price</th>
@@ -263,6 +266,15 @@
                             <tbody>
                             @foreach ($productVariants as $productVariant)
                                 <tr>
+                                    <td style="max-width: 20px">
+                                        @if ($productVariant->file_id)
+                                            <img class="rounded mr-1 mb-3 mb-sm-0 img-fluid"
+                                                 src="{{ route('file.show', $productVariant->file_id) }}" alt="">
+                                        @else
+                                            <img class="rounded mr-1 mb-3 mb-sm-0 img-fluid"
+                                                 src="{{ asset('images/default/default_image.png') }}" alt="">
+                                        @endif
+                                    </td>
                                     <td>{{ $productVariant->name }}</td>
                                     <td class="d-none d-sm-table-cell">
                                         <h4><span class="badge badge-primary">{{ $productVariant->qty }}</span>
@@ -326,7 +338,7 @@
             plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount charmap quickbars emoticons accordion',
             menubar: 'file edit view insert format tools table help',
             toolbar: 'undo redo | accordion accordionremove | blocks fontfamily fontsize | bold italic underline strikethrough | align numlist bullist | link image | table media | lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code fullscreen preview | save print | pagebreak anchor codesample | ltr rtl',
-            height: 600,
+            height: 500,
             image_upload_url: '/upload-image',
             images_upload_handler: function (blobInfo) {
                 return new Promise(function (resolve, reject) {

@@ -66,9 +66,50 @@
                             </div>
                         @endforeach
                     @endif
+                    @if($productImages->count())
+                        <div class="m-2 row">
+                            <h4 class="mb-3 col-12">Select Product Variant Image</h4>
+                            @foreach ($productImages as $image)
+                                <div class="col-md-3 col-sm-6 col-12 img-{{ $image->file_id }}">
+                                    <div class="card ribbon-box">
+                                        <div class="card-body border rounded">
+                                            <div data-id="{{ $image->file_id }}" role="button" class="deleteImg ribbon ribbon-secondary float-right">
+                                                <div class="custom-control custom-radio">
+                                                    <input class="custom-control-input" type="radio" name="file_id" @if($productVariant->file_id == $image->file_id) checked @endif id="option-{{ $image->file_id }}" value="{{ $image->file_id }}">
+                                                    <label class="custom-control-label" for="option-{{ $image->file_id }}"></label>
+                                                </div>
+                                            </div>
+                                            <div class="ribbon-content">
+                                                <a href="{{ route('file.show', $image->file_id) }}" target="_blank">
+                                                    <img src="{{ route('file.show', $image->file_id) }}" alt="post-img"
+                                                         class="rounded mr-1 mb-3 mb-sm-0 img-fluid">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                            <div class="col-md-3 col-sm-6 col-12">
+                                <div class="card ribbon-box">
+                                    <div class="card-body border rounded">
+                                        <div data-id="0" role="button" class="deleteImg ribbon ribbon-warning float-right">
+                                            <div class="custom-control custom-radio">
+                                                <input class="custom-control-input" type="radio" name="file_id" @if($productVariant->file_id == null) checked @endif id="option-0" value="0">
+                                                <label class="custom-control-label" for="option-0">NULL</label>
+                                            </div>
+                                        </div>
+                                        <div class="ribbon-content">
+                                            <img src="{{ asset('images/default/default_image.png') }}" alt="post-img"
+                                                 class="rounded mr-1 mb-3 mb-sm-0 img-fluid">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
-            <div class="card-footer float-right">
+            <div class="card-footer w-100 d-flex justify-content-end">
                 <button type="submit" class="btn btn-primary" id="create">Save</button>
             </div>
         </form>

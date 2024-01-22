@@ -9,6 +9,7 @@ use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Product;
 use App\Models\ProductAttributeValue;
+use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -28,13 +29,15 @@ class ProductVariantController extends Controller
     {
         $attributes = Attribute::get();
 
+        $productId = $request->get("product_id");
+
         $product = Product::with([
             'productAttributeValue' => function ($query) {
                 $query->where('product_variant_id', '>', 0);
             },
             'productAttributeValue.attributeValue'
         ])
-            ->where("id", $request->get("product_id"))
+            ->where("id", $productId)
             ->first();
 
         $variantAttribute = $attributeValue = [];
@@ -49,11 +52,14 @@ class ProductVariantController extends Controller
             $attributeValue = AttributeValue::whereIn("attribute_id", $variantAttribute)->get();
         }
 
+        $productImages = ProductImage::where('product_id', $productId)->get();
+
         return view('admin.product_variants.create', [
             'attributes' => $attributes,
             'variantAttribute' => $variantAttribute,
             'variantAttributeValue' => $attributeValue,
-            'product' => $product
+            'product' => $product,
+            'productImages' => $productImages
         ]);
     }
 
@@ -114,9 +120,12 @@ class ProductVariantController extends Controller
 
         $product = Product::find($productVariant->product_id);
 
+        $productImages = ProductImage::where('product_id', $productVariant->product_id)->get();
+
         return view('admin.product_variants.edit', [
             'product' => $product,
-            'productVariant' => $productVariant
+            'productVariant' => $productVariant,
+            'productImages' => $productImages
         ]);
     }
 

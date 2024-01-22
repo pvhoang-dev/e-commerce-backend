@@ -17,7 +17,8 @@ class ProductVariant extends Model
         'sku',
         'qty',
         'price',
-        'status'
+        'status',
+        'file_id'
     ];
 
     public static function getRules($id = null)

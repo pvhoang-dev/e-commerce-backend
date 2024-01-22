@@ -228,6 +228,8 @@ class ProductController extends Controller
                 return response()->json(['success' => false, 'message' => "Do not delete the default image"]);
             }
 
+            ProductVariant::where('file_id', $id)->update(['file_id' => 0]);
+
             $productImage->delete();
 
             $file->delete();
