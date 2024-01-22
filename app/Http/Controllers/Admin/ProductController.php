@@ -73,6 +73,7 @@ class ProductController extends Controller
                 $arrProductImg[] = [
                     'file_id' => $response["id"],
                     'type' => 0,
+                    'position' => 0,
                     'product_id' => $product->id,
                 ];
             }
@@ -94,6 +95,8 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::find($id);
+
+//        dd($product->images->sortby('position'));
 
         if (!$product) {
             dd(404);
