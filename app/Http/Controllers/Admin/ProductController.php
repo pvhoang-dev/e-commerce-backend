@@ -18,6 +18,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -204,6 +205,35 @@ class ProductController extends Controller
             }
         } else {
             return redirect()->back()->withErrors(["message" => "Empty images."]);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteImage(Request $request)
+    {
+        $id = $request->id;
+
+        try {
+            DB::beginTransaction();
+
+            $file = File::find($id);
+
+            ProductImage::where('file_id', $id)->delete();
+
+            $file->delete();
+
+            unlink(storage_path("app/" . $file->path));
+
+            DB::commit();
+
+            return response()->json(['success' => true, 'message' => 'Image deleted successfully']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
 

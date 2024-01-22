@@ -449,6 +449,27 @@
             });
         });
 
+        $(".deleteImg").on('click', function () {
+            if (confirm("Are you sure you want to delete this image?")) {
+                let id = $(this).data('id');
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "{{ route('admin.products.delete_image') }}",
+                    method: "POST",
+                    data: {
+                        id: id,
+                    },
+                    success: function (data) {
+                        $.NotificationApp.send("Success", "Deleted image", "bottom-right", "success");
+                        $(".img-" + id).remove();
+                    }
+                });
+            }
+        });
+
         $('#add_home_page_product').on('change', function () {
             let product_id = $(this).attr("data-product_id");
             $.ajax({

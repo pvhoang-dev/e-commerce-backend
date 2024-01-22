@@ -76,6 +76,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('/delete/{id}', 'delete')->name('delete');
         Route::post('/store-description', 'storeDescription')->name('store_description');
         Route::post('/upload-images', 'uploadImages')->name('upload_images');
+        Route::post('/delete-image', 'deleteImage')->name('delete_image');
     });
 
     #Product Variants
