@@ -31,7 +31,7 @@ class ProductController extends Controller
 
         $products = Product::with(['images' => function ($query) {
             $query->where('type', 1);
-        }])->where('status', 1)->paginate(10);
+        }])->paginate(10);
 
         return view('admin.products.index', ['products' => $products]);
     }
@@ -81,7 +81,7 @@ class ProductController extends Controller
             dd(404);
         }
 
-        $productVariants = ProductVariant::where('product_id', $product->id)->paginate(5);
+        $productVariants = ProductVariant::where('product_id', $product->id)->get();
 
         $categories = Category::get();
 
@@ -313,6 +313,24 @@ class ProductController extends Controller
         $description->description = $input['description'];
 
         $description->save();
+
+        return redirect()->back();
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+
+        if($request->get('status'))
+        {
+            if($product->productVariants->first() && $product->qty > 0){
+                $product->update(['status' => 1]);
+            } else {
+                return redirect()->back()->withErrors(["message" => "Product does not have variants or quantity = 0"]);
+            }
+        } else {
+            $product->update(['status' => 0]);
+        }
 
         return redirect()->back();
     }

@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests\Admin;
 
-use App\Models\Product;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Str;
 
-class CreateProductRequest extends FormRequest
+class UpdateVariantDiscountRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +20,9 @@ class CreateProductRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'slug' => Str::slug($this->name),
-            'status' => 0,
-            'sku' => 'N&H' . Str::upper(Str::random(10)),
-            'qty' => $this->qty ?? 0,
-            'promotion_price' => $this->promotion_price ?? 0
+            'status' => $this->status == null ? 0 : 1,
+            'start_date' => $this->start_date ?? 0,
+            'end_date' => $this->end_date ?? 0,
         ]);
     }
 
@@ -37,6 +33,13 @@ class CreateProductRequest extends FormRequest
      */
     public function rules(): array
     {
-        return Product::getRules();
+        return [
+            'discount_percent'  => [
+                'required',
+                'numeric',
+                'min:1',
+                'max:100'
+            ]
+        ];
     }
 }

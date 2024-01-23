@@ -48,8 +48,10 @@
                                         <input class="updateStatus" type="checkbox" id="product-{{ $product->id }}"
                                             object="products" object_id="{{ $product->id }}"
                                             status="{{ $product->status }}" @if ($product->status == 1) checked @endif
-                                            data-switch="success" />
-                                        <label for="product-{{ $product->id }}" data-on-label="Yes" data-off-label="No"
+                                            data-switch="success"
+                                            disabled
+                                        />
+                                        <label for="product-{{ $product->id }}" data-on-label="" data-off-label=""
                                             class="mb-0 d-block"></label>
                                     </div>
                                 </td>
