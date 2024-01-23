@@ -23,7 +23,7 @@ class CreateProductRequest extends FormRequest
     {
         $this->merge([
             'slug' => Str::slug($this->name),
-            'status' => 1,
+            'status' => 0,
             'sku' => 'N&H' . Str::upper(Str::random(10)),
             'qty' => $this->qty ?? 0,
         ]);

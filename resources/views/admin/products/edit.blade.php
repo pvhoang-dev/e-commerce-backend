@@ -8,19 +8,46 @@
 @endsection
 
 @section('content')
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="card">
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+        <div class="card-body">
+            <form action="{{ route('admin.products.update_status', ['id' => $product->id]) }}" method="POST">
+                @csrf
+                <h4 class="mb-3">Status</h4>
+                <hr>
+                <div class="form-group col-12">
+                    <div>
+                        <input class="updateStatus" type="checkbox" id="product-status"
+                               name="status"
+                               @if ($product->status == 1) checked @endif
+                               data-switch="success"
+                        />
+                        <label for="product-status" data-on-label="Yes" data-off-label="No"
+                               class="mb-0 d-block"></label>
+                    </div>
+                    <span>(public to client or block)</span>
+                </div>
+                <div class="float-right">
+                    <button type="submit" class="btn btn-primary" id="create">Update status</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card">
         <form action="{{ route('admin.products.update', ['id' => $product->id]) }}" method="POST">
             @csrf
             <div class="card-body">
+                <h4 class="mb-3">Information</h4>
+                <hr>
                 <div class="row">
                     <div class="form-group col-sm-6">
                         <label for="pro_name">Name</label>

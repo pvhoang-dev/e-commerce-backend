@@ -78,6 +78,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/upload-images', 'uploadImages')->name('upload_images');
         Route::post('/delete-image', 'deleteImage')->name('delete_image');
         Route::post('/setup-position-images', 'setupPositionImages')->name('setup_position_images');
+        Route::post('/update-status/{id}', 'updateStatus')->name('update_status');
     });
 
     #Product Variants
