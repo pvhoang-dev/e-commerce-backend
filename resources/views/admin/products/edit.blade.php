@@ -104,6 +104,15 @@
                         @endif
                     </div>
 
+                    <div class="form-group col-sm-6">
+                        <label for="promotion_price">Promotion Price</label>
+                        <input type="number" name="promotion_price" id="promotion_price" class="form-control"
+                               value="{{ $product->promotion_price }}">
+                        @if ($errors->has('promotion_price'))
+                            <span class="text-danger">{{ $errors->first('promotion_price') }}</span>
+                        @endif
+                    </div>
+
                     <div class="form-group col-sm-12">
                         <label for="short_desc">Description</label>
                         <input type="text" value="{{ $product->short_description }}" name="short_description"

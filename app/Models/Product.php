@@ -44,6 +44,12 @@ class Product extends Model
             ],
             'price' => [
                 'required',
+                'numeric',
+                'gte:0',
+            ],
+            'qty' => [
+                'numeric',
+                'gte:0',
             ],
         ];
     }
