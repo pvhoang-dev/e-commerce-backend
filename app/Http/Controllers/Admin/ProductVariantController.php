@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CreateProductVariantRequest;
 use App\Http\Requests\Admin\UpdateProductVariantRequest;
+use App\Http\Requests\Admin\UpdateVariantDiscountRequest;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Product;
 use App\Models\ProductAttributeValue;
 use App\Models\ProductImage;
+use App\Models\ProductPromotion;
 use App\Models\ProductVariant;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -122,10 +124,13 @@ class ProductVariantController extends Controller
 
         $productImages = ProductImage::where('product_id', $productVariant->product_id)->get();
 
+        $productPromotion = ProductPromotion::where('product_variant_id', $productVariant->id)->first();
+
         return view('admin.product_variants.edit', [
             'product' => $product,
             'productVariant' => $productVariant,
-            'productImages' => $productImages
+            'productImages' => $productImages,
+            'productPromotion' => $productPromotion
         ]);
     }
 
@@ -191,6 +196,27 @@ class ProductVariantController extends Controller
             // Handle other types of exceptions or rethrow the exception
             dd($e);
         }
+    }
+
+    public function updateDiscount(UpdateVariantDiscountRequest $request, $id)
+    {
+        $productVariant = ProductVariant::findOrFail($id);
+
+        $input = $request->all();
+
+        $productPromotion = ProductPromotion::firstOrNew(['product_variant_id' => $id]);
+
+        if (!$productPromotion->exists) {
+            $productPromotion->product_id = $productVariant->product_id;
+            $productPromotion->product_variant_id = $id;
+            $productPromotion->product_variant_sku = $productVariant->sku;
+        }
+
+        $productPromotion->fill($input);
+
+        $productPromotion->save();
+
+        return redirect()->back();
     }
 
     /**

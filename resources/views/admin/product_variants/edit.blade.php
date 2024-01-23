@@ -18,7 +18,7 @@
                 </ul>
             </div>
         @endif
-        <form action="{{ route('admin.product_variants.update', ['id' => $productVariant->id]) }}" method="post">
+        <form action="{{ route('admin.product_variants.update', ['id' => $productVariant->id]) }}" method="POST">
             @csrf
             <div class="card-body">
                 <div class="row">
@@ -111,6 +111,59 @@
             </div>
             <div class="card-footer w-100 d-flex justify-content-end">
                 <button type="submit" class="btn btn-primary" id="create">Save</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="card">
+        <form action="{{ route('admin.product_variants.update_discount', ['id' => $productVariant->id]) }}" method="POST">
+            @csrf
+            <div class="card-body">
+                <h4 class="mb-3">Discount</h4>
+                <hr>
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label for="status">Status</label>
+                        <div>
+                            <input class="updateStatus" type="checkbox" id="product-status"
+                                   name="status"
+                                   @if ($productPromotion?->status == 1) checked @endif
+                                   data-switch="success"
+                            />
+                            <label for="product-status" data-on-label="On" data-off-label="Off"
+                                   class="mb-0 d-block"></label>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label for="discount_percent">Discount percent</label>
+                        <input type="number" value="{{ $productPromotion?->discount_percent }}" name="discount_percent" id="discount_percent"
+                               class="form-control">
+                        @if ($errors->has('discount_percent'))
+                            <span class="text-danger">{{ $errors->first('discount_percent') }}</span>
+                        @endif
+                    </div>
+
+                    <div class="form-group col-sm-6">
+                        <label for="start_date">Start date</label>
+                        <input type="text" value="{{ $productPromotion?->start_date }}" name="start_date" id="start_date"
+                               class="form-control">
+                        @if ($errors->has('start_date'))
+                            <span class="text-danger">{{ $errors->first('start_date') }}</span>
+                        @endif
+                    </div>
+
+                    <div class="form-group col-sm-6">
+                        <label for="end_date">End date</label>
+                        <input type="text" value="{{ $productPromotion?->end_date }}" name="end_date" id="end_date"
+                               class="form-control">
+                        @if ($errors->has('end_date'))
+                            <span class="text-danger">{{ $errors->first('end_date') }}</span>
+                        @endif
+                    </div>
+                </div>
+                <div class="float-right mt-2 mb-3">
+                    <button type="submit" class="btn btn-primary" id="create">Save</button>
+                </div>
             </div>
         </form>
     </div>

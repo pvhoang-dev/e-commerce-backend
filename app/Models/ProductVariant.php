@@ -51,4 +51,9 @@ class ProductVariant extends Model
     {
         return $this->hasMany(ProductAttributeValue::class, "product_variant_id", "id");
     }
+
+    public function discount()
+    {
+        return $this->hasOne(ProductPromotion::class, "product_variant_id", "id");
+    }
 }
