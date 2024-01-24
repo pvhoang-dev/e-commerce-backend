@@ -251,14 +251,7 @@
                         <div class="tab-pane fade show active" id="description" role="tabpanel">
                             <div class="how-pos2 p-lr-15-md">
                                 <p class="stext-102 cl6">
-                                    Aenean sit amet gravida nisi. Nam fermentum est felis, quis feugiat nunc fringilla
-                                    sit amet. Ut in blandit ipsum. Quisque luctus dui at ante aliquet, in hendrerit
-                                    lectus interdum. Morbi elementum sapien rhoncus pretium maximus. Nulla lectus enim,
-                                    cursus et elementum sed, sodales vitae eros. Ut ex quam, porta consequat interdum
-                                    in, faucibus eu velit. Quisque rhoncus ex ac libero varius molestie. Aenean tempor
-                                    sit amet orci nec iaculis. Cras sit amet nulla libero. Curabitur dignissim, nunc nec
-                                    laoreet consequat, purus nunc porta lacus, vel efficitur tellus augue in ipsum. Cras
-                                    in arcu sed metus rutrum iaculis. Nulla non tempor erat. Duis in egestas nunc.
+                                    {!! $product->description->description !!}
                                 </p>
                             </div>
                         </div>
@@ -343,20 +336,20 @@
                 <!-- Slide2 -->
                 <div class="wrap-slick2">
                     <div class="slick2">
-                        @foreach ($categoryProducts as $product)
+                        @foreach ($categoryProducts as $cateProduct)
                             <div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
                                 <!-- Block2 -->
                                 <div class="block2">
                                     <div class="block2-pic hov-img0">
-                                        @if($product->images->first())
-                                            <img src="{{route('file.show', $product->images[0]->file_id)}}"
+                                        @if($cateProduct->images->first())
+                                            <img src="{{route('file.show', $cateProduct->images[0]->file_id)}}"
                                                  alt="IMG-PRODUCT">
                                         @else
                                             <img src="{{ asset('images/default/default_image.png') }}"
                                                  alt="DEFAULT-PRODUCT">
                                         @endif
 
-                                        <a href="#"
+                                        <a href="{{ route('detail.show', $cateProduct->id) }}"
                                            class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
                                             Quick View
                                         </a>
@@ -364,13 +357,13 @@
 
                                     <div class="block2-txt flex-w flex-t p-t-14">
                                         <div class="block2-txt-child1 flex-col-l ">
-                                            <a href="{{ route('detail.show', $product->id) }}"
+                                            <a href="{{ route('detail.show', $cateProduct->id) }}"
                                                class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                                                {{ $product->name }}
+                                                {{ $cateProduct->name }}
                                             </a>
 
                                             <span class="stext-105 cl3">
-                                                {{ number_format($product->price) }}
+                                                {{ number_format($cateProduct->price) }}
                                             </span>
                                         </div>
 
