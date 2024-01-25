@@ -16,7 +16,7 @@ class AttributeValueController extends Controller
      */
     public function index()
     {
-        $attributeValues = AttributeValue::get();
+        $attributeValues = AttributeValue::paginate(10);
 
         return view('admin.attribute_values.index', ['attributeValues' => $attributeValues]);
     }

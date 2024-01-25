@@ -75,14 +75,10 @@
                     </tbody>
                 </table>
             </div>
-
-            <div class="card-footer clearfix">
-                <div class="float-right">
-                    {{ $products->links() }}
-                </div>
-            </div>
         </div>
-
+        <div class="card-footer clearfix">
+            {{ ($products->links('admin.pagination.custom')) }}
+        </div>
     </div>
 @endsection
 @push('js')

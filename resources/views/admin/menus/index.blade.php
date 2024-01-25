@@ -52,6 +52,9 @@
                 @endif
             </div>
         </div>
+        <div class="card-footer clearfix">
+            {{ ($menus->links('admin.pagination.custom')) }}
+        </div>
     </div>
 @endsection
 @push('js')

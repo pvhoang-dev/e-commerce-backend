@@ -60,6 +60,9 @@
                 @endif
             </div>
         </div>
+        <div class="card-footer clearfix">
+            {{ ($categories->links('admin.pagination.custom')) }}
+        </div>
     </div>
 @endsection
 @push('js')

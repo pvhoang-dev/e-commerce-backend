@@ -56,5 +56,8 @@
                 @endif
             </div>
         </div>
+        <div class="card-footer clearfix">
+            {{ ($banners->links('admin.pagination.custom')) }}
+        </div>
     </div>
 @endsection
