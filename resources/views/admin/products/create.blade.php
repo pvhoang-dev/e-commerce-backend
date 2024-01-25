@@ -48,10 +48,10 @@
                                     {{ old('category_id') == $category->id ? 'selected' : '' }}>{{ $category->name }}
                                 </option>
                             @endforeach
-                            @if ($errors->has('category_id'))
-                                <span class="text-danger">{{ $errors->first('category_id') }}</span>
-                            @endif
                         </select>
+                        @if ($errors->has('category_id'))
+                            <span class="text-danger">{{ $errors->first('category_id') }}</span>
+                        @endif
                     </div>
 
                     <div class="form-group col-sm-6">
@@ -61,10 +61,10 @@
                                 <option value="{{ $brand->id }}" {{ old('brand_id') == $brand->id ? 'selected' : '' }}>
                                     {{ $brand->name }}</option>
                             @endforeach
-                            @if ($errors->has('brand_id'))
-                                <span class="text-danger">{{ $errors->first('brand_id') }}</span>
-                            @endif
                         </select>
+                        @if ($errors->has('brand_id'))
+                            <span class="text-danger">{{ $errors->first('brand_id') }}</span>
+                        @endif
                     </div>
 
                     <div class="form-group col-sm-6">
@@ -82,6 +82,20 @@
                                value="{{ old('promotion_price') }}">
                         @if ($errors->has('promotion_price'))
                             <span class="text-danger">{{ $errors->first('promotion_price') }}</span>
+                        @endif
+                    </div>
+
+                    <div class="form-group col-sm-6">
+                        <label for="type">Type</label>
+                        <select class="form-control select2" name="type" id="type" data-toggle="select2">
+                            @foreach ($types as $key => $value)
+                                <option value="{{ $value }}" {{ old('type') == $value ? 'selected' : '' }}>
+                                    {{ $key }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('type'))
+                            <span class="text-danger">{{ $errors->first('type') }}</span>
                         @endif
                     </div>
 

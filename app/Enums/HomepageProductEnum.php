@@ -5,11 +5,6 @@ namespace App\Enums;
 use BenSampo\Enum\Enum;
 use Illuminate\Support\Facades\DB;
 
-/**
- * @method static static OptionOne()
- * @method static static OptionTwo()
- * @method static static OptionThree()
- */
 final class HomepageProductEnum extends Enum
 {
     const MOBILE = 1;

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Enums\HomepageProductEnum;
+use App\Enums\ProductTypeEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CreateProductRequest;
 use App\Http\Requests\Admin\UpdateProductRequest;
@@ -45,9 +46,12 @@ class ProductController extends Controller
 
         $brands = Brand::all();
 
+        $types = ProductTypeEnum::getArrWithKey();
+
         return view('admin.products.create', [
             'categories' => $categories,
             'brands' => $brands,
+            'types' => $types,
         ]);
     }
 
@@ -91,13 +95,16 @@ class ProductController extends Controller
 
         $brands = Brand::get();
 
+        $types = ProductTypeEnum::getArrWithKey();
+
         return view('admin.products.edit', [
             'product' => $product,
             'productVariants' => $productVariants,
             'categories' => $categories,
             'brands' => $brands,
             'groups' => $groups,
-            'position' => $position
+            'position' => $position,
+            'types' => $types,
         ]);
     }
 

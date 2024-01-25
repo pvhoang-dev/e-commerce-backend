@@ -22,6 +22,7 @@ class Product extends Model
         'qty',
         'short_description',
         'status',
+        'type',
     ];
 
     public static function getRules($id = null)
