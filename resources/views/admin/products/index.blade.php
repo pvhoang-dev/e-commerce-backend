@@ -3,9 +3,18 @@
 @section('title')
     All Products
 
-    <a class="btn btn-primary float-right align-items-center" href="{{ route('admin.products.create') }}">
-        Add New
+    <a href="{{ route('admin.products.create') }}" class="btn btn-outline-primary ml-2">
+        Add
     </a>
+
+    <form action="{{ route('admin.products.index') }}" method="GET" class="ml-auto">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search" name="search" value="{{ $search }}">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+        </div>
+    </form>
 @endsection
 
 @section('content')
@@ -77,7 +86,7 @@
             </div>
         </div>
         <div class="card-footer clearfix">
-            {{ ($products->links('admin.pagination.custom')) }}
+            {{ $products->appends(request()->query())->links('admin.pagination.custom') }}
         </div>
     </div>
 @endsection

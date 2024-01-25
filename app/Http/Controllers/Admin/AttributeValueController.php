@@ -8,17 +8,29 @@ use App\Http\Requests\Admin\UpdateAttributeValueRequest;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
 
 class AttributeValueController extends Controller
 {
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $attributeValues = AttributeValue::paginate(10);
+        $search = $request->input('search');
 
-        return view('admin.attribute_values.index', ['attributeValues' => $attributeValues]);
+        $query = AttributeValue::query();
+
+        if ($search) {
+            $query->where('value', 'like', '%' . $search . '%');
+        }
+
+        $attributeValues = $query->paginate(10);
+
+        return view('admin.attribute_values.index', [
+            'attributeValues' => $attributeValues,
+            'search' => $search,
+        ]);
     }
 
     /**

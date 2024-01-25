@@ -3,9 +3,18 @@
 @section('title')
     List Banner
 
-    <a href="{{ route('admin.banners.create') }}" class="btn btn-outline-info float-right">
-        Add Banner
+    <a href="{{ route('admin.banners.create') }}" class="btn btn-outline-primary ml-2">
+        Add
     </a>
+
+    <form action="{{ route('admin.banners.index') }}" method="GET" class="ml-auto">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search" name="search" value="{{ $search }}">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+        </div>
+    </form>
 @endsection
 @section('content')
     <div class="card">
@@ -57,7 +66,7 @@
             </div>
         </div>
         <div class="card-footer clearfix">
-            {{ ($banners->links('admin.pagination.custom')) }}
+            {{ $banners->appends(request()->query())->links('admin.pagination.custom') }}
         </div>
     </div>
 @endsection

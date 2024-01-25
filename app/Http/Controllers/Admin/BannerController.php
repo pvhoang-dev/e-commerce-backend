@@ -15,12 +15,21 @@ class BannerController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $banners = Banner::paginate(10);
+        $search = $request->input('search');
+
+        $query = Banner::query();
+
+        if ($search) {
+            $query->where('title', 'like', '%' . $search . '%');
+        }
+
+        $banners = $query->paginate(10);
 
         return view('admin.banners.index', [
-            'banners' => $banners
+            'banners' => $banners,
+            'search' => $search,
         ]);
     }
 

@@ -15,12 +15,21 @@ class CategoryController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::paginate(10);
+        $search = $request->input('search');
+
+        $query = Category::query();
+
+        if ($search) {
+            $query->where('name', 'like', '%' . $search . '%');
+        }
+
+        $categories = $query->paginate(10);
 
         return view('admin.categories.index', [
-            'categories' => $categories
+            'categories' => $categories,
+            'search' => $search,
         ]);
     }
 
