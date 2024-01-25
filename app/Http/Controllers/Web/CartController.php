@@ -21,12 +21,12 @@ class CartController extends Controller
 
     public function addToCart(Request $request)
     {
-        try {
+        if ($request->ajax()) {
             $input = $request->all();
 
             $cart = $this->getCartFromSession();
 
-            $productVariant = ProductVariant::with('product')->find($input['product_variant']);
+            $productVariant = ProductVariant::with('product')->find($input['id']);
 
             $key = $productVariant->id . "-" . $input['option_1'] . "-" . $input['option_2'];
 
@@ -47,11 +47,12 @@ class CartController extends Controller
             }
 
             session()->put('cart', $cart);
-        } catch (\Throwable $e) {
-            session()->flash('error', $e->getMessage());
-        }
 
-        return redirect()->route('cart');
+
+            return response()->json([
+                'message' => 'Items added successfully'
+            ]);
+        }
     }
 
     private function getCartFromSession()

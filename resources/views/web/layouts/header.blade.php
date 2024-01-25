@@ -1,4 +1,16 @@
 <!-- Header -->
+<?php
+$cart = session('cart.items');
+$total = $qty = 0;
+?>
+@if (isset($cart))
+    @foreach ($cart as $item)
+        @php
+            $total += $item['price'] * $item['quantity'];
+            $qty += $item['quantity'];
+        @endphp
+    @endforeach
+@endif
 <header class="header-v4">
     <!-- Header desktop -->
     <div class="container-menu-desktop">
@@ -42,14 +54,14 @@
                                 @foreach ($menus as $menu)
                                     <li class="">
                                         <a href="#">{{ $menu['name'] }}</a>
-                                        @if(!empty($menu['sub_menus']))
+                                        @if (!empty($menu['sub_menus']))
                                             <ul class="sub-menu">
-                                                @foreach($menu['sub_menus'] as $subMenu)
+                                                @foreach ($menu['sub_menus'] as $subMenu)
                                                     <li class="">
                                                         <a href="#">{{ $subMenu['name'] }}</a>
-                                                        @if(!empty($subMenu['sub_menus']))
+                                                        @if (!empty($subMenu['sub_menus']))
                                                             <ul class="sub-menu">
-                                                                @foreach($subMenu['sub_menus'] as $subSubMenu)
+                                                                @foreach ($subMenu['sub_menus'] as $subSubMenu)
                                                                     <li>
                                                                         <a href="#">{{ $subSubMenu['name'] }}</a>
                                                                     </li>
@@ -62,7 +74,7 @@
                                         @endif
                                     </li>
                                 @endforeach
-                               {{-- <li class="main-menu">
+                                {{-- <li class="main-menu">
                                     <a href="#">Menu 1</a>
                                     <ul class="sub-menu">
                                         <li class="main-menu">
@@ -80,7 +92,7 @@
                                             <a href="#">SubMenu 3</a>
                                         </li>
                                     </ul>
-                                </li>--}}
+                                </li> --}}
                             </ul>
                         </li>
                         <li>
@@ -102,8 +114,8 @@
                                 @endforeach
                             </ul>
                             <span class="arrow-main-menu-m">
-                    <i class="fa fa-angle-right" aria-hidden="true"></i>
-                </span>
+                                <i class="fa fa-angle-right" aria-hidden="true"></i>
+                            </span>
                         </li>
 
                         <li>
@@ -127,7 +139,7 @@
                     </div>
 
                     <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart"
-                         data-notify="1">
+                        data-notify="1">
                         <i class="zmdi zmdi-shopping-cart"></i>
                     </div>
                 </div>
@@ -140,7 +152,7 @@
         <!-- Logo moblie -->
         <div class="logo-mobile">
             <a href="{{ route('home.show') }}"><img src="{{ asset('web/images/icons/logo-01.png') }}"
-                                                    alt="IMG-LOGO"></a>
+                    alt="IMG-LOGO"></a>
         </div>
 
         <!-- Icon header -->
@@ -150,7 +162,7 @@
             </div>
 
             <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart"
-                 data-notify="2">
+                data-notify="2">
                 <i class="zmdi zmdi-shopping-cart"></i>
             </div>
         </div>
@@ -265,23 +277,26 @@
         </div>
         <div class="header-cart-content flex-w js-pscroll w-full">
             <ul class="header-cart-wrapitem w-full">
+                @if (isset($cart))
+                    @foreach ($cart as $item)
+                        <li class="header-cart-item flex-w flex-t m-b-12">
+                            <div class="header-cart-item-img">
+                                <img src="{{route('file.show', $item['image'])}}" alt="IMG">
+                            </div>
 
-                <li class="header-cart-item flex-w flex-t m-b-12">
-                    <div class="header-cart-item-img">
-                        <img src=""
-                             alt="IMG">
-                    </div>
+                            <div class="header-cart-item-txt p-t-8">
+                                <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+                                   {{$item['name']}}
+                                </a>
 
-                    <div class="header-cart-item-txt p-t-8">
-                        <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-                            hoangf awn cuwst tao
-                        </a>
+                                <span class="header-cart-item-info">
+                                    {{$item['quantity']}} x {{$item['price']}}đ
+                                </span>
+                            </div>
+                        </li>
+                    @endforeach
+                @endif
 
-                        <span class="header-cart-item-info">
-                                2 x 100d
-                            </span>
-                    </div>
-                </li>
             </ul>
         </div>
         <div class="w-full">
@@ -291,12 +306,12 @@
 
             <div class="header-cart-buttons flex-w w-full">
                 <a href="{{ route('cart.show') }}"
-                   class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+                    class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
                     View Cart
                 </a>
 
                 <a href="{{ route('checkout.show') }}"
-                   class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+                    class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
                     Check Out
                 </a>
             </div>
@@ -304,6 +319,4 @@
     </div>
 </div>
 
-<script>
-
-</script>
+<script></script>
