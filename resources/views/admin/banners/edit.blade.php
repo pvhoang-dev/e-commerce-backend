@@ -39,12 +39,20 @@
                             class="form-control">
                     </div>
 
-                    <div class="form-group col-12">
+                    <div class="form-group col-6">
                         <label for="banner_url">Url</label>
                         <input type="text" value="{{ $banner->url }}" name="url" id="banner_url"
                             class="form-control">
                         @if ($errors->has('url'))
                             <span class="text-danger">{{ $errors->first('url') }}</span>
+                        @endif
+                    </div>
+                     <div class="form-group col-6">
+                        <label for="banner_slot">Slot</label>
+                        <input type="text" value="{{ $banner->slot }}" name="slot" id="banner_slot"
+                            class="form-control">
+                        @if ($errors->has('slot'))
+                            <span class="text-danger">{{ $errors->first('slot') }}</span>
                         @endif
                     </div>
 

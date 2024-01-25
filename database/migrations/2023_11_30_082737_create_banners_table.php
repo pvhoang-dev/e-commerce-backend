@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->integer('position');
+            $table->integer('slot');
             $table->unsignedBigInteger('file_id');
             $table->string('url')->unique()->nullable();
             $table->tinyInteger('status')->index("idx_banners_status");
