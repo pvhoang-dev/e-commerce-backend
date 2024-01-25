@@ -172,7 +172,7 @@
             <form action="{{ route('admin.products.store_description', ['id' => $product->id]) }}" method="POST">
                 @csrf
                 <h4 class="mb-3">Description</h4>
-                <textarea id="description" name="description">{{ $product->description->description }}</textarea>
+                <textarea id="description" name="description">{{ $product->description?->description }}</textarea>
 
                 <div class="float-right mt-3">
                     <button type="submit" class="btn btn-primary" id="create">Save</button>

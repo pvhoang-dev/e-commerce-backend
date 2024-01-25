@@ -6,12 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Banner;
 use App\Models\HomePageProduct;
+use App\Enums\BannerEnum;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        $banners = Banner::where('status', 1)->get();
+        $banners = Banner::whereIn('slot', [BannerEnum::BannerLeft, BannerEnum::BannerRight, 3])->get();
+
+        $bannerLeft = $banners->where('slot', BannerEnum::BannerLeft);
+
+        $bannerRight = $banners->where('slot', BannerEnum::BannerRight);
+
+        $bannerButton = $banners->where('slot', 3);
 
         $categoriesHome = Category::where('status', 1)->get();
 
@@ -22,7 +29,9 @@ class HomeController extends Controller
         return view('web.home', [
             'banners' => $banners,
             'categoriesHome' => $categoriesHome,
-            'groupedProducts' => $groupedProducts
+            'groupedProducts' => $groupedProducts,
+            'bannerLeft' => $bannerLeft,
+            'bannerRight' => $bannerRight,
         ]);
     }
 }
