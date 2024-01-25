@@ -29,8 +29,17 @@ Route::get('/home/ajax/products', [AjaxController::class, 'getProductsHomePage']
     ->name('ajaxGetProductHomePage');
 
 // Cart
-Route::get('/cart', [CartController::class, 'index'])
-    ->name("cart.show");
+#Cart
+Route::get('/cart', [CartController::class, 'index'])->name('cart.show');
+
+Route::post('/cart/add', [CartController::class, 'addToCart'])
+    ->name("cart.add");
+
+Route::post('/cart/update', [CartController::class, 'update'])
+    ->name("cart.update");
+
+Route::post('/cart/remove', [CartController::class, 'removeItem'])
+    ->name("cart.remove");
 
 // Checkout
 Route::get('/checkout', [CheckoutController::class, 'index'])
