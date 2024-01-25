@@ -28,7 +28,7 @@ Route::get('/files/{file_id}', [FileController::class, 'index'])
 Route::get('/files/draft/{file_id}', [FileController::class, 'draft'])
     ->name("file.draft.show");
 
-Route::get('/delete/{file_id}/draft', [FileController::class, 'delete'])
+Route::delete('/delete/{file_id}/draft', [FileController::class, 'deleteDraft'])
     ->name("file.draft.delete");
 
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -75,6 +75,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/update/{id}', 'update')->name('update');
         Route::delete('/delete/{id}', 'delete')->name('delete');
         Route::post('/store-description', 'storeDescription')->name('store_description');
+        Route::post('/upload-images', 'uploadImages')->name('upload_images');
+        Route::post('/delete-image', 'deleteImage')->name('delete_image');
+        Route::post('/setup-position-images', 'setupPositionImages')->name('setup_position_images');
+        Route::post('/update-status/{id}', 'updateStatus')->name('update_status');
     });
 
     #Product Variants
@@ -85,6 +89,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/edit/{id}', 'edit')->name('edit');
         Route::post('/update/{id}', 'update')->name('update');
         Route::delete('/delete/{id}', 'delete')->name('delete');
+        Route::post('/update-discount/{id}', 'updateDiscount')->name('update_discount');
     });
 
     #Banners

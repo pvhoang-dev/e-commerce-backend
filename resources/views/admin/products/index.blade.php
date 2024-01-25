@@ -15,8 +15,8 @@
                 <table class="table table-centered mb-0 " id="products-table">
                     <thead>
                         <tr>
-                            <th>Name</th>
                             <th>Image</th>
+                            <th>Name</th>
                             <th class="d-none d-sm-table-cell">Qty</th>
                             <th class="d-none d-sm-table-cell">Price</th>
                             <th class="d-none d-lg-table-cell">Category</th>
@@ -28,7 +28,6 @@
                     <tbody>
                         @foreach ($products as $product)
                             <tr>
-                                <td>{{ $product->name }}</td>
                                 <td style="max-width: 20px">
                                     @if ($product->images->count())
                                         <img class="rounded mr-1 mb-3 mb-sm-0 img-fluid"
@@ -37,6 +36,7 @@
                                         Chưa có ảnh
                                     @endif
                                 </td>
+                                <td>{{ $product->name }}</td>
                                 <td class="d-none d-sm-table-cell">
                                     <h4><span class="badge badge-primary">{{ $product->qty }}</span></h4>
                                 </td>
@@ -48,8 +48,10 @@
                                         <input class="updateStatus" type="checkbox" id="product-{{ $product->id }}"
                                             object="products" object_id="{{ $product->id }}"
                                             status="{{ $product->status }}" @if ($product->status == 1) checked @endif
-                                            data-switch="success" />
-                                        <label for="product-{{ $product->id }}" data-on-label="Yes" data-off-label="No"
+                                            data-switch="success"
+                                            disabled
+                                        />
+                                        <label for="product-{{ $product->id }}" data-on-label="" data-off-label=""
                                             class="mb-0 d-block"></label>
                                     </div>
                                 </td>

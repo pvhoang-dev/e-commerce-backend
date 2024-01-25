@@ -23,6 +23,7 @@ class UpdateProductRequest extends FormRequest
     {
         $this->merge([
             'slug' => Str::slug($this->name),
+            'promotion_price' => $this->promotion_price ?? 0
         ]);
     }
 

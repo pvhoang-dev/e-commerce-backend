@@ -17,7 +17,8 @@ class ProductVariant extends Model
         'sku',
         'qty',
         'price',
-        'status'
+        'status',
+        'file_id'
     ];
 
     public static function getRules($id = null)
@@ -49,5 +50,10 @@ class ProductVariant extends Model
     public function productAttributeValue()
     {
         return $this->hasMany(ProductAttributeValue::class, "product_variant_id", "id");
+    }
+
+    public function discount()
+    {
+        return $this->hasOne(ProductPromotion::class, "product_variant_id", "id");
     }
 }

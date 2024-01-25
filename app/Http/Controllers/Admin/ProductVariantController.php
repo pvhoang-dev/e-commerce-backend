@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CreateProductVariantRequest;
 use App\Http\Requests\Admin\UpdateProductVariantRequest;
+use App\Http\Requests\Admin\UpdateVariantDiscountRequest;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Product;
 use App\Models\ProductAttributeValue;
+use App\Models\ProductImage;
+use App\Models\ProductPromotion;
 use App\Models\ProductVariant;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -28,13 +31,15 @@ class ProductVariantController extends Controller
     {
         $attributes = Attribute::get();
 
+        $productId = $request->get("product_id");
+
         $product = Product::with([
             'productAttributeValue' => function ($query) {
                 $query->where('product_variant_id', '>', 0);
             },
             'productAttributeValue.attributeValue'
         ])
-            ->where("id", $request->get("product_id"))
+            ->where("id", $productId)
             ->first();
 
         $variantAttribute = $attributeValue = [];
@@ -49,11 +54,14 @@ class ProductVariantController extends Controller
             $attributeValue = AttributeValue::whereIn("attribute_id", $variantAttribute)->get();
         }
 
+        $productImages = ProductImage::where('product_id', $productId)->get();
+
         return view('admin.product_variants.create', [
             'attributes' => $attributes,
             'variantAttribute' => $variantAttribute,
             'variantAttributeValue' => $attributeValue,
-            'product' => $product
+            'product' => $product,
+            'productImages' => $productImages
         ]);
     }
 
@@ -114,9 +122,15 @@ class ProductVariantController extends Controller
 
         $product = Product::find($productVariant->product_id);
 
+        $productImages = ProductImage::where('product_id', $productVariant->product_id)->get();
+
+        $productPromotion = ProductPromotion::where('product_variant_id', $productVariant->id)->first();
+
         return view('admin.product_variants.edit', [
             'product' => $product,
-            'productVariant' => $productVariant
+            'productVariant' => $productVariant,
+            'productImages' => $productImages,
+            'productPromotion' => $productPromotion
         ]);
     }
 
@@ -182,6 +196,27 @@ class ProductVariantController extends Controller
             // Handle other types of exceptions or rethrow the exception
             dd($e);
         }
+    }
+
+    public function updateDiscount(UpdateVariantDiscountRequest $request, $id)
+    {
+        $productVariant = ProductVariant::findOrFail($id);
+
+        $input = $request->all();
+
+        $productPromotion = ProductPromotion::firstOrNew(['product_variant_id' => $id]);
+
+        if (!$productPromotion->exists) {
+            $productPromotion->product_id = $productVariant->product_id;
+            $productPromotion->product_variant_id = $id;
+            $productPromotion->product_variant_sku = $productVariant->sku;
+        }
+
+        $productPromotion->fill($input);
+
+        $productPromotion->save();
+
+        return redirect()->back();
     }
 
     /**
