@@ -113,6 +113,20 @@
                         @endif
                     </div>
 
+                    <div class="form-group col-sm-6">
+                        <label for="type">Type</label>
+                        <select class="form-control select2" name="type" id="type" data-toggle="select2">
+                            @foreach ($types as $key => $value)
+                                <option value="{{ $value }}" {{ $product->type == $value ? 'selected' : '' }}>
+                                    {{ $key }}
+                                </option>
+                            @endforeach
+                            @if ($errors->has('type'))
+                                <span class="text-danger">{{ $errors->first('type') }}</span>
+                            @endif
+                        </select>
+                    </div>
+
                     <div class="form-group col-sm-12">
                         <label for="short_desc">Description</label>
                         <input type="text" value="{{ $product->short_description }}" name="short_description"
