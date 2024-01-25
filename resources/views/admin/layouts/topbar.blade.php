@@ -13,18 +13,18 @@
 
         <ul class="list-unstyled topbar-right-menu float-right mb-0">
 
-            <li class="dropdown notification-list d-lg-none">
-                <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button"
-                    aria-haspopup="false" aria-expanded="false">
-                    <i class="dripicons-search noti-icon"></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-animated dropdown-lg p-0">
-                    <form class="p-3">
-                        <input type="text" class="form-control" placeholder="Search ..."
-                            aria-label="Recipient's username">
-                    </form>
-                </div>
-            </li>
+            {{--<li class="dropdown notification-list d-lg-none">--}}
+                {{--<a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button"--}}
+                    {{--aria-haspopup="false" aria-expanded="false">--}}
+                    {{--<i class="dripicons-search noti-icon"></i>--}}
+                {{--</a>--}}
+                {{--<div class="dropdown-menu dropdown-menu-animated dropdown-lg p-0">--}}
+                    {{--<form class="p-3">--}}
+                        {{--<input type="text" class="form-control" placeholder="Search ..."--}}
+                            {{--aria-label="Recipient's username">--}}
+                    {{--</form>--}}
+                {{--</div>--}}
+            {{--</li>--}}
 
             <li class="dropdown notification-list topbar-dropdown d-none d-lg-block">
                 <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" id="topbar-languagedrop"
@@ -118,16 +118,16 @@
                 <span></span>
             </div>
         </a>
-        <div class="app-search dropdown">
-            <form>
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search..." id="top-search">
-                    <span class="mdi mdi-magnify search-icon"></span>
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="submit">Search</button>
-                    </div>
-                </div>
-            </form>
-        </div>
+        {{--<div class="app-search dropdown">--}}
+            {{--<form>--}}
+                {{--<div class="input-group">--}}
+                    {{--<input type="text" class="form-control" placeholder="Search..." id="top-search">--}}
+                    {{--<span class="mdi mdi-magnify search-icon"></span>--}}
+                    {{--<div class="input-group-append">--}}
+                        {{--<button class="btn btn-primary" type="submit">Search</button>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--</form>--}}
+        {{--</div>--}}
     </div>
 </div>

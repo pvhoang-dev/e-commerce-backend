@@ -26,15 +26,26 @@ class ProductController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
         Paginator::useBootstrap();
 
-        $products = Product::with(['images' => function ($query) {
-            $query->where('type', 1);
-        }])->paginate(10);
+        $search = $request->input('search');
 
-        return view('admin.products.index', ['products' => $products]);
+        $query = Product::query()->with(['images' => function ($query) {
+            $query->where('type', 1);
+        }]);
+
+        if ($search) {
+            $query->where('name', 'like', '%' . $search . '%');
+        }
+
+        $products = $query->paginate(1);
+
+        return view('admin.products.index', [
+            'products' => $products,
+            'search' => $search,
+        ]);
     }
 
     /**

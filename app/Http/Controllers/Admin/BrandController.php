@@ -15,12 +15,21 @@ class BrandController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $brands = Brand::paginate(10);
+        $search = $request->input('search');
+
+        $query = Brand::query();
+
+        if ($search) {
+            $query->where('name', 'like', '%' . $search . '%');
+        }
+
+        $brands = $query->paginate(10);
 
         return view('admin.brands.index', [
-            'brands' => $brands
+            'brands' => $brands,
+            'search' => $search,
         ]);
     }
 

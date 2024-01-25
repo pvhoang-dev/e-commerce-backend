@@ -3,9 +3,18 @@
 @section('title')
     List Menus
 
-    <a href="{{ route('admin.menus.create') }}" class="btn btn-outline-info float-right">
-        Add Menu
+    <a href="{{ route('admin.menus.create') }}" class="btn btn-outline-primary ml-2">
+        Add
     </a>
+
+    <form action="{{ route('admin.menus.index') }}" method="GET" class="ml-auto">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search" name="search" value="{{ $search }}">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+        </div>
+    </form>
 @endsection
 @section('content')
     <div class="card">
@@ -53,7 +62,7 @@
             </div>
         </div>
         <div class="card-footer clearfix">
-            {{ ($menus->links('admin.pagination.custom')) }}
+            {{ $menus->appends(request()->query())->links('admin.pagination.custom') }}
         </div>
     </div>
 @endsection

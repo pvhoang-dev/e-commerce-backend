@@ -15,12 +15,21 @@ class MenuController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $menus = Menu::paginate(10);
+        $search = $request->input('search');
+
+        $query = Menu::query();
+
+        if ($search) {
+            $query->where('name', 'like', '%' . $search . '%');
+        }
+
+        $menus = $query->paginate(10);
 
         return view('admin.menus.index', [
-            'menus' => $menus
+            'menus' => $menus,
+            'search' => $search,
         ]);
     }
 

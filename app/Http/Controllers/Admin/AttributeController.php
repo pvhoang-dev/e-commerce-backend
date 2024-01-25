@@ -7,18 +7,28 @@ use App\Http\Requests\Admin\CreateAttributeRequest;
 use App\Http\Requests\Admin\UpdateAttributeRequest;
 use App\Models\Attribute;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
 
 class AttributeController extends Controller
 {
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $attributes = Attribute::paginate(10);
+        $search = $request->input('search');
+
+        $query = Attribute::query();
+
+        if ($search) {
+            $query->where('name', 'like', '%' . $search . '%');
+        }
+
+        $attributes = $query->paginate(10);
 
         return view('admin.attributes.index', [
-            'attributes' => $attributes
+            'attributes' => $attributes,
+            'search' => $search,
         ]);
     }
 
