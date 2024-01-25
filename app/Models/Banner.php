@@ -14,6 +14,7 @@ class Banner extends Model
         'title',
         'slug',
         'position',
+        'slot',
         'file_id',
         'url',
         'status'
@@ -32,6 +33,9 @@ class Banner extends Model
                 Rule::unique('banners', 'slug')->ignore($id),
             ],
             'position' => [
+                'required',
+            ],
+            'slot' => [
                 'required',
             ],
             'file_id' => [

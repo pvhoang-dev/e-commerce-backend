@@ -40,12 +40,20 @@
                             <span class="text-danger">{{ $errors->first('position') }}</span>
                         @endif
                     </div>
-                    <div class="form-group col-12">
+                    <div class="form-group col-6">
                         <label for="banner_url">Url</label>
                         <input type="text" name="url" id="banner_url" value="{{ old('url') }}"
                             class="form-control">
                         @if ($errors->has('url'))
                             <span class="text-danger">{{ $errors->first('url') }}</span>
+                        @endif
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="banner_url">SLot</label>
+                        <input type="text" name="slot" id="banner_slot" value="{{ old('slot') }}"
+                            class="form-control">
+                        @if ($errors->has('slot'))
+                            <span class="text-danger">{{ $errors->first('slot') }}</span>
                         @endif
                     </div>
                     <div class="form-group col-12">
