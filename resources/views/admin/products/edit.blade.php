@@ -282,7 +282,7 @@
     </div>
     --}}
 
-    <div class="row">
+    <div class="row" id="product-variant-preview">
         <div class="col-12">
             <div class="page-title-box">
                 <div class="page-title d-flex justify-content-between align-items-center">
@@ -334,9 +334,9 @@
                                     <td class="d-none d-lg-table-cell">{{ $productVariant->sku }}</td>
                                     <td>
                                         <div>
-                                            <input class="updateStatus" type="checkbox"
+                                            <input class="updateVariantStatus" type="checkbox"
                                                    id="product-variants-{{ $productVariant->id }}"
-                                                   object="product-variants" object_id="{{ $productVariant->id }}"
+                                                   object="product-variants" data-id="{{ $productVariant->id }}"
                                                    status="{{ $productVariant->status }}"
                                                    @if ($productVariant->status == 1) checked @endif
                                                    data-switch="success"/>
@@ -380,6 +380,7 @@
     </div>
 @endsection
 @push('js')
+    {{-- Tiny editor--}}
     <script>
         const useDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
@@ -432,6 +433,8 @@
             content_css: useDarkMode ? 'dark' : 'default',
         });
     </script>
+
+    {{-- Features --}}
     <script>
         @if (session('error'))
         // Display an alert with the error message
@@ -515,7 +518,7 @@
             });
         });
 
-        $(".deleteImg").on('click', function () {
+        $('.deleteImg').on('click', function () {
             if (confirm("Are you sure you want to delete this image?")) {
                 let id = $(this).data('id');
 
@@ -557,6 +560,36 @@
                     console.log(data)
                 }
             });
+        });
+
+        $('.updateVariantStatus').on('click', function () {
+            if (confirm("Are you sure?")) {
+                var id = $(this).data('id');
+
+                setTimeout(function () {
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "{{ route('admin.product_variants.update_status') }}",
+                        method: "POST",
+                        data: {
+                            id: id,
+                        },
+                        success: function (data) {
+                            if (data.success == true) {
+                                $.NotificationApp.send("Success", data.message, "bottom-right", '#10c469', "success");
+                            } else {
+                                $.NotificationApp.send("Warning", data.message, "bottom-right", '#f9c851', "warning");
+
+                                setTimeout(function () {
+                                    location.reload();
+                                }, 500)
+                            }
+                        }
+                    });
+                }, 0);
+            }
         })
     </script>
 @endpush

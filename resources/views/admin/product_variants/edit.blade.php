@@ -2,7 +2,7 @@
 
 @section('title')
     Edit Product Variant
-    <a href="{{ route('admin.products.edit', $productVariant->product_id) }}" class="btn btn-outline-info float-right">
+    <a href="{{ route('admin.products.edit', $productVariant->product_id) }}#product-variant-preview" class="btn btn-outline-info float-right">
         <i class="uil uil-corner-up-left-alt"></i> Back
     </a>
 @endsection

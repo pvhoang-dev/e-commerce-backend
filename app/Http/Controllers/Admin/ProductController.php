@@ -335,6 +335,11 @@ class ProductController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function updateStatus(Request $request, $id)
     {
         $product = Product::findOrFail($id);
