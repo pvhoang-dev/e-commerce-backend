@@ -198,6 +198,11 @@ class ProductVariantController extends Controller
         }
     }
 
+    /**
+     * @param UpdateVariantDiscountRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function updateDiscount(UpdateVariantDiscountRequest $request, $id)
     {
         $productVariant = ProductVariant::findOrFail($id);
@@ -305,5 +310,35 @@ class ProductVariantController extends Controller
         }
 
         return ["status" => true, "messages" => ""];
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateStatus(Request $request)
+    {
+        if ($request->has('id')) {
+            $id = $request->get('id');
+
+            $productVariant = ProductVariant::findOrFail($id);
+
+            if ($productVariant->status == 1) {
+                $productVariant->update(['status' => 0]);
+
+                return response()->json(['success' => true, 'status' => 0, 'message' => 'Update status successfully']);
+            } else {
+                if ($productVariant->qty <= 0) {
+                    return response()->json(['success' => false, 'message' => 'Quantity variant need to > 10']);
+                } else {
+                    $productVariant->update(['status' => 1]);
+
+                    return response()->json(['success' => true, 'status' => 1, 'message' => 'Update status successfully']);
+                }
+            }
+
+        } else {
+            return response()->json(['success' => false, 'message' => 'Variant not exist']);
+        }
     }
 }

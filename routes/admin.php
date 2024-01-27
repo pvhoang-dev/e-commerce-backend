@@ -90,6 +90,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/update/{id}', 'update')->name('update');
         Route::delete('/delete/{id}', 'delete')->name('delete');
         Route::post('/update-discount/{id}', 'updateDiscount')->name('update_discount');
+        Route::post('/update-status', 'updateStatus')->name('update_status');
     });
 
     #Banners
