@@ -9,8 +9,12 @@
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+
 include('admin.php');
 
 include('user.php');
+
+\Illuminate\Support\Facades\Route::get('test', [\App\Http\Controllers\TestController::class, 'index'])->name('test');
 
 
