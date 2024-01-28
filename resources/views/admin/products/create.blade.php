@@ -79,7 +79,7 @@
                     <div class="form-group col-sm-6">
                         <label for="promotion_price">Promotion Price</label>
                         <input type="number" name="promotion_price" id="promotion_price" class="form-control"
-                               value="{{ old('promotion_price') }}">
+                               value="{{ old('promotion_price') }}" disabled="">
                         @if ($errors->has('promotion_price'))
                             <span class="text-danger">{{ $errors->first('promotion_price') }}</span>
                         @endif

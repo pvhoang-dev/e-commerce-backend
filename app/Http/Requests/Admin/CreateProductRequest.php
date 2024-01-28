@@ -26,7 +26,7 @@ class CreateProductRequest extends FormRequest
             'status' => 0,
             'sku' => 'N&H' . Str::upper(Str::random(10)),
             'qty' => $this->qty ?? 0,
-            'promotion_price' => $this->promotion_price ?? 0
+            'promotion_price' => $this->price
         ]);
     }
 
