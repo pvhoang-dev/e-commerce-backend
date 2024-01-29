@@ -19,7 +19,6 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -40,7 +39,7 @@ class ProductController extends Controller
             $query->where('name', 'like', '%' . $search . '%');
         }
 
-        $products = $query->paginate(1);
+        $products = $query->paginate(10);
 
         return view('admin.products.index', [
             'products' => $products,
@@ -154,7 +153,7 @@ class ProductController extends Controller
 
             if (!empty($image_ids)) {
                 ProductImage::where('product_id', $id)->delete();
-                File::whereIn('id', $image_ids)->delete();
+                FileController::deleteMultiFileWithImage($image_ids);
             }
 
             $product->delete();
@@ -237,8 +236,6 @@ class ProductController extends Controller
         try {
             DB::beginTransaction();
 
-            $file = File::find($id);
-
             $productImage = ProductImage::where('file_id', $id)->first();
 
             if($productImage->type == 1)
@@ -250,9 +247,7 @@ class ProductController extends Controller
 
             $productImage->delete();
 
-            $file->delete();
-
-            unlink(storage_path("app/" . $file->path));
+            FileController::deleteFileWithImage($id);
 
             DB::commit();
 

@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Services\File\MakeFinalFileService;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -108,10 +109,13 @@ class CategoryController extends Controller
         if ($request->has('file_id')) {
             $response = MakeFinalFileService::convertDraftToFinal($input['file_id']);
 
-            if (!$response["status"]) {
+            if (!$response['status']) {
                 $input['file_id'] = $category->file_id;
             } else {
-                $input['file_id'] = $response["id"];
+                $input['file_id'] = $response['id'];
+                if ($category->file_id) {
+                    FileController::deleteFileWithImage($category->file_id);
+                }
             }
         }
 
@@ -127,6 +131,8 @@ class CategoryController extends Controller
     public function delete($id)
     {
         try {
+            DB::beginTransaction();
+
             $category = Category::findOrFail($id);
 
             $subCategories = Category::where('parent_id', $id)->first();
@@ -136,7 +142,14 @@ class CategoryController extends Controller
                     ->with('error', 'Cannot delete the category. It is associated with sub records.');
             }
 
+            if($category->id)
+            {
+                FileController::deleteFileWithImage($category->file_id);
+            }
+
             $category->delete();
+
+            DB::commit();
 
             return redirect()->route('admin.categories.index');
         } catch (\Exception $e) {

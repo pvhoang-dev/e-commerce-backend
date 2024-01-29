@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\File;
 use App\Models\FileDraft;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class FileController extends Controller
 {
@@ -57,6 +57,46 @@ class FileController extends Controller
             return response()->json(['message' => 'File deleted successfully'], 200);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Failed to delete file'], 500);
+        }
+    }
+
+    /**
+     * @param $id
+     */
+    public static function deleteFileWithImage($id)
+    {
+        try {
+            DB::beginTransaction();
+
+            $file = File::findOrFail($id);
+
+            unlink(storage_path("app/" . $file->path));
+
+            $file->delete();
+
+            DB::commit();
+        } catch (\Throwable $e) {
+            DB::rollBack();
+        }
+    }
+
+    public static function deleteMultiFileWithImage($ids)
+    {
+        try {
+            DB::beginTransaction();
+
+            foreach ($ids as $id)
+            {
+                $file = File::findOrFail($id);
+
+                $file->delete();
+
+                unlink(storage_path("app/" . $file->path));
+            }
+
+            DB::commit();
+        } catch (\Throwable $e) {
+            DB::rollBack();
         }
     }
 }

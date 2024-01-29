@@ -9,6 +9,7 @@ use App\Models\Banner;
 use App\Services\File\MakeFinalFileService;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BannerController extends Controller
 {
@@ -105,6 +106,9 @@ class BannerController extends Controller
                 $input['file_id'] = $banner->file_id;
             } else {
                 $input['file_id'] = $response["id"];
+                if ($banner->file_id) {
+                    FileController::deleteFileWithImage($banner->file_id);
+                }
             }
         }
 
@@ -120,12 +124,22 @@ class BannerController extends Controller
     public function delete($id)
     {
         try {
+            DB::beginTransaction();
+
             $banner = Banner::findOrFail($id);
+
+            if($banner->id)
+            {
+                FileController::deleteFileWithImage($banner->file_id);
+            }
 
             $banner->delete();
 
+            DB::commit();
+
             return redirect()->route('admin.banners.index');
         } catch (\Exception $e) {
+            DB::rollBack();
             if ($e instanceof QueryException && $e->errorInfo[1] == 1451) {
                 // Foreign key constraint violation
                 return redirect()->route('admin.banners.index')

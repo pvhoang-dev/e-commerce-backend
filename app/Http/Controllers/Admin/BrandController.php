@@ -105,6 +105,10 @@ class BrandController extends Controller
                 $input['file_id'] = $brand->file_id;
             } else {
                 $input['file_id'] = $response["id"];
+                if ($brand->file_id)
+                {
+                    FileController::deleteFileWithImage($brand->file_id);
+                }
             }
         }
 
@@ -121,6 +125,11 @@ class BrandController extends Controller
     {
         try {
             $brand = Brand::findOrFail($id);
+
+            if ($brand->file_id)
+            {
+                FileController::deleteFileWithImage($brand->file_id);
+            }
 
             $brand->delete();
 
