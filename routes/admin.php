@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AttributeValueController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\FeatureCategoryController;
 use App\Http\Controllers\Admin\FileController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\LocationController;
@@ -31,7 +32,10 @@ Route::get('/files/draft/{file_id}', [FileController::class, 'draft'])
 Route::delete('/delete/{file_id}/draft', [FileController::class, 'deleteDraft'])
     ->name("file.draft.delete");
 
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')->name('admin.')->group(/**
+ *
+ */
+    function () {
 
     #Dashboard
     Route::get('/', [HomeController::class, 'index'])->name('dashboard');
@@ -123,6 +127,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('/delete/{id}', 'delete')->name('delete');
     });
 
+    #Features
+    Route::prefix('feature-categories')->controller(FeatureCategoryController::class)->name('feature_categories.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/create', 'store')->name('store');
+        Route::get('/edit/{id}', 'edit')->name('edit');
+        Route::post('/update/{id}', 'update')->name('update');
+        Route::delete('/delete/{id}', 'delete')->name('delete');
+    });
 
     #Home page product
     Route::post('/add_home_page_product', [HomePageController::class, 'addHomePage'])->name('add_home_page');

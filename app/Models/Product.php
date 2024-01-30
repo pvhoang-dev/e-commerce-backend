@@ -84,4 +84,9 @@ class Product extends Model
     {
         return $this->hasOne(ProductDescription::class, 'product_id');
     }
+
+    public function features()
+    {
+        return $this->hasMany(ProductFeature::class, "product_id");
+    }
 }
