@@ -93,11 +93,26 @@
         @endif
     </script>
     <script>
-        $('#preview_feature_category').select2({
-            tags: true
+        $(document).ready(function() {
+            $.ajax({
+                url: '{{ route('admin.ajaxGetFeature') }}?feature_category_id=' + '{{ $featureCategoriesPreview->first->get()->id }}',
+            }).done(function (data) {
+                $("#preview_feature_position").html(data)
+            });
+            $('#preview_feature_category').select2({
+                tags: true
+            });
+            $('#preview_feature_position').select2({
+                tags: true
+            });
+            $("#preview_feature_category").on("change", function (e) {
+                $.ajax({
+                    url: '{{ route('admin.ajaxGetFeature') }}?feature_category_id=' + $(this).val(),
+                }).done(function (data) {
+                    $("#preview_feature_position").html(data)
+                });
+            })
         });
-        $('#preview_feature_position').select2({
-            tags: true
-        });
+
     </script>
 @endpush

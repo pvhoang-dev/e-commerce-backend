@@ -9,12 +9,12 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\FeatureCategoryController;
 use App\Http\Controllers\Admin\FileController;
 use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\HomePageController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductVariantController;
 use App\Http\Controllers\Admin\UploadController;
-use App\Http\Controllers\Admin\HomePageController;
 use Illuminate\Support\Facades\Route;
 
 #admin routes
@@ -150,4 +150,6 @@ Route::prefix('admin')->name('admin.')->group(/**
     #Ajax
     Route::get('ajax/attribute-value', [AjaxController::class, 'getAttributeValue'])
         ->name('ajaxGetAttributeValue');
+    Route::get('ajax/feature', [AjaxController::class, 'getFeature'])
+        ->name('ajaxGetFeature');
 });
