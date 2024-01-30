@@ -48,6 +48,13 @@
             </a>
         </li>
 
+        <li class="side-nav-item">
+            <a href="{{ route('admin.feature_categories.index') }}" class="side-nav-link">
+                <i class="dripicons-chevron-right"></i>
+                <span>Product Features</span>
+            </a>
+        </li>
+
         <li class="side-nav-title side-nav-item">Order management</li>
 
         <li class="side-nav-item">
