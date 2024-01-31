@@ -232,6 +232,40 @@
         </div>
     </div>
 
+    <div class="card">
+        <form>
+            <div class="card-body">
+                @csrf
+                <h4 class="mb-3">Specs</h4>
+                <hr>
+
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label for="preview_feature_category">Name</label>
+                        <select id="preview_feature_category" class="form-control">
+                            <option value="0">No item</option>
+                        @foreach($featureCategoriesPreview as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label for="preview_feature_name">Feature</label>
+                        <select id="preview_feature_name" class="form-control"></select>
+                    </div>
+                    <div class="form-group col-12">
+                        <label for="feature_value">Value</label>
+                        <input type="text" name="feature_value" id="feature_value" value="" class="form-control">
+                    </div>
+                </div>
+
+                <div class="float-right mt-3">
+                    <button type="submit" class="btn btn-primary" id="create">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
    {{--
    <div class="row">
         <div class="col-12">
@@ -591,5 +625,28 @@
                 }, 0);
             }
         })
+
+        $(document).ready(function() {
+            $('#preview_feature_category').select2({
+                tags: true
+            });
+            $('#preview_feature_name').select2({
+                tags: true
+            });
+            $("#preview_feature_category").on("change", function (e) {
+                $.ajax({
+                    url: '{{ route('admin.ajaxGetFeature') }}?feature_category_id=' + $(this).val(),
+                }).done(function (data) {
+                    $("#preview_feature_name").html(data)
+                });
+            })
+            $("#preview_feature_name").on("change", function (e) {
+                $.ajax({
+                    url: '{{ route('admin.product_features.index') }}?id=' + $(this).val(),
+                }).done(function (data) {
+                    $("#feature_value").val(data.value)
+                });
+            })
+        });
     </script>
 @endpush

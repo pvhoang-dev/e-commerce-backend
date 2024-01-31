@@ -15,4 +15,9 @@ class ProductFeature extends Model
         'value',
         'position',
     ];
+
+    public function feature()
+    {
+        return $this->hasOne(Feature::class, 'feature_id');
+    }
 }
