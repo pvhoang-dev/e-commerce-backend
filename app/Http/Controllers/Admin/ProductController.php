@@ -9,6 +9,7 @@ use App\Http\Requests\Admin\CreateProductRequest;
 use App\Http\Requests\Admin\UpdateProductRequest;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\FeatureCategory;
 use App\Models\File;
 use App\Models\Product;
 use App\Models\ProductDescription;
@@ -107,6 +108,10 @@ class ProductController extends Controller
 
         $types = ProductTypeEnum::getArrWithKey();
 
+        $featureCategoriesPreview = FeatureCategory::all();
+
+//        dd($product->with('features.feature.featureCategory')->get());
+
         return view('admin.products.edit', [
             'product' => $product,
             'productVariants' => $productVariants,
@@ -115,6 +120,7 @@ class ProductController extends Controller
             'groups' => $groups,
             'position' => $position,
             'types' => $types,
+            'featureCategoriesPreview' => $featureCategoriesPreview,
         ]);
     }
 

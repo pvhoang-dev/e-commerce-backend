@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CreateFeatureCategoryRequest;
 use App\Http\Requests\Admin\UpdateFeatureCategoryRequest;
+use App\Models\Feature;
 use App\Models\FeatureCategory;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FeatureCategoryController extends Controller
 {
@@ -70,15 +73,28 @@ class FeatureCategoryController extends Controller
     public function delete($id)
     {
         try {
-            $attribute = FeatureCategory::findOrFail($id);
-            $attribute->delete();
+            DB::beginTransaction();
 
-            return redirect()->route('admin.feature_categories.index');
+            $featureCategory = FeatureCategory::findOrFail($id);
+
+            $subFeatures = Feature::where('feature_category_id', $id)->first();
+
+            if($subFeatures){
+                return redirect()->back()
+                    ->with('error', 'Cannot delete the feature category. It is associated with sub records.');
+            }
+
+            $featureCategory->delete();
+
+            DB::commit();
+
+            return redirect()->back();
         } catch (\Exception $e) {
+            DB::rollBack();
             if ($e instanceof QueryException && $e->errorInfo[1] == 1451) {
                 // Foreign key constraint violation
-                return redirect()->route('admin.feature_categories.index')
-                    ->with('error', 'Cannot delete the attribute. It is associated with other records.');
+                return redirect()->back()
+                    ->with('error', 'Cannot delete the feature category. It is associated with other records.');
             }
 
             // Handle other types of exceptions or rethrow the exception

@@ -26,4 +26,9 @@ class FeatureCategory extends Model
             ],
         ];
     }
+
+    public function features()
+    {
+        return $this->hasMany(Feature::class, 'feature_category_id', 'id');
+    }
 }

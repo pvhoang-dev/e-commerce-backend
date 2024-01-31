@@ -153,6 +153,7 @@ class CategoryController extends Controller
 
             return redirect()->route('admin.categories.index');
         } catch (\Exception $e) {
+            DB::rollBack();
             if ($e instanceof QueryException && $e->errorInfo[1] == 1451) {
                 // Foreign key constraint violation
                 return redirect()->route('admin.categories.index')
