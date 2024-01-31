@@ -33,7 +33,7 @@
 
                     <div class="form-group col-sm-6">
                         <label for="position">Position</label>
-                        <input type="text" value="{{ $featureCategory->position }}" name="name" id="position"
+                        <input type="number" value="{{ $featureCategory->position }}" name="position" id="position"
                                class="form-control">
                         @if ($errors->has('position'))
                             <span class="text-danger">{{ $errors->first('position') }}</span>

@@ -36,7 +36,6 @@ Route::prefix('admin')->name('admin.')->group(/**
  *
  */
     function () {
-
     #Dashboard
     Route::get('/', [HomeController::class, 'index'])->name('dashboard');
 
@@ -127,7 +126,7 @@ Route::prefix('admin')->name('admin.')->group(/**
         Route::delete('/delete/{id}', 'delete')->name('delete');
     });
 
-    #Features
+    #Feature Categories
     Route::prefix('feature-categories')->controller(FeatureCategoryController::class)->name('feature_categories.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/create', 'create')->name('create');
