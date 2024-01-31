@@ -233,8 +233,8 @@
     </div>
 
     <div class="card">
-        <form>
-            <div class="card-body">
+        <div class="card-body">
+            <form>
                 @csrf
                 <h4 class="mb-3">Specs</h4>
                 <hr>
@@ -243,8 +243,8 @@
                     <div class="form-group col-sm-6">
                         <label for="preview_feature_category">Name</label>
                         <select id="preview_feature_category" class="form-control">
-                            <option value="0">No item</option>
-                        @foreach($featureCategoriesPreview as $item)
+                            <option value="0">Select</option>
+                            @foreach($featureCategoriesPreview as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
@@ -262,8 +262,8 @@
                 <div class="float-right mt-3">
                     <button type="submit" class="btn btn-primary" id="create">Save</button>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 
    {{--
@@ -637,7 +637,8 @@
                 $.ajax({
                     url: '{{ route('admin.ajaxGetFeature') }}?feature_category_id=' + $(this).val(),
                 }).done(function (data) {
-                    $("#preview_feature_name").html(data)
+                    $("#preview_feature_name").html(data);
+                    $("#feature_value").val('')
                 });
             })
             $("#preview_feature_name").on("change", function (e) {

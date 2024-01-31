@@ -110,8 +110,6 @@ class ProductController extends Controller
 
         $featureCategoriesPreview = FeatureCategory::all();
 
-//        dd($product->with('features.feature.featureCategory')->get());
-
         return view('admin.products.edit', [
             'product' => $product,
             'productVariants' => $productVariants,

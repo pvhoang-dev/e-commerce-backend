@@ -10,11 +10,21 @@ class ProductFeatureController extends Controller
 {
     public function index(Request $request)
     {
-        return ProductFeature::findOrFail($request->get('id'));
+        $productFeature = ProductFeature::find($request->get('id'));
+
+        if(!$productFeature)
+        {
+            return [
+                'value' => "",
+            ];
+        }
+
+        return $productFeature;
     }
 
     public function store(Request $request)
     {
+        $productFeature = ProductFeature::firstOrNew($request->get('id'));
 
     }
 }
