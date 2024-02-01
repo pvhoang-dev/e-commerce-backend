@@ -29,7 +29,7 @@ class AjaxController extends Controller
             return '';
 
         $features = Feature::where("feature_category_id", $request->feature_category_id)->get();
-        $str = '<option value="0">No item</option>';
+        $str = '<option value="0">-- Select --</option>';
         foreach ($features as $value) {
             $str .= '<option value="' . $value->id . '">' . $value->name . '</option>';
         }

@@ -242,8 +242,8 @@
                 <div class="row">
                     <div class="form-group col-sm-6">
                         <label for="preview_feature_category">Name</label>
-                        <select id="preview_feature_category" class="form-control">
-                            <option value="0">Select</option>
+                        <select id="preview_feature_category" name="preview_feature_category" class="form-control">
+                            <option value="0">-- Select --</option>
                             @foreach($featureCategoriesPreview as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
@@ -628,10 +628,10 @@
 
         $(document).ready(function() {
             $('#preview_feature_category').select2({
-                tags: true
+                tags: false
             });
             $('#preview_feature_name').select2({
-                tags: true
+                tags: false
             });
             $("#preview_feature_category").on("change", function (e) {
                 $.ajax({
@@ -640,14 +640,20 @@
                     $("#preview_feature_name").html(data);
                     $("#feature_value").val('')
                 });
-            })
+            });
             $("#preview_feature_name").on("change", function (e) {
                 $.ajax({
-                    url: '{{ route('admin.product_features.index') }}?id=' + $(this).val(),
+                    url: '{{ route('admin.product_features.index') }}',
+                    data: {
+                        product_id: '{{ $product->id }}',
+                        feature_id: $(this).val(),
+                    },
                 }).done(function (data) {
-                    $("#feature_value").val(data.value)
+                    console.log(data.value);
+                    $("#feature_value").val(data.value);
                 });
-            })
+            });
+            
         });
     </script>
 @endpush

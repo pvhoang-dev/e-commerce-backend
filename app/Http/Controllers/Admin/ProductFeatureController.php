@@ -10,7 +10,10 @@ class ProductFeatureController extends Controller
 {
     public function index(Request $request)
     {
-        $productFeature = ProductFeature::find($request->get('id'));
+        $productFeature = ProductFeature::where([
+            'product_id' => $request->get('product_id'),
+            'feature_id' => $request->get('feature_id'),
+        ])->first();
 
         if(!$productFeature)
         {
