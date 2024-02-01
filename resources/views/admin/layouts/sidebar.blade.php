@@ -1,17 +1,8 @@
 <div class="left-side-menu left-side-menu-detached">
-
-    {{-- <div class="leftbar-user"> --}}
-    {{-- <a href="javascript: void(0);"> --}}
-    {{-- <img src="{{ asset('images/users/avatar-1.jpg') }}" alt="user-image" height="42" --}}
-    {{-- class="rounded-circle shadow-sm"> --}}
-    {{-- <span class="leftbar-user-name">Nhiệm</span> --}}
-    {{-- </a> --}}
-    {{-- </div> --}}
-
     <!--- Sidemenu -->
     <ul class="metismenu side-nav">
 
-        <li class="side-nav-title side-nav-item">For Products</li>
+        <li class="side-nav-title side-nav-item bg-primary-lighten text-white"><h6>For Products</h6></li>
 
         <li class="side-nav-item">
             <a href="{{ route('admin.attributes.index') }}" class="side-nav-link">
@@ -55,7 +46,7 @@
             </a>
         </li>
 
-        <li class="side-nav-title side-nav-item">Order management</li>
+        <li class="side-nav-title side-nav-item bg-primary-lighten text-white"><h6>For Orders</h6></li>
 
         <li class="side-nav-item">
             <a href="#" class="side-nav-link">
@@ -64,7 +55,7 @@
             </a>
         </li>
 
-        <li class="side-nav-title side-nav-item">Promotion management</li>
+        <li class="side-nav-title side-nav-item bg-primary-lighten text-white"><h6>For Promotions</h6></li>
 
         <li class="side-nav-item">
             <a href="#" class="side-nav-link">
@@ -73,7 +64,7 @@
             </a>
         </li>
 
-        <li class="side-nav-title side-nav-item">Display</li>
+        <li class="side-nav-title side-nav-item bg-primary-lighten text-white"><h6>For Display</h6></li>
 
         <li class="side-nav-item">
             <a href="#" class="side-nav-link">
@@ -103,7 +94,7 @@
             </a>
         </li>
 
-        <li class="side-nav-title side-nav-item">Others</li>
+        <li class="side-nav-title side-nav-item bg-primary-lighten text-white"><h6>Others</h6></li>
 
         <li class="side-nav-item">
             <a href="{{ route('admin.locations.index') }}" class="side-nav-link">
