@@ -233,8 +233,8 @@
     </div>
 
     <div class="card">
-        <form>
-            <div class="card-body">
+        <div class="card-body">
+            <form id="store-product-feature">
                 @csrf
                 <h4 class="mb-3">Specs</h4>
                 <hr>
@@ -242,28 +242,28 @@
                 <div class="row">
                     <div class="form-group col-sm-6">
                         <label for="preview_feature_category">Name</label>
-                        <select id="preview_feature_category" class="form-control">
-                            <option value="0">No item</option>
-                        @foreach($featureCategoriesPreview as $item)
+                        <select id="preview_feature_category" name="preview_feature_category" class="form-control">
+                            <option value="0">-- Select --</option>
+                            @foreach($featureCategoriesPreview as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group col-sm-6">
                         <label for="preview_feature_name">Feature</label>
-                        <select id="preview_feature_name" class="form-control"></select>
+                        <select id="preview_feature_name" name="preview_feature_name" class="form-control"></select>
                     </div>
                     <div class="form-group col-12">
                         <label for="feature_value">Value</label>
-                        <input type="text" name="feature_value" id="feature_value" value="" class="form-control">
+                        <input type="text" name="feature_value" id="feature_value" class="form-control">
                     </div>
                 </div>
 
                 <div class="float-right mt-3">
-                    <button type="submit" class="btn btn-primary" id="create">Save</button>
+                    <button type="button" class="btn btn-primary" id="store-feature">Save</button>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 
    {{--
@@ -628,24 +628,64 @@
 
         $(document).ready(function() {
             $('#preview_feature_category').select2({
-                tags: true
+                tags: false
             });
             $('#preview_feature_name').select2({
-                tags: true
+                tags: false
             });
             $("#preview_feature_category").on("change", function (e) {
                 $.ajax({
                     url: '{{ route('admin.ajaxGetFeature') }}?feature_category_id=' + $(this).val(),
                 }).done(function (data) {
-                    $("#preview_feature_name").html(data)
+                    $("#preview_feature_name").html(data);
+                    $("#feature_value").val('')
                 });
-            })
+            });
             $("#preview_feature_name").on("change", function (e) {
                 $.ajax({
-                    url: '{{ route('admin.product_features.index') }}?id=' + $(this).val(),
+                    url: '{{ route('admin.product_features.index') }}',
+                    data: {
+                        product_id: '{{ $product->id }}',
+                        feature_id: $(this).val(),
+                    },
                 }).done(function (data) {
-                    $("#feature_value").val(data.value)
+                    console.log(data.value);
+                    $("#feature_value").val(data.value);
                 });
+            });
+            $('#store-feature').on('click', function () {
+                let checkFeatCate = $('#preview_feature_category').val();
+                let checkFeatName = $('#preview_feature_name').val();
+                let checkFeatValue = $('#feature_value').val();
+
+                setTimeout(function () {
+                    if (checkFeatName > 0 && checkFeatCate > 0) {
+                        $('#feature_value').val(checkFeatValue.trim());
+
+                        $.ajax({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            type: 'POST',
+                            url: '{{ route('admin.product_features.store') }}',
+                            data: {
+                                preview_feature_name: checkFeatName,
+                                feature_value: checkFeatValue.trim(),
+                                product_id: '{{ $product->id }}',
+                            },
+                            success: function (response) {
+                                console.log(response);
+
+                                $.NotificationApp.send("Success", 'done', "bottom-right", '#10c469', "success");
+                            },
+                            error: function () {
+                                alert('There was an error submitting the form.');
+                            }
+                        });
+                    } else {
+                        alert('Pls select 2 fields!!!');
+                    }
+                }, 500);
             })
         });
     </script>
