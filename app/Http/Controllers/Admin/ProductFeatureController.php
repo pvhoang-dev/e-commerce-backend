@@ -27,7 +27,16 @@ class ProductFeatureController extends Controller
 
     public function store(Request $request)
     {
-        $productFeature = ProductFeature::firstOrNew($request->get('id'));
+        $input = $request->all();
 
+        $productFeature = ProductFeature::firstOrNew([
+            'product_id' => $input['product_id'],
+            'feature_id' => $input['preview_feature_name'],
+        ]);
+
+        $productFeature->value = $input['feature_value'] ?? '';
+        $productFeature->position = 0;
+
+        $productFeature->save();
     }
 }
