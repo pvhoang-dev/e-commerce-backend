@@ -58,16 +58,19 @@
                         @endif
                     </div>
 
-                    {{-- 
                     <div class="form-group col-sm-6">
-                        <label for="qty">Quantity</label>
-                        <input type="number" value="{{ $product->qty }}" name="qty" id="qty"
-                               class="form-control">
-                        @if ($errors->has('qty'))
-                            <span class="text-danger">{{ $errors->first('qty') }}</span>
-                        @endif
-                    </div> 
-                    --}}
+                        <label for="type">Type</label>
+                        <select class="form-control select2" name="type" id="type" data-toggle="select2">
+                            @foreach ($types as $key => $value)
+                                <option value="{{ $value }}" {{ $product->type == $value ? 'selected' : '' }}>
+                                    {{ $key }}
+                                </option>
+                            @endforeach
+                            @if ($errors->has('type'))
+                                <span class="text-danger">{{ $errors->first('type') }}</span>
+                            @endif
+                        </select>
+                    </div>
 
                     <div class="form-group col-sm-6">
                         <label for="category_id">Category</label>
@@ -97,40 +100,31 @@
                         </select>
                     </div>
 
-                    {{-- 
                     <div class="form-group col-sm-6">
                         <label for="price">Price</label>
                         <input type="number" value="{{ $product->price }}" name="price" id="price"
-                               class="form-control">
+                               class="form-control" disabled>
                         @if ($errors->has('price'))
                             <span class="text-danger">{{ $errors->first('price') }}</span>
                         @endif
-                    </div> 
-                    --}}
-
-                    {{--                     
+                    </div>
+                     
                     <div class="form-group col-sm-6">
                         <label for="promotion_price">Promotion Price</label>
                         <input type="number" name="promotion_price" id="promotion_price" class="form-control"
-                               value="{{ $product->promotion_price }}" disabled="">
+                               value="{{ $product->promotion_price }}" disabled>
                         @if ($errors->has('promotion_price'))
                             <span class="text-danger">{{ $errors->first('promotion_price') }}</span>
                         @endif
                     </div> 
-                    --}}
 
                     <div class="form-group col-sm-6">
-                        <label for="type">Type</label>
-                        <select class="form-control select2" name="type" id="type" data-toggle="select2">
-                            @foreach ($types as $key => $value)
-                                <option value="{{ $value }}" {{ $product->type == $value ? 'selected' : '' }}>
-                                    {{ $key }}
-                                </option>
-                            @endforeach
-                            @if ($errors->has('type'))
-                                <span class="text-danger">{{ $errors->first('type') }}</span>
-                            @endif
-                        </select>
+                        <label for="qty">Quantity</label>
+                        <input type="number" value="{{ $product->qty }}" name="qty" id="qty"
+                               class="form-control" disabled>
+                        @if ($errors->has('qty'))
+                            <span class="text-danger">{{ $errors->first('qty') }}</span>
+                        @endif
                     </div>
 
                     <div class="form-group col-sm-12">
