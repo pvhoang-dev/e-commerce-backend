@@ -43,15 +43,6 @@ class Product extends Model
             'brand_id' => [
                 'required',
             ],
-            'price' => [
-                'required',
-                'numeric',
-                'gte:0',
-            ],
-            'qty' => [
-                'numeric',
-                'gte:0',
-            ],
         ];
     }
 
