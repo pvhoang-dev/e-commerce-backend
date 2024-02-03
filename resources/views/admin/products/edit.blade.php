@@ -58,6 +58,7 @@
                         @endif
                     </div>
 
+                    {{-- 
                     <div class="form-group col-sm-6">
                         <label for="qty">Quantity</label>
                         <input type="number" value="{{ $product->qty }}" name="qty" id="qty"
@@ -65,7 +66,8 @@
                         @if ($errors->has('qty'))
                             <span class="text-danger">{{ $errors->first('qty') }}</span>
                         @endif
-                    </div>
+                    </div> 
+                    --}}
 
                     <div class="form-group col-sm-6">
                         <label for="category_id">Category</label>
@@ -95,6 +97,7 @@
                         </select>
                     </div>
 
+                    {{-- 
                     <div class="form-group col-sm-6">
                         <label for="price">Price</label>
                         <input type="number" value="{{ $product->price }}" name="price" id="price"
@@ -102,8 +105,10 @@
                         @if ($errors->has('price'))
                             <span class="text-danger">{{ $errors->first('price') }}</span>
                         @endif
-                    </div>
+                    </div> 
+                    --}}
 
+                    {{--                     
                     <div class="form-group col-sm-6">
                         <label for="promotion_price">Promotion Price</label>
                         <input type="number" name="promotion_price" id="promotion_price" class="form-control"
@@ -111,7 +116,8 @@
                         @if ($errors->has('promotion_price'))
                             <span class="text-danger">{{ $errors->first('promotion_price') }}</span>
                         @endif
-                    </div>
+                    </div> 
+                    --}}
 
                     <div class="form-group col-sm-6">
                         <label for="type">Type</label>
