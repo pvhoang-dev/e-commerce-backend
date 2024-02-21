@@ -91,7 +91,7 @@ class ProductVariantController extends Controller
 
         $variant = ProductVariant::create($input);
 
-//        $this->checkAndUpdatePriceProduct($variant->toArray(), 'create');
+        $this->checkAndUpdatePriceProduct($variant->toArray(), 'create');
 
         $this->createProductVariantAttribute(
             $input["product_id"],
@@ -136,7 +136,7 @@ class ProductVariantController extends Controller
         ]);
     }
 
-    /*public function checkAndUpdatePriceProduct($data, $status = '')
+    public function checkAndUpdatePriceProduct($data, $status = '')
     {
         if ($status == 'create') {
             $productPromotion = new ProductPromotion();
@@ -153,16 +153,38 @@ class ProductVariantController extends Controller
 
         $product = Product::find($data['product_id']);
 
+        $productVariants = ProductVariant::where('product_id', $data['product_id'])->with('discount')->get();
+
+        if ($status == 'delete' && $productVariants->count() == 0) {
+            $product->update([
+                'price' =>  0,
+                'promotion_price' => 0,
+                'product_promotion_id' => 0,
+                'status' => 0
+            ]);
+
+            return;
+        }
+
         $key = 0;
 
         $realPriceProduct = $product['promotion_price'];
-
-        $productVariants = ProductVariant::where('product_id', $data['product_id'])->with('discount')->get();
 
         foreach ($productVariants as $productVariant)
         {
             if($productVariant->discount) {
                 $realPriceVariant = $productVariant->price - $productVariant->discount->discount_percent * $productVariant->price / 100;
+
+                if ($productVariants->count() == 1)
+                {
+                    $product->update([
+                        'price' =>  $productVariant->price,
+                        'promotion_price' => $realPriceVariant,
+                        'product_promotion_id' => $productVariant->discount->id,
+                    ]);
+
+                    return;
+                }
 
                 if($realPriceVariant < $realPriceProduct)
                 {
@@ -183,7 +205,7 @@ class ProductVariantController extends Controller
                 'product_promotion_id' => $dataVariant->discount->id,
             ]);
         }
-    }*/
+    }
 
     /**
      * @param UpdateProductVariantRequest $request
@@ -230,7 +252,7 @@ class ProductVariantController extends Controller
 
             $product->qty = $product->qty - $productVariant->qty > 0 ? $product->qty - $productVariant->qty : 0;
 
-//            $this->checkAndUpdatePriceProduct($productVariant->toArray());
+            $this->checkAndUpdatePriceProduct($productVariant->toArray(), 'delete');
 
             $product->save();
 
@@ -274,7 +296,7 @@ class ProductVariantController extends Controller
 
         $productPromotion->save();
 
-//        $this->checkAndUpdatePriceProduct($productVariant->toArray());
+        $this->checkAndUpdatePriceProduct($productVariant->toArray(), 'updateDiscount');
 
         return redirect()->back();
     }
