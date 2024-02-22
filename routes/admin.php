@@ -3,6 +3,8 @@
 use App\Http\Controllers\Admin\AjaxController;
 use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\Admin\AttributeValueController;
+use App\Http\Controllers\Admin\Auth\LoginController;
+use App\Http\Controllers\Admin\Auth\LogoutController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
@@ -34,7 +36,17 @@ Route::get('/files/draft/{file_id}', [FileController::class, 'draft'])
 Route::delete('/delete/{file_id}/draft', [FileController::class, 'deleteDraft'])
     ->name("file.draft.delete");
 
-Route::prefix('admin')->name('admin.')->group(
+// Auth
+Route::get('/admin/login', [LoginController::class, 'index'])
+    ->name("admin.login");
+
+Route::post('/admin/login', [LoginController::class, 'authenticate'])
+    ->name("admin.login.authenticate");
+
+Route::get('/admin/logout', [LogoutController::class, 'logout'])
+    ->name("admin.logout");
+
+Route::prefix('admin')->name('admin.')->middleware(['check_admin'])->group(
     function () {
         #Dashboard
         Route::get('/', [HomeController::class, 'index'])->name('dashboard');
