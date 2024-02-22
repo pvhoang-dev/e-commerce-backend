@@ -17,7 +17,7 @@ class CheckAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::user()->type == User::USER_ADMIN)
+        if (Auth::check() && Auth::user()->type == User::USER_ADMIN)
             return $next($request);
 
         return redirect()->route('admin.login');
